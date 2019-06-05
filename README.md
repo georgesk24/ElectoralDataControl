@@ -36,4 +36,8 @@ El software ha sido desarrollado con el lenguaje de programacion <b>JAVA</b> tra
 * [Xmlbeans-2.6.0](https://poi.apache.org/)
 
 ### Nota: las librerias estan incluidas en el proyecto igualmente la base de datos
+<br/>
+<h3> Te invito a seguir nuestro blog: https://uh-tis.blogspot.com/ (SOFTWARE GALAXIA) </h3>
+<h3> Canal de Youtube: https://www.youtube.com/SoftwareGalaxiaTV</h3>
+
 

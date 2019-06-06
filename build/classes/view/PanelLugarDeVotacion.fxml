@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<GridPane prefHeight="1335.0" prefWidth="1000.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelLugarDeVotacionController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="630.0" minHeight="10.0" prefHeight="630.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox maxHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="480.0" GridPane.valignment="TOP">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIcon iconName="HOME" size="3em" styleClass="font-nav-icon" />
+                  <Label text="Lugar De Votacion">
+                     <font>
+                        <Font name="FontAwesome Regular" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Consulta el lugar y mesa de votacion">
+               <font>
+                  <Font name="FontAwesome Regular" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-color: black;" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+         <children>
+            <HBox maxHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="479.0">
+               <children>
+                  <JFXButton fx:id="btnRecargar" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#eventsOnAction" styleClass="buttonCard" text=" " textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" iconName="REFRESH">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </FontAwesomeIcon>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </padding>
+            </HBox>
+            <WebView fx:id="webview" prefHeight="200.0" prefWidth="200.0" style="-fx-border-radius:3; -fx-border-background:3; -fx-border-color:black;" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </WebView>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </GridPane.margin>
+      </VBox>
+   </children>
+</GridPane>

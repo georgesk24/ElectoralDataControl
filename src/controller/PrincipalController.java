@@ -1,0 +1,484 @@
+package controller;
+
+import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javax.swing.JOptionPane;
+import model.Votantes;
+import utlidades.ControladorGeneral;
+import utlidades.UtilidadesView;
+
+/**
+ *
+ * @author jorge
+ */
+public class PrincipalController implements Initializable, UtilidadesView {
+    
+    @FXML
+    public BorderPane borderP;
+        
+    public GridPane panelInicio, panelRegistro, panelConsulta,
+             panelLugarDeVotacion, panelReporte, panelAjuste;
+    
+    @FXML
+    private JFXButton btnInicio, btnRegistroPersona, 
+                      btnConsulta, btnReportes, btnLugarDeVotacion,
+                      btnAjustes, btnSalir, btnAcercaDe, btnRecomendacion;
+
+    @FXML
+    private FontAwesomeIcon fontIconInicio, fontIconSalir, 
+                            fontIconAjustes, fontIconLugar,
+                            fontIconReporte, fontIconConsulta,
+                            fontIconRegistro;
+    
+    @FXML
+    public Circle imageProfile;
+
+    @FXML
+    private JFXButton btnAjustesSubMenu, btnSalirSubMenu;
+
+    @FXML
+    public Label lbNombreUsuario;
+    
+    FXMLLoader loader = new FXMLLoader();
+    public static FXMLLoader loaderAjustes = new FXMLLoader();
+        
+    Stop[] stopsActive = new Stop[]{new Stop(0, Color.DARKCYAN), new Stop(1, Color.CYAN)};
+    LinearGradient linearActive = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsActive);
+    
+    ScrollPane pane = new ScrollPane();
+    
+    @FXML
+    public void validatorMenu(ActionEvent event){
+
+        Object evt = event.getSource();
+        
+        if(evt.equals(btnInicio)){
+
+            selectView("Inicio", null);
+                        
+        }else if(evt.equals(btnRegistroPersona) ){
+
+            selectView("Registro", null);
+            
+        }else if(evt.equals(btnConsulta)){
+
+            selectView("Consulta", null);
+            
+        }else if(evt.equals(btnReportes)){
+
+            selectView("Reporte", null);
+            
+        }else if(evt.equals(btnLugarDeVotacion)){
+
+            selectView("Lugar", null);
+            
+        }else if(evt.equals(btnAjustes) || evt.equals(btnAjustesSubMenu)){
+
+            selectView("Ajuste", null);
+        
+        }else if(evt.equals(btnSalir) || evt.equals(btnSalirSubMenu)){
+            
+            int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir del sistema?");
+            
+            if(confirmar==JOptionPane.YES_OPTION){
+                System.exit(0);
+            }
+            
+        }else if(evt.equals(btnAcercaDe)){
+            
+            loadModal("/view/AcercaDe.fxml", "VBox");
+        
+        }else if(evt.equals(btnRecomendacion)){
+
+            loadModal("/view/Recomendacion.fxml", "ScrollPane");            
+        
+        }
+        
+    }
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        btnInicio.setTextFill(linearActive);
+        fontIconInicio.setFill(linearActive);        
+        
+        Image image = new Image("/resources/images/user-profile.png", false);
+        imageProfile.setFill(new ImagePattern(image));
+
+        String tip1 = "Módulo para registrar \npersonal de votación";
+        addTooltipText(btnRegistroPersona, tip1, "toolTipText");
+        
+        tip1 = "Realiza consultas del personal \nregistrado en base de datos";
+        addTooltipText(btnConsulta, tip1, "toolTipText");
+
+        tip1 = "Genera reportes en excel";
+        addTooltipText(btnReportes, tip1, "toolTipText");
+
+        tip1 = "Consulta el lugar y \nmesa de votación";
+        addTooltipText(btnLugarDeVotacion, tip1, "toolTipText");
+
+        addTooltipText(btnSalirSubMenu, "Salir del sistema", "toolTipTextAjustes");
+        addTooltipText(btnAjustesSubMenu, "Ir a preferencias del sistema", "toolTipTextAjustes");
+        addTooltipText(btnAcercaDe, "Información del software", "toolTipTextAjustes");
+        addTooltipText(btnRecomendacion, "Información general del sistema", "toolTipTextAjustes");
+
+        try {
+            
+            panelInicio =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelInicio.fxml"));
+            panelRegistro =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelRegister.fxml"));
+            //panelConsulta =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelConsulta.fxml"));
+            
+            loader = new FXMLLoader(getClass().getResource("/view/PanelConsulta.fxml"));        
+            panelConsulta = (GridPane)loader.load();
+            
+            
+            panelReporte =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelReporte.fxml"));
+            panelLugarDeVotacion =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelLugarDeVotacion.fxml"));
+
+            loaderAjustes = new FXMLLoader(getClass().getResource("/view/PanelAjustes.fxml"));
+            panelAjuste =  (GridPane) loaderAjustes.load();
+            
+            addOpacity(panelRegistro, 0.0);
+            addOpacity(panelConsulta, 0.0);
+            addOpacity(panelReporte, 0.0);
+            addOpacity(panelLugarDeVotacion, 0.0);
+            addOpacity(panelAjuste, 0.0);
+
+            borderP.setCenter(panelInicio);
+            BorderPane.setMargin(panelInicio, new Insets(0, 30, 0, 0));
+            redimensionarHeightPanel(borderP.getPrefHeight(), panelInicio.getPrefHeight());
+            
+                    
+        } catch (IOException ex) {
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        /*
+        borderP.heightProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0,
+                    Number arg1, Number arg2) {
+               
+                GridPane panel = (GridPane) borderP.getCenter();
+                //panel.setPrefHeight(panel.getHeight()+70);
+                
+                
+                if(borderP.getPrefHeight()<panel.getHeight()){
+                    borderP.setPrefHeight(panel.getHeight()+70);
+                }
+                System.out.println(panel.getPrefHeight() + " dfgdfg");
+                System.out.println(arg1 + "  "+ arg2);
+            }
+
+        
+        });*/
+        
+        
+        
+    }    
+    
+    private void addTooltipText(JFXButton button, String text, String classStyle){
+        
+        Tooltip tooltipText = new Tooltip(text);
+        tooltipText.getStyleClass().add(classStyle);
+        Tooltip.install(button, tooltipText);        
+    
+    }
+   
+    private void makeFadeOut(GridPane container){
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(700));
+        fade.setNode(container);
+        fade.setFromValue(0.0);
+        fade.setToValue(1.0);
+        fade.play();
+    }
+
+    private void addOpacity(Node node, double value){
+        node.setOpacity(value);
+    }    
+
+    
+    public void selectView(String name, Votantes v){
+
+        switch(name){
+            
+            case "Inicio":
+
+                fillActive("Inicio");
+                fillDefault("Registro");
+                fillDefault("Consulta");
+                fillDefault("Reporte");
+                fillDefault("Lugar");
+                fillDefault("Ajuste");
+
+
+                addOpacity(panelInicio, 0.0);
+                borderP.setCenter(panelInicio);
+                BorderPane.setMargin(panelInicio, new Insets(0, 30, 0, 0));                
+                makeFadeOut(panelInicio);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelInicio.getPrefHeight());
+    
+            break;
+                
+            case "Registro":
+
+                if(ControladorGeneral.CONTROLVIEWMODIFICAR==1){
+                    
+                    loader = new FXMLLoader(getClass().getResource("/view/PanelRegister.fxml"));        
+                    {
+                        try {
+                            panelRegistro = (GridPane)loader.load();     
+                            PanelRegistroController registroController = loader.getController();
+                            registroController.initComponents(v);                            
+                        } catch (IOException ex) {
+                            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    
+                }                
+                
+                fillActive("Registro");
+                fillDefault("Inicio");
+                fillDefault("Consulta");
+                fillDefault("Reporte");
+                fillDefault("Lugar");
+                fillDefault("Ajuste");
+
+                borderP.setCenter(panelRegistro);
+                BorderPane.setMargin(panelRegistro, new Insets(0, 30, 0, 0));                        
+                makeFadeOut(panelRegistro);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelRegistro.getPrefHeight());
+    
+            break;
+
+            case "Consulta":
+                                                
+                fillActive("Consulta");
+                fillDefault("Inicio");
+                fillDefault("Registro");
+                fillDefault("Reporte");
+                fillDefault("Lugar");
+                fillDefault("Ajuste");
+
+                borderP.setCenter(panelConsulta);
+                BorderPane.setMargin(panelConsulta, new Insets(0, 30, 0, 0));                
+                makeFadeOut(panelConsulta);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelConsulta.getPrefHeight());
+                                
+                
+            break;
+            
+            case "Lugar":
+
+                fillActive("Lugar");
+                fillDefault("Inicio");
+                fillDefault("Registro");
+                fillDefault("Consulta");
+                fillDefault("Reporte");
+                fillDefault("Ajuste");
+
+                borderP.setCenter(panelLugarDeVotacion);
+                BorderPane.setMargin(panelLugarDeVotacion, new Insets(0, 30, 0, 0));                
+                makeFadeOut(panelLugarDeVotacion);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelLugarDeVotacion.getPrefHeight());
+                
+            break;            
+
+            case "Reporte":
+
+                fillActive("Reporte");
+                fillDefault("Inicio");
+                fillDefault("Registro");
+                fillDefault("Consulta");
+                fillDefault("Lugar");
+                fillDefault("Ajuste");
+
+                borderP.setCenter(panelReporte);
+                BorderPane.setMargin(panelReporte, new Insets(0, 30, 0, 0));                                
+                makeFadeOut(panelReporte);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelReporte.getPrefHeight());                
+
+            break;
+
+            case "Ajuste":
+
+                fillActive("Ajuste");
+                fillDefault("Inicio");
+                fillDefault("Registro");
+                fillDefault("Consulta");
+                fillDefault("Reporte");
+                fillDefault("Lugar");
+
+                borderP.setCenter(panelAjuste);
+                BorderPane.setMargin(panelAjuste, new Insets(0, 30, 0, 0));                                
+                makeFadeOut(panelAjuste);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelAjuste.getPrefHeight());                
+
+            break;
+        
+        
+        }
+    }
+    
+    public void redimensionarHeightPanel(double dimension1, double dimension2){
+
+        if(dimension1<dimension2){
+            borderP.setPrefHeight(dimension2+70);
+        }else{
+            borderP.setPrefHeight(dimension2);            
+        }
+        
+    }
+    
+    
+    /*Metodo interfaz UtilidadesView controlara que item del menu esta activo*/
+
+    @Override
+    public void fillActive(String navigate) {
+        
+        switch(navigate){
+            
+            case "Inicio":
+                btnInicio.setTextFill(linearActive);
+                fontIconInicio.setFill(linearActive);                                        
+            break;
+                
+            case "Registro":
+                btnRegistroPersona.setTextFill(linearActive);
+                fontIconRegistro.setFill(linearActive);                                        
+            break;
+
+            case "Consulta":
+                btnConsulta.setTextFill(linearActive);
+                fontIconConsulta.setFill(linearActive);                                        
+            break;
+            
+            case "Lugar":
+                btnLugarDeVotacion.setTextFill(linearActive);
+                fontIconLugar.setFill(linearActive);                                        
+            break;            
+
+            case "Reporte":
+                btnReportes.setTextFill(linearActive);
+                fontIconReporte.setFill(linearActive);                        
+            break;
+
+            case "Ajuste":
+                btnAjustes.setTextFill(linearActive);
+                fontIconAjustes.setFill(linearActive);                                        
+            break;
+            
+        }
+
+    }
+
+    @Override
+    public void fillDefault(String navigate) {
+        switch(navigate){
+            
+            case "Inicio":
+                btnInicio.setTextFill(Color.web("#999999"));
+                fontIconInicio.setFill(Color.web("#999999"));                                        
+            break;
+                
+            case "Registro":
+                btnRegistroPersona.setTextFill(Color.web("#999999"));
+                fontIconRegistro.setFill(Color.web("#999999"));                                        
+            break;
+
+            case "Consulta":
+                btnConsulta.setTextFill(Color.web("#999999"));
+                fontIconConsulta.setFill(Color.web("#999999"));                                        
+            break;
+            
+            case "Lugar":
+                btnLugarDeVotacion.setTextFill(Color.web("#999999"));
+                fontIconLugar.setFill(Color.web("#999999"));                                        
+            break;            
+
+            case "Reporte":
+                btnReportes.setTextFill(Color.web("#999999"));
+                fontIconReporte.setFill(Color.web("#999999"));                        
+            break;
+
+            case "Ajuste":
+                btnAjustes.setTextFill(Color.web("#999999"));
+                fontIconAjustes.setFill(Color.web("#999999"));                                        
+            break;
+            
+        }
+    }
+
+    private void loadModal(String url, String type) {
+
+        try {
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            Parent parent = null;
+            switch(type){
+                case "VBox":
+                    parent =  (VBox) FXMLLoader.load(getClass().getResource(url));                                     
+                 break;
+                 
+                case "ScrollPane": 
+                    parent =  (ScrollPane) FXMLLoader.load(getClass().getResource(url));                                     
+                break;
+            }
+            Scene scene = new Scene(parent);                
+            stage.setScene(scene);
+            stage.show();
+
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);               
+                        
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar modulo\n"+
+                                                 ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    
+}

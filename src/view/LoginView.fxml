@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<GridPane id="layoutLogin" fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="854.0" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginViewController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="403.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.0" minWidth="10.0" prefWidth="451.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #30373e;" GridPane.columnIndex="1">
+         <children>
+            <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <FontAwesomeIcon fx:id="btnMinimize" fill="WHITE" iconName="MINUS" onMouseClicked="#eventsMouseClick" size="2em" styleClass="icon" />
+                  <FontAwesomeIcon fx:id="btnClose" fill="WHITE" iconName="CLOSE" onMouseClicked="#eventsMouseClick" size="2em" styleClass="icon">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin></FontAwesomeIcon>
+               </children>
+               <VBox.margin>
+                  <Insets top="3.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/images/electoral-login.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Electoral Data Control" textFill="#f2ecec">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Sistema para el control y gestión de datos de votantes" textFill="#f2ecec" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <JFXTabPane>
+         <tabs>
+            <Tab closable="false" text="Inicio">
+               <content>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <Label style="-fx-font-size: 30; -fx-font-weight: bold;" text="Iniciar Sesión" />
+                        <VBox prefWidth="300.0">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Usuario" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXTextField fx:id="textFieldUsuario" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese su usuario" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </JFXTextField>
+                                 </children>
+                              </HBox>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Contraseña" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXPasswordField fx:id="textFieldPass" focusColor="#363e46" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
+                                       <unFocusColor>
+                                          <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                             <stops>
+                                                <Stop color="#4d4d4d05" />
+                                                <Stop color="#ffffff05" offset="1.0" />
+                                             </stops>
+                                          </RadialGradient>
+                                       </unFocusColor>
+                                    </JFXPasswordField>
+                                    <JFXTextField fx:id="textFieldPassUnmask" focusColor="#363e46" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                              <JFXCheckBox fx:id="checkVerPassI" onAction="#eventsOnAction" text="Ver Contraseña">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </JFXCheckBox>
+                              <JFXButton fx:id="btnIngresar" buttonType="RAISED" onAction="#eventsOnAction" prefHeight="44.0" prefWidth="391.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCyan" text="Ingresar">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Configuración">
+               <content>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label style="-fx-font-size: 30; -fx-font-weight: bold;" text="Actualizar Usuario" />
+                        <VBox prefWidth="300.0">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Nuevo Usuario" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXTextField fx:id="textFieldNuevoUsuario" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese un valor" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </JFXTextField>
+                                 </children>
+                              </HBox>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Nueva Contraseña" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXPasswordField fx:id="textFieldNuevoPass" focusColor="#363e46" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
+                                       <unFocusColor>
+                                          <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                             <stops>
+                                                <Stop color="#4d4d4d05" />
+                                                <Stop color="#ffffff05" offset="1.0" />
+                                             </stops>
+                                          </RadialGradient>
+                                       </unFocusColor>
+                                    </JFXPasswordField>
+                                    <JFXTextField fx:id="textFieldPassUnmask2" focusColor="#363e46" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                              <JFXCheckBox fx:id="checkVerPassC" onAction="#eventsOnAction" text="Ver Contraseña">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </JFXCheckBox>
+                              <JFXButton fx:id="btnActualizar" buttonType="RAISED" onAction="#eventsOnAction" prefHeight="44.0" prefWidth="391.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCyan" text="Actualizar">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</GridPane>

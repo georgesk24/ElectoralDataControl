@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<GridPane prefHeight="800.0" prefWidth="1000.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelAjustesController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="83.0" minHeight="34.0" prefHeight="63.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="420.0" minHeight="10.0" prefHeight="420.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox maxHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="480.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIcon iconName="COGS" size="3em" styleClass="font-nav-icon" />
+                  <Label text="Preferencias">
+                     <font>
+                        <Font name="FontAwesome Regular" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Configuración general del sistema">
+               <font>
+                  <Font name="FontAwesome Regular" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Accordion fx:id="accordionConfig" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+        <panes>
+          <TitledPane fx:id="titledPaneUsuario" text="Ajuste Usuario">
+               <content>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <ScrollPane styleClass="scroll-ajustes">
+                           <content>
+                              <VBox prefWidth="300.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="180.0" text="Imagen Usuario" textFill="#363e46">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="180.0" style="-fx-border-color: black; -fx-border-radius: 3; -fx-background-radius: 3;">
+                                             <children>
+                                                <ImageView fx:id="containerImageProfile" fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" styleClass="image-profile" HBox.hgrow="ALWAYS">
+                                                   <image>
+                                                      <Image url="@../../../../Escritorio/elections.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
+                                          <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" spacing="7.0">
+                                             <children>
+                                                <JFXButton fx:id="btnCargarImagen" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCard" text="Cambiar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="CLIPBOARD" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnActualizarImagen" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonWarning" text="Actualizar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnRestaurarImagen" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="74.0" layoutY="10.0" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCyan" text="Restaurar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="DATABASE" />
+                                                   </graphic>
+                                                </JFXButton>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Usuario Actual" textFill="#363e46">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox prefWidth="200.0">
+                                       <children>
+                                          <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXTextField fx:id="textFieldUsuario" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="62.0" prefWidth="454.0" promptText="Los datos no estan disponibles" style="-fx-font-size: 18;" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </JFXTextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="2.0">
+                                             <children>
+                                                <JFXButton fx:id="btnActualizarUsuario" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCard" text="Cambiar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnRestaurarUsuario" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="74.0" layoutY="10.0" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCyan" text="Restaurar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="DATABASE" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnLimpiarUser" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="66.0" layoutY="10.0" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonWarning" text="Restaurar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="ERASER" />
+                                                   </graphic>
+                                                </JFXButton>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Contraseña Actual" textFill="#363e46">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefWidth="200.0">
+                                       <children>
+                                          <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXPasswordField fx:id="textFieldPass" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="43.0" promptText="Los datos no estan disponibles" HBox.hgrow="ALWAYS">
+                                                   <unFocusColor>
+                                                      <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                         <stops>
+                                                            <Stop color="#4d4d4d05" />
+                                                            <Stop color="#ffffff05" offset="1.0" />
+                                                         </stops>
+                                                      </RadialGradient>
+                                                   </unFocusColor>
+                                                </JFXPasswordField>
+                                                <JFXTextField fx:id="textFieldPassUnmask" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="49.0" prefWidth="141.0" promptText="Los datos no estan disponibles" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" spacing="2.0">
+                                             <children>
+                                                <JFXButton fx:id="btnActualizarPass" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCard" text="Cambiar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnRestaurarPass" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="74.0" layoutY="10.0" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCyan" text="Restaurar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="DATABASE" />
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnLimpiarPass" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#eventsOnAction" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonWarning" text="Restaurar">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="ERASER" />
+                                                   </graphic>
+                                                </JFXButton>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <JFXCheckBox fx:id="checkVerPass" text="Ver Contraseña">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXCheckBox>
+                                    <Label style="-fx-font-size: 21; -fx-font-weight: bold;" text="E-mail">
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox layoutX="10.0" layoutY="314.0" prefWidth="200.0">
+                                       <children>
+                                          <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXTextField fx:id="textFieldEmail" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="62.0" prefWidth="454.0" promptText="EJ. example@gmail.com" style="-fx-font-size: 18;" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </JFXTextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <Label layoutX="20.0" layoutY="510.0" style="-fx-font-size: 21; -fx-font-weight: bold;" text="Contraseña E-mail">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox layoutX="20.0" layoutY="408.0" prefWidth="200.0">
+                                       <children>
+                                          <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXPasswordField fx:id="textFieldPassEmail" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="43.0" promptText="Los datos no estan disponibles" HBox.hgrow="ALWAYS">
+                                                   <unFocusColor>
+                                                      <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                                         <stops>
+                                                            <Stop color="#4d4d4d05" />
+                                                            <Stop color="#ffffff05" offset="1.0" />
+                                                         </stops>
+                                                      </RadialGradient>
+                                                   </unFocusColor>
+                                                </JFXPasswordField>
+                                                <JFXTextField fx:id="textFieldPassEmailUnmask" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="49.0" prefWidth="141.0" promptText="Los datos no estan disponibles" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                    <JFXCheckBox fx:id="checkVerPassEmail" layoutX="20.0" layoutY="462.0" text="Ver Contraseña">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXCheckBox>
+                                    <HBox layoutX="20.0" layoutY="614.0" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <JFXButton fx:id="btnGuardarDatosEmail" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonCard" text="Guardar" />
+                                          <JFXButton fx:id="btnLimpiarEmail" layoutX="720.0" layoutY="10.0" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonWarning" text="Limpiar" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
+          </TitledPane>
+          <TitledPane text="Envio De Correos">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <ScrollPane VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="45.0">
+                                       <children>
+                                          <Label style="-fx-font-size: 18;" text="De:" />
+                                          <HBox fx:id="textEmailPara2" fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXTextField fx:id="textFieldDe" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Example@gmail.com" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </JFXTextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="30.0">
+                                       <children>
+                                          <Label style="-fx-font-size: 18;" text="Para:">
+                                             <HBox.margin>
+                                                <Insets top="-15.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <VBox prefWidth="408.0">
+                                             <children>
+                                                <HBox fx:id="textEmailPara" fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                                   <children>
+                                                      <JFXTextField fx:id="textFieldPara" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Example@gmail.com" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets left="5.0" right="5.0" />
+                                                         </padding>
+                                                      </JFXTextField>
+                                                   </children>
+                                                </HBox>
+                                                <Label fx:id="labelInfo" style="-fx-text-fill: red;" text="Separe los E-mail por comas ( , ) las direcciones invalidas seran ignoradas" wrapText="true" />
+                                             </children>
+                                          </VBox>
+                                          <JFXCheckBox fx:id="checkBoxTodo" onAction="#eventsOnAction" text="Todos">
+                                             <HBox.margin>
+                                                <Insets left="-25.0" top="-15.0" />
+                                             </HBox.margin>
+                                          </JFXCheckBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Label style="-fx-font-size: 18;" text="Asunto:" />
+                                          <HBox fx:id="textEmailPara1" fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXTextField fx:id="textFieldAsunto" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Escriba el asusnto de su correo electronico" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </padding>
+                                                </JFXTextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HTMLEditor fx:id="htmlEditorMensaje" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxHeight="-Infinity" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" prefHeight="350.0">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HTMLEditor>
+                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Label style="-fx-font-size: 18;" text="Adjuntar Archivo:" />
+                                          <Hyperlink fx:id="linkAdjunto" style="-fx-font-size: 15;" textFill="#eb1010" />
+                                          <JFXButton id="btnAd" fx:id="btnAdjuntar" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#eventsOnAction" style="-fx-background-color: white;">
+                                             <graphic>
+                                                <FontAwesomeIcon iconName="PAPERCLIP" size="2em" />
+                                             </graphic>
+                                          </JFXButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <JFXButton fx:id="btnEnviarMail" buttonType="RAISED" onAction="#eventsOnAction" style="-FX-font-size: 18; -fx-text-fill: white;" styleClass="buttonCard" text="Enviar" />
+                                          <JFXButton fx:id="btnLimpiarMail" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#eventsOnAction" style="-FX-font-size: 18; -fx-text-fill: white;" styleClass="buttonCyan" text="Limpiar">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <Label fx:id="labelBarra" text="Enviando...">
+                                             <font>
+                                                <Font name="FontAwesome Regular" size="18.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="20.0" top="13.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <JFXProgressBar fx:id="barraDeProgreso" prefHeight="20.0">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="13.0" />
+                                             </HBox.margin>
+                                          </JFXProgressBar>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" right="10.0" top="15.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children></VBox>
+               </content>
+          </TitledPane>
+        </panes>
+         <GridPane.margin>
+            <Insets top="30.0" />
+         </GridPane.margin>
+      </Accordion>
+   </children>
+</GridPane>

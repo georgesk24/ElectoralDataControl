@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.RangeSlider?>
+
+<GridPane prefWidth="1000.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelReporteController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="ALWAYS" />
+    <RowConstraints vgrow="ALWAYS" />
+  </rowConstraints>
+   <children>
+      <VBox prefWidth="480.0">
+         <children>
+            <HBox prefHeight="40.0" prefWidth="498.0" spacing="10.0">
+               <children>
+                  <FontAwesomeIcon iconName="FILE_TEXT" size="3em" styleClass="font-nav-icon" />
+                  <Label text="Reportes">
+                     <font>
+                        <Font name="FontAwesome Regular" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Genera tus reportes en formato excel">
+               <font>
+                  <Font name="FontAwesome Regular" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <VBox prefWidth="100.0" styleClass="panelForm" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <children>
+            <HBox id="headerForm" minHeight="-Infinity" prefHeight="55.0" prefWidth="618.0" style="-fx-background-color: #363e46;">
+               <children>
+                  <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="556.0" text="Formulario De Reporte" textFill="#fffbfb" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="FontAwesome Regular" size="35.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox prefWidth="878.0" styleClass="panelForm">
+               <children>
+                  <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Tipo De Búsqueda" textFill="#363e46">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox fx:id="hTipoBusqueda" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="280.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <JFXComboBox fx:id="fxCombotipoBusqueda" focusColor="#363e46" maxWidth="1.7976931348623157E308" onAction="#eventosOnAction" prefHeight="62.0" prefWidth="577.0" promptText="Nombre/Apellido" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="3.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxMesaVotacion" layoutX="26.0" layoutY="142.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox maxWidth="-Infinity" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Mesa De Votación" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXComboBox fx:id="fxComboBoxMesa" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="25.0" top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxLugarVotacion" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox maxWidth="-Infinity" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Lugar De Votación" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXComboBox fx:id="fxComboBoxLugar" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxBusqueda" layoutX="26.0" layoutY="127.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Búsqueda" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                 <children>
+                                    <JFXTextField fx:id="fxTextFieldBusqueda" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingresa el dato que deseas consultar" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </JFXTextField>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxEdad" layoutX="26.0" layoutY="227.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="52.0" text="Rango Edad:" textFill="#363e46" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="rangoEdadValor" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="50.0" textFill="#c60909" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <RangeSlider fx:id="rangeSliderEdad" highValue="35.0" lowValue="18.0" majorTickUnit="10.0" max="100.0" min="18.0" minorTickCount="5" prefHeight="100.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </RangeSlider>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxSexo" layoutX="26.0" layoutY="217.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="300.0" text="Sexo" textFill="#363e46">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0">
+                                 <children>
+                                    <JFXRadioButton fx:id="radioMale" prefHeight="65.0" prefWidth="111.0" text="Masculino">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </JFXRadioButton>
+                                    <JFXRadioButton fx:id="radioFemale" layoutX="20.0" layoutY="10.0" prefHeight="66.0" prefWidth="109.0" text="Femenino">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                    </JFXRadioButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hBoxBtn" alignment="TOP_CENTER" layoutX="26.0" layoutY="416.0" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <JFXButton fx:id="btnBuscar" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" onAction="#eventosOnAction" styleClass="buttonCard" text="Buscar" textFill="#f8f4f4" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIcon fill="#f2ebeb" iconName="SEARCH" lineSpacing="14.0" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="35.0" />
+               </VBox.margin>
+               <children>
+                  <HBox VBox.vgrow="NEVER">
+                     <children>
+                        <Label alignment="BASELINE_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" text="Información Personas" textFill="#363e46">
+                           <font>
+                              <Font name="FontAwesome Regular" size="35.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelTotalRegistro" alignment="CENTER" contentDisplay="BOTTOM" prefHeight="52.0" textFill="#d01414">
+                           <font>
+                              <Font name="FontAwesome Regular" size="21.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXTreeTableView fx:id="tableView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="350.0" styleClass="tbView" HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER" prefHeight="200.0">
+                           <children>
+                              <JFXButton fx:id="btnReporte" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" graphicTextGap="1.0" onAction="#eventosOnAction" style="-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;" text="Generar">
+                                 <font>
+                                    <Font name="FontAwesome Regular" size="23.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/images/excel-icon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <VBox fx:id="contenedorBarra">
+                                 <children>
+                                    <Label text="Por favor espere...">
+                                       <font>
+                                          <Font name="FontAwesome Regular" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <JFXProgressBar fx:id="barraDeProgreso" prefHeight="20.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                    </JFXProgressBar>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+   </children>
+</GridPane>

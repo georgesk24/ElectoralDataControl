@@ -328,8 +328,6 @@ public class VotantesDAO {
         return list;
     }
 
-    
-    
     public boolean modificarVotantes(Votantes datosVotante){
         
         boolean estado = false;
@@ -421,6 +419,51 @@ public class VotantesDAO {
         return estado;
         
     }    
+    
+    public boolean validarNumeroIdentificacion(String tipo_documento, String numero_documento){
+        
+        boolean res = false;
+        
+        try{
+
+            conectar = conexion.conectar();
+            
+            if(conectar!=null){
+                
+                String sql ="SELECT tipo_documento, numero_documento FROM Votantes WHERE tipo_documento=? AND numero_documento=?";
+                
+                pst = conectar.prepareStatement(sql);
+                pst.setString(1, tipo_documento);
+                pst.setString(2, numero_documento);
+                
+                rs = pst.executeQuery();
+                                
+                if(rs.next()){
+                    res=true;
+                }
+                
+                ControladorValidaciones.EXCEPCIONES="";
+                
+            }else{
+                ControladorValidaciones.EXCEPCIONES="* Error al conectar con la base de datos\n";            
+            }
+            
+            
+        }catch(SQLException ex){
+            ControladorValidaciones.EXCEPCIONES= "* Error de ejecución : "+ex.getMessage();        
+        }finally{
+            try{
+                if(conexion!=null){
+                    conexion.cerrar(conectar);                
+                }
+            }catch(Exception ex){
+                
+            }
+        }
+        
+        return res;
+        
+    }
     
     
 }

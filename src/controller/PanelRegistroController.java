@@ -236,14 +236,22 @@ public class PanelRegistroController implements Initializable, GeneralView {
 
 
                     if(btnGuardar.getText().equals("Guardar")){
+                        
+                        if(modelo.validarNumeroIdentificacion(tipoDocumento.getValue(), numeroDocumento.getText())){
 
-                        if(agregarVotantes()==true){
-                            JOptionPane.showMessageDialog(null, "Los Datos se almacenaron exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "El número de identificación ya ha sido registrado en la base de datos", "ERROR", JOptionPane.WARNING_MESSAGE);
+                        
                         }else{
-                             JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
-                                                                 ControladorValidaciones.EXCEPCIONES, 
-                                                                 "ERROR", JOptionPane.ERROR_MESSAGE);           
-                             ControladorValidaciones.EXCEPCIONES="";
+
+                            if(agregarVotantes()==true){
+                                JOptionPane.showMessageDialog(null, "Los Datos se almacenaron exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                            }else{
+                                 JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
+                                                                     ControladorValidaciones.EXCEPCIONES, 
+                                                                     "ERROR", JOptionPane.ERROR_MESSAGE);           
+                                 ControladorValidaciones.EXCEPCIONES="";
+                            }
+                            
                         }
 
                     }else if(btnGuardar.getText().equals("Modificar")){

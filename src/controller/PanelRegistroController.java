@@ -97,6 +97,51 @@ public class PanelRegistroController implements Initializable, GeneralView {
         
     }    
     
+    public void ActualizarDatos(Votantes votante){
+
+        if(votante!=null){
+            
+            ControladorGeneral.CONTROLVIEWMODIFICAR=0;                                    
+
+            idVotante = votante.getId();
+
+            this.tipoDocumento.setValue(votante.getTipoDocumento());
+            this.numeroDocumento.setText(String.valueOf(votante.getNumeroDocumento()));
+            this.nombreCompleto.setText(votante.getNombre());
+            this.apellidos.setText(votante.getApellido());
+            //verificamos el tipo de genero que se va a seleccionar
+            if(votante.getSexo().equals("Femenino")){
+                this.radioFemale.setSelected(true);            
+            }else{
+                this.radioMale.setSelected(true);            
+            }              
+
+            if(votante.getFehaNacimiento()!=null){
+                this.fechaNacimiento.setValue(LocalDate.parse(votante.getFehaNacimiento()));        
+            }
+
+            if(votante.getEstadoCivil()!=null){
+                this.estadoCivil.setValue(votante.getEstadoCivil());            
+            }
+
+            this.direccion.setText(votante.getDireccion());
+            this.barrio.setText(votante.getBarrio());
+            this.telefono.setText(votante.getTelefono());
+            this.correo.setText(votante.getCorreoElectronico());
+            this.lugarDeVotacion.setText(votante.getLugar());
+            this.mesaDeVotacion.setText(String.valueOf(votante.getMesa()));
+            this.direccionVotacion.setText(votante.getDireccionLugar());
+            
+            btnGuardar.setText("Modificar");
+
+        }else{
+            limpiarCampos();
+        }
+        
+    
+    
+    }
+    
     private boolean agregarVotantes(){
         
         //Creamos un objeto de tipo Votantes
@@ -117,11 +162,18 @@ public class PanelRegistroController implements Initializable, GeneralView {
         datosVotantes.setDireccionLugar(direccionVotacion.getText());   
         datosVotantes.setEstadoCivil(estadoCivil.getValue());
         
-        String fecha="";
+        String fecha=null;
+
         try{
-            LocalDate date = fechaNacimiento.getValue();
-            fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();
-        }catch(Exception ex){}
+
+            if(fechaNacimiento.getValue()!=null){
+                LocalDate date = fechaNacimiento.getValue();
+                fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();            
+            }
+
+        }catch(Exception ex){
+            fecha=null;
+        }
         
         
         datosVotantes.setFehaNacimiento(fecha);
@@ -163,7 +215,6 @@ public class PanelRegistroController implements Initializable, GeneralView {
         return modelo.modificarVotantes(datosVotantes);
             
     }
-
 
     private void limpiarCampos(){
         tipoDocumento.setValue("Cedula de Ciudadanía");
@@ -234,7 +285,6 @@ public class PanelRegistroController implements Initializable, GeneralView {
                    ControladorValidaciones.onlyNumber(mesaDeVotacion.getText()) == true && 
                    ControladorValidaciones.isMayorDeEdad(fechaNacimiento.getValue()) == true){
 
-
                     if(btnGuardar.getText().equals("Guardar")){
                         
                         if(modelo.validarNumeroIdentificacion(tipoDocumento.getValue(), numeroDocumento.getText())){
@@ -245,6 +295,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
 
                             if(agregarVotantes()==true){
                                 JOptionPane.showMessageDialog(null, "Los Datos se almacenaron exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                                limpiarCampos();
                             }else{
                                  JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
                                                                      ControladorValidaciones.EXCEPCIONES, 
@@ -268,10 +319,13 @@ public class PanelRegistroController implements Initializable, GeneralView {
                     }
 
                 }else{
+                    
                     JOptionPane.showMessageDialog(null, "Operación fallida, Posibles errores : \n"+
-                                                        "1- El campo número documento y mesa de votación solo acepta valores numericos\n"+
-                                                        "2- La fecha de nacimiento ingresada no es valida, debe ser mayor de 18 años \n"+
+                                                        "1- Errores de formato( valores numericos fuera de rango )\n"+
+                                                        "2- El campo número documento y mesa de votación solo acepta valores numericos\n"+
+                                                        "3- La fecha de nacimiento ingresada no es valida, debe ser mayor de 18 años \n"+
                                                         "<html><p> <span style='color:red;'>Nota:</span> Verifique la información e intente nuevamente.</p></html>" , "ERROR", JOptionPane.ERROR_MESSAGE);            
+                
                 }
 
             }else{
@@ -309,151 +363,100 @@ public class PanelRegistroController implements Initializable, GeneralView {
     @Override
     public void initComponents(Object obj) {
         
-            String sexo = "Masculino";
-            String tipoDocumentoSelected="Cedula de Ciudadanía";
-            String estadoCivilSelected="Soltero(a)";
-            String fecha = "";
+        String tipoDocumentoSelected="Cedula de Ciudadanía";
+        String estadoCivilSelected="Soltero(a)";
             
-            if(obj!=null){
-                
-                ControladorGeneral.CONTROLVIEWMODIFICAR=0;                                    
-                Votantes votante = (Votantes) obj;
+        StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
 
-                idVotante = votante.getId();
-                
-                sexo = votante.getSexo();
-                tipoDocumentoSelected = votante.getTipoDocumento();
-                
-                tipoDocumento.getItems().remove(0, 2);
-                estadoCivil.getItems().remove(0, 2);
-                
-                numeroDocumento.setText(String.valueOf(votante.getNumeroDocumento()));
-                nombreCompleto.setText(votante.getNombre());
-                apellidos.setText(votante.getApellido());
-                
-                estadoCivilSelected = votante.getEstadoCivil();
-                
-                direccion.setText(votante.getDireccion());
-                barrio.setText(votante.getBarrio());
-                telefono.setText(votante.getTelefono());
-                correo.setText(votante.getCorreoElectronico());
-                
-                lugarDeVotacion.setText(votante.getLugar());
-                direccionVotacion.setText(votante.getDireccionLugar());
-                mesaDeVotacion.setText(votante.getMesa());
-            
-                fecha = votante.getFehaNacimiento();
-                
-                btnGuardar.setText("Modificar");
-                                
-            }else{
-                limpiarCampos();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            @Override
+            public String toString(LocalDate object) {
+                if (object != null) {
+                    return dateFormatter.format(object);
+                } else {
+                    return "";
+                }                    
             }
 
-            StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
-                
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                
-                @Override
-                public String toString(LocalDate object) {
-                    if (object != null) {
-                        return dateFormatter.format(object);
-                    } else {
-                        return "";
-                    }                    
-                }
-
-                @Override
-                public LocalDate fromString(String string) {
-                    if (string != null && !string.isEmpty()) {
-                        return LocalDate.parse(string, dateFormatter);
-                    } else {
-                        return null;
-                    }                    
-                }
-
-            };           
-            
-            fechaNacimiento.setConverter(converter);
-            if(!fecha.equals("")){
-                fechaNacimiento.setValue(LocalDate.parse(fecha));        
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }                    
             }
+
+        };           
             
-            radioFemale.setToggleGroup(groupRadio);
-            radioFemale.setUserData("Femenino");
-            radioMale.setToggleGroup(groupRadio);
-            radioMale.setUserData("Masculino");            
-            //verificamos el tipo de genero que se va a seleccionar
-            if(sexo.equals("Femenino")){
-                radioFemale.setSelected(true);            
-            }else{
-                radioMale.setSelected(true);            
-            }  
-            
-            
-            tipoDocumento.getItems().add("Cedula de Ciudadanía");
-            tipoDocumento.getItems().add("Cedula de Extranjería");
-            tipoDocumento.setValue(tipoDocumentoSelected);
-
-            estadoCivil.getItems().add("Soltero(a)");
-            estadoCivil.getItems().add("Casado(a)");
-            estadoCivil.setValue(estadoCivilSelected);
+        fechaNacimiento.setConverter(converter);
+        radioMale.setSelected(true);            
 
 
-            /*Agregamos validadores a los campos de texto y similares*/        
-            numeroDocumento.getValidators().addAll(validatorFieldText, validatorNumber);        
-            nombreCompleto.getValidators().add(validatorFieldText);
-            apellidos.getValidators().add(validatorFieldText);
-            lugarDeVotacion.getValidators().add(validatorFieldText);
-            mesaDeVotacion.getValidators().addAll(validatorFieldText, validatorNumber);
-            direccionVotacion.getValidators().add(validatorFieldText); 
+        tipoDocumento.getItems().add("Cedula de Ciudadanía");
+        tipoDocumento.getItems().add("Cedula de Extranjería");
+        tipoDocumento.setValue(tipoDocumentoSelected);
+
+        estadoCivil.getItems().add("Soltero(a)");
+        estadoCivil.getItems().add("Casado(a)");
+        estadoCivil.setValue(estadoCivilSelected);
 
 
-            /*validacion de email*/
-            validatorEmail = new ValidatorBase() {
-                @Override
-                protected void eval() {
-                    setMessage("Email invalido");
-                    if (correo.getText().length() < 2 || !isValidEmailAddress(correo.getText())) {
+        /*Agregamos validadores a los campos de texto y similares*/        
+        numeroDocumento.getValidators().addAll(validatorFieldText, validatorNumber);        
+        nombreCompleto.getValidators().add(validatorFieldText);
+        apellidos.getValidators().add(validatorFieldText);
+        lugarDeVotacion.getValidators().add(validatorFieldText);
+        mesaDeVotacion.getValidators().addAll(validatorFieldText, validatorNumber);
+        direccionVotacion.getValidators().add(validatorFieldText); 
+
+
+        /*validacion de email*/
+        validatorEmail = new ValidatorBase() {
+            @Override
+            protected void eval() {
+                setMessage("Email invalido");
+                if (correo.getText().length() < 2 || !isValidEmailAddress(correo.getText())) {
+                    hasErrors.set(true);
+                } else hasErrors.set(false);
+            }
+
+            private boolean isValidEmailAddress(String text) {
+                String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+                return text.matches(regex);
+            }
+
+        };
+
+        /*validacion de email*/
+        validatorAge = new ValidatorBase() {
+            @Override
+            protected void eval() {
+                setMessage("Debe ser mayor de 18 años");
+                try{
+                    LocalDate value = fechaNacimiento.getValue();
+                    if (!isMAyorDeEdad(value.getYear())) {
                         hasErrors.set(true);
-                    } else hasErrors.set(false);
+                    } else hasErrors.set(false);                
+                }catch(Exception ex){
+                    hasErrors.set(false);
                 }
+            }
 
-                private boolean isValidEmailAddress(String text) {
-                    String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-                    return text.matches(regex);
-                }
+            private boolean isMAyorDeEdad(int year) {
+                int yearA = Calendar.getInstance().get(Calendar.YEAR);
+                return (yearA-year)>=18;
+            }
 
-            };
+        };
 
-            /*validacion de email*/
-            validatorAge = new ValidatorBase() {
-                @Override
-                protected void eval() {
-                    setMessage("Debe ser mayor de 18 años");
-                    try{
-                        LocalDate value = fechaNacimiento.getValue();
-                        if (!isMAyorDeEdad(value.getYear())) {
-                            hasErrors.set(true);
-                        } else hasErrors.set(false);                
-                    }catch(Exception ex){
-                        hasErrors.set(false);
-                    }
-                }
+        correo.getValidators().addAll(validatorFieldText, validatorEmail);
+        fechaNacimiento.getValidators().add(validatorAge);
 
-                private boolean isMAyorDeEdad(int year) {
-                    int yearA = Calendar.getInstance().get(Calendar.YEAR);
-                    return (yearA-year)>=18;
-                }
-
-            };
-
-            correo.getValidators().addAll(validatorFieldText, validatorEmail);
-            fechaNacimiento.getValidators().add(validatorAge);
-
-            /*mensaje de validaciones*/
-            validatorFieldText.setMessage("Este campo es obligatorio");
-            validatorNumber.setMessage("Solo se permite el ingreso de números");
+        /*mensaje de validaciones*/
+        validatorFieldText.setMessage("Este campo es obligatorio");
+        validatorNumber.setMessage("Solo se permite el ingreso de números");
         
                 
     }

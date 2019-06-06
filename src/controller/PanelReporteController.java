@@ -739,9 +739,6 @@ class GenerateReport{
             filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
             agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
             sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));
-
-            //agregarTitulo(book, sheet, style2, "Arial", 21, filaT, 5, "Filtro: ");            
-            //sheet.addMergedRegion(new CellRangeAddress(0, 4, 5, 7));
                         
             String[] cabecera = new String[]{"Nº", "Nº Documento", "Nombres", "Apellidos", "Telefono", "Lugar de Votación", "Dirección", "Mesa"};
                         
@@ -812,60 +809,10 @@ class GenerateReport{
             sheet.autoSizeColumn(6);
             sheet.autoSizeColumn(7);
             
-            /*
-            //System.out.println(sheet.getColumnWidthInPixels(5) + " (5 + 3) "+sheet.getColumnWidthInPixels(3));
-                        
-            InputStream is = new FileInputStream("src/resources/images/registraduria_logo.png");
-            byte[] bytes = IOUtils.toByteArray(is);
-            int imgIndex = book.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
-            is.close();
-
-            CreationHelper help = sheet.getWorkbook().getCreationHelper();
-            Drawing draw = sheet.createDrawingPatriarch();
-            
-            //Create an anchor that is attached to the worksheet
-            ClientAnchor anchor = help.createClientAnchor();
-            //set top-left corner for the image
-            anchor.setCol1(3);
-            anchor.setRow1(10);
-
-            //Creates a picture
-            Picture pict = draw.createPicture(anchor, imgIndex);
-            //Reset the image to the original size
-            pict.resize();            
-            
-            
-            /*
-            CreationHelper help = sheet.getWorkbook().getCreationHelper();
-            Drawing draw = sheet.createDrawingPatriarch();
-
-            ClientAnchor anchor = help.createClientAnchor();
-            anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);            
-                     
-            int width1=Math.round(((sheet.getColumnWidthInPixels(3))*50)/100);
-            int width2=Math.round(((sheet.getColumnWidthInPixels(4))*50)/100);
-            
-            int widthFinal = width1>=width2 ? width1 : width2;
-            
-            anchor.setCol1(3); //first anchor determines upper left position
-            anchor.setRow1(0);
-            anchor.setDx1(Units.pixelToEMU(widthFinal)); //dx = left in px
-            anchor.setDy1(Units.toEMU(10)); //dy = top in pt
-
-            anchor.setCol2(4); //second anchor determines bottom right position
-            anchor.setRow2(4); 
-            anchor.setDx2(Units.pixelToEMU(widthFinal)); //dx = left + wanted width in px
-            anchor.setDy2(Units.toEMU(10)); //dy= top + wanted height in pt
-                        
-            draw.createPicture(anchor, imgIndex);
-            sheet.addMergedRegion(new CellRangeAddress(0, 4, 3, 4));
-            */
-
-          
             sheet.setRepeatingRows(CellRangeAddress.valueOf("1:7"));
-            FileOutputStream fileOut = new FileOutputStream(directorio+"/"+generarNombre());
-            book.write(fileOut);
-            fileOut.close();
+            try (FileOutputStream fileOut = new FileOutputStream(directorio+"/"+generarNombre())) {
+                book.write(fileOut);
+            }
             
             condicion=true;
             

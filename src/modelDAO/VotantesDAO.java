@@ -97,11 +97,14 @@ public class VotantesDAO {
                 pst = conectar.prepareStatement(sql);
                 
                 rs = pst.executeQuery();
-                                
+                
+                int count=1;
+                
                 while(rs.next()){
                     
                     votante = new Votantes();
                     
+                    votante.setIndice(count);
                     votante.setId(rs.getInt("id"));
                     votante.setTipoDocumento(rs.getString("tipo_documento"));
                     votante.setNumeroDocumento(rs.getInt("numero_documento"));    
@@ -119,6 +122,8 @@ public class VotantesDAO {
                     votante.setDireccionLugar(rs.getString("direccion_votacion"));
                                         
                     list.add(votante);
+                    
+                    count++;
 
                 }
                 
@@ -228,7 +233,9 @@ public class VotantesDAO {
                 
                                 
                 rs = pst.executeQuery();
-                                
+                
+                int count=1;                
+                
                 while(rs.next()){
                     
                     votante = new Votantes();
@@ -256,8 +263,11 @@ public class VotantesDAO {
                         votante.setMesa(rs.getString("mesa_de_votacion"));
                     }
                     
+                    votante.setIndice(count);
+                    
                     list.add(votante);
-
+                    count++;
+                    
                 }
                 
                 ControladorValidaciones.EXCEPCIONES="";

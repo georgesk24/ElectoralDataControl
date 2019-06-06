@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utlidades;
 
+import com.jfoenix.controls.JFXButton;
 import controller.PanelAjustesController;
 import controller.PrincipalController;
 import java.io.ByteArrayInputStream;
@@ -18,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -218,6 +215,14 @@ public class ControladorGeneral {
         return newString;
     }
   
+    public static void addTooltipText(JFXButton button, String text, String classStyle){
+        
+        Tooltip tooltipText = new Tooltip(text);
+        tooltipText.getStyleClass().add(classStyle);
+        Tooltip.install(button, tooltipText);        
+    
+    }    
+    
     
     
 }

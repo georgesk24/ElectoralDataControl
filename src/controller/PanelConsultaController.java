@@ -62,7 +62,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     private Label rangoEdadValor;
     
     @FXML
-    private JFXButton btnBuscar, btnNuevo, btnModificar, btnEliminar, btnReporte;
+    private JFXButton btnBuscar, btnNuevo, btnModificar, btnEliminar, 
+                      btnReporte, btnActualizarTabla;
 
     @FXML
     private HBox hTipoBusqueda, hBoxSexo, hBoxEdad, hBoxBusqueda, 
@@ -78,7 +79,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     @FXML
     private GridPane panelConsulta;
     
-    private JFXTreeTableColumn<ControlTable, String> columnNames, columnTipoDoc, columnNumDoc, columnSexo,
+    private JFXTreeTableColumn<ControlTable, String> columnNames, columnNum, columnNumDoc, columnSexo,
                                                 columnLugar, columnMesa;
 
     private ObservableList<ControlTable> datos;
@@ -203,7 +204,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 break;
                 default:
                     hBoxSexo.setVisible(false);                
-                    hBoxBtn.setVisible(false);
+                    hBoxBtn.setVisible(true);
                     hBoxEdad.setVisible(false);                                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
@@ -212,138 +213,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         
         }else if(evt.equals(btnBuscar)){
 
-            ArrayList<String> data = new ArrayList<>();            
-            ArrayList<Votantes> list;
-            /*validamos el tipo de busqueda*/
-            if(hBoxNumeroDocumento.isVisible()){
-                
-                if(!numeroDocumento.getText().isEmpty()){
-                    
-                    if(ControladorValidaciones.onlyNumber(numeroDocumento.getText())){
-                        
-                        /*obtenemos datos*/
-                        data.add(tipoDocumento.getValue());
-                        data.add(numeroDocumento.getText());
-
-                        list = model.consultarVotantes("Número de Documento", data);
-                        
-                        if(list.size()>0){
-                            addRow(list);                        
-                        }else{
-                            
-                            /*validamos si hubo alguna excepción u error*/
-                            if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-                                
-                                JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                                    ControladorValidaciones.EXCEPCIONES, 
-                                                                    "ERROR", JOptionPane.ERROR_MESSAGE);           
-                                ControladorValidaciones.EXCEPCIONES="";                                
-                            
-                            }else{
-                                JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                                addRow(list);
-                            }                        
-                        }
-                        
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Solo de aceptan valores numericos", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                }
-                
-            }else if(hBoxBusqueda.isVisible()){
-
-                if(!busqueda.getText().isEmpty()){
-                    
-                    /*obtenemos datos*/
-                    data.add(busqueda.getText());
-                    
-                    list = model.consultarVotantes(fxCombotipoBusqueda.getValue(), data);
-
-                    if(list.size()>0){
-                        addRow(list);                        
-                    }else{
-
-                        /*validamos si hubo alguna excepción u error*/
-                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-
-                            JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                                ControladorValidaciones.EXCEPCIONES, 
-                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
-                            ControladorValidaciones.EXCEPCIONES="";                                
-
-                        }else{
-                            JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                            addRow(list);
-                        }                        
-                    }
-                      
-                }else{
-                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                }
-                                                
-            }else if(hBoxEdad.isVisible()){
-
-                int valueMin = ControladorGeneral.toInt(rangeSliderEdad.getLowValue());
-                int valueMax = ControladorGeneral.toInt(rangeSliderEdad.getHighValue());
-
-                data.add(String.valueOf(valueMin));
-                data.add(String.valueOf(valueMax));
-
-                list = model.consultarVotantes("Edad", data);
-
-                if(list.size()>0){
-                    addRow(list);                        
-                }else{
-
-                    /*validamos si hubo alguna excepción u error*/
-                    if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-
-                        JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                            ControladorValidaciones.EXCEPCIONES, 
-                                                            "ERROR", JOptionPane.ERROR_MESSAGE);           
-                        ControladorValidaciones.EXCEPCIONES="";                                
-
-                    }else{
-                        JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                        addRow(list);
-                    }                        
-                }
-                
-                
-                
-            }else if(hBoxSexo.isVisible()){
-                    
-                /*obtenemos datos*/
-                if(radioFemale.isSelected()){
-                    data.add("Femenino");                
-                }else{
-                    data.add("Masculino");            
-                }
-
-                list = model.consultarVotantes("Sexo", data);
-
-                if(list.size()>0){
-                    addRow(list);                        
-                }else{
-
-                    /*validamos si hubo alguna excepción u error*/
-                    if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-
-                        JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                            ControladorValidaciones.EXCEPCIONES, 
-                                                            "ERROR", JOptionPane.ERROR_MESSAGE);           
-                        ControladorValidaciones.EXCEPCIONES="";                                
-
-                    }else{
-                        JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                        addRow(list);
-                    }                        
-                }
-                  
-            }
+            buscarDatos();
             
         }else if(evt.equals(btnNuevo)){            
             PrincipalController principalController = ElectoralDataControl.loader.getController();
@@ -356,10 +226,10 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 TreeItem<ControlTable> d = modelTable.getSelectedItem();
                 ControlTable c = d.getValue();
                 Votantes v = c.getVotante();
-
+                                
                 ControladorGeneral.CONTROLVIEWMODIFICAR=1;
                 PrincipalController principalController = ElectoralDataControl.loader.getController();
-                principalController.selectView("Registro", v);                                    
+                principalController.selectView("Registro", v);                                   
             
             }else{
                 JOptionPane.showMessageDialog(null, "Seleccione una celda valida", "Operación fallida", JOptionPane.ERROR_MESSAGE);
@@ -409,6 +279,29 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
             PrincipalController config = ElectoralDataControl.loader.getController();
             config.selectView("Reporte", null);
         
+        }else if(evt.equals(btnActualizarTabla)){
+            
+            ArrayList <Votantes> list = model.consultarVotantes();
+
+            if(list.size()>0){
+                addRow(list);                        
+            }else{
+
+                /*validamos si hubo alguna excepción u error*/
+                if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                        ControladorValidaciones.EXCEPCIONES, 
+                                                        "ERROR", JOptionPane.ERROR_MESSAGE);           
+                    ControladorValidaciones.EXCEPCIONES="";                                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    addRow(list);
+                }                        
+
+            }            
+            
         }
         
     }    
@@ -438,12 +331,14 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     public void initComponents(Object obj) {
         
         //agregamos combobox
+        fxCombotipoBusqueda.getItems().add("Todos");
         fxCombotipoBusqueda.getItems().add("Número de Documento");
         fxCombotipoBusqueda.getItems().add("Nombre");
         fxCombotipoBusqueda.getItems().add("Apellido");
         fxCombotipoBusqueda.getItems().add("Edad");
         fxCombotipoBusqueda.getItems().add("Sexo");
         fxCombotipoBusqueda.getItems().add("Barrio");        
+        fxCombotipoBusqueda.setValue("Todos");
         
         tipoDocumento.getItems().add("Cedula de Ciudadanía");
         tipoDocumento.getItems().add("Cedula de Extranjería");
@@ -455,18 +350,18 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         controlVisibilidad(hBoxEdad, false);
         controlVisibilidad(panelConsulta, true);
         
-        hBoxNumeroDocumento.setVisible(true);
+        hBoxNumeroDocumento.setVisible(false);
         hBoxNumeroDocumento.setManaged(false);
         hBoxNumeroDocumento.managedProperty().bind(hBoxNumeroDocumento.visibleProperty());
         
         rangeSliderEdad.adjustHighValue(80.0);
         rangeSliderEdad.adjustLowValue(20.0);
 
-        tableView.getColumns().setAll(columnTipoDoc, columnNumDoc, columnNames, columnSexo, columnLugar, columnMesa);
+        tableView.getColumns().setAll(columnNum, columnNumDoc, columnNames, columnSexo, columnLugar, columnMesa);
 
         tableView.setColumnResizePolicy(JFXTreeTableView.CONSTRAINED_RESIZE_POLICY);        
-        columnTipoDoc.setMaxWidth(1f * Integer.MAX_VALUE * 10);
-        columnNumDoc.setMaxWidth(1f * Integer.MAX_VALUE * 19);
+        columnNum.setMaxWidth(1f * Integer.MAX_VALUE * 7);
+        columnNumDoc.setMaxWidth(1f * Integer.MAX_VALUE * 22);
         columnNames.setMaxWidth(1f * Integer.MAX_VALUE * 22);
         columnSexo.setMaxWidth(1f * Integer.MAX_VALUE * 8);
         columnLugar.setMaxWidth(1f * Integer.MAX_VALUE * 31);
@@ -496,6 +391,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
 
         rangoEdadValor.setText("Entre "+min+" y "+max+ " Años");            
         
+        ControladorGeneral.addTooltipText(btnActualizarTabla, "Actualizar listado", "toolTipTextAjustes");
         
     }
 
@@ -510,13 +406,13 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     @Override
     public void addColumn() {
 
-        columnTipoDoc = new JFXTreeTableColumn<>("Tipo Doc.");
+        columnNum = new JFXTreeTableColumn<>("Nº");
         //deptName.setPrefWidth(150);
-        columnTipoDoc.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ControlTable, String>, ObservableValue<String>>() {
+        columnNum.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ControlTable, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ControlTable, String> param) {
-                StringProperty tipoDoc = param.getValue().getValue().tipoDoc;
-                return tipoDoc;
+                StringProperty num = param.getValue().getValue().num;
+                return num;
             }
         });
 
@@ -595,6 +491,167 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         
     }
 
+    private void buscarDatos() {
+
+        ArrayList<String> data = new ArrayList<>();            
+        ArrayList<Votantes> list;
+        /*validamos el tipo de busqueda*/
+        if(hBoxNumeroDocumento.isVisible()){
+
+            if(!numeroDocumento.getText().isEmpty()){
+
+                if(ControladorValidaciones.onlyNumber(numeroDocumento.getText())){
+
+                    /*obtenemos datos*/
+                    data.add(tipoDocumento.getValue());
+                    data.add(numeroDocumento.getText());
+
+                    list = model.consultarVotantes("Número de Documento", data);
+
+                    if(list.size()>0){
+                        addRow(list);                        
+                    }else{
+
+                        /*validamos si hubo alguna excepción u error*/
+                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                            JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                                ControladorValidaciones.EXCEPCIONES, 
+                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
+                            ControladorValidaciones.EXCEPCIONES="";                                
+
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                            addRow(list);
+                        }                        
+                    }
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Solo de aceptan valores numericos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(hBoxBusqueda.isVisible()){
+
+            if(!busqueda.getText().isEmpty()){
+
+                /*obtenemos datos*/
+                data.add(busqueda.getText());
+
+                list = model.consultarVotantes(fxCombotipoBusqueda.getValue(), data);
+
+                if(list.size()>0){
+                    addRow(list);                        
+                }else{
+
+                    /*validamos si hubo alguna excepción u error*/
+                    if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                        JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                            ControladorValidaciones.EXCEPCIONES, 
+                                                            "ERROR", JOptionPane.ERROR_MESSAGE);           
+                        ControladorValidaciones.EXCEPCIONES="";                                
+
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                        addRow(list);
+                    }                        
+                }
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(hBoxEdad.isVisible()){
+
+            int valueMin = ControladorGeneral.toInt(rangeSliderEdad.getLowValue());
+            int valueMax = ControladorGeneral.toInt(rangeSliderEdad.getHighValue());
+
+            data.add(String.valueOf(valueMin));
+            data.add(String.valueOf(valueMax));
+
+            list = model.consultarVotantes("Edad", data);
+
+            if(list.size()>0){
+                addRow(list);                        
+            }else{
+
+                /*validamos si hubo alguna excepción u error*/
+                if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                        ControladorValidaciones.EXCEPCIONES, 
+                                                        "ERROR", JOptionPane.ERROR_MESSAGE);           
+                    ControladorValidaciones.EXCEPCIONES="";                                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    addRow(list);
+                }                        
+            }
+
+
+
+        }else if(hBoxSexo.isVisible()){
+
+            /*obtenemos datos*/
+            if(radioFemale.isSelected()){
+                data.add("Femenino");                
+            }else{
+                data.add("Masculino");            
+            }
+
+            list = model.consultarVotantes("Sexo", data);
+
+            if(list.size()>0){
+                addRow(list);                        
+            }else{
+
+                /*validamos si hubo alguna excepción u error*/
+                if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                        ControladorValidaciones.EXCEPCIONES, 
+                                                        "ERROR", JOptionPane.ERROR_MESSAGE);           
+                    ControladorValidaciones.EXCEPCIONES="";                                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    addRow(list);
+                }                        
+            }
+
+        }else{
+
+            list = model.consultarVotantes();
+
+            if(list.size()>0){
+                addRow(list);                        
+            }else{
+
+                /*validamos si hubo alguna excepción u error*/
+                if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                        ControladorValidaciones.EXCEPCIONES, 
+                                                        "ERROR", JOptionPane.ERROR_MESSAGE);           
+                    ControladorValidaciones.EXCEPCIONES="";                                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    addRow(list);
+                }                        
+
+            }
+
+        }            
+        
+        
+    }
+
     
     
 }
@@ -602,7 +659,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
 
 class ControlTable extends RecursiveTreeObject<ControlTable> {
 
-    StringProperty tipoDoc;
+    StringProperty num;
     StringProperty numDoc;
     StringProperty nombre;
     StringProperty sexo;
@@ -611,9 +668,9 @@ class ControlTable extends RecursiveTreeObject<ControlTable> {
     Votantes votante;
 
     public ControlTable(Votantes v) {
-
-        this.tipoDoc = new SimpleStringProperty(ControladorGeneral.abreviarTipoDocumento(v.getTipoDocumento()));
-        this.numDoc = new SimpleStringProperty(String.valueOf(v.getNumeroDocumento()));
+        
+        this.num= new SimpleStringProperty(String.valueOf(v.getIndice()));
+        this.numDoc = new SimpleStringProperty(ControladorGeneral.abreviarTipoDocumento(v.getTipoDocumento())+" "+String.valueOf(v.getNumeroDocumento()));
         this.nombre = new SimpleStringProperty(v.getNombre()+" "+v.getApellido());
         this.sexo = new SimpleStringProperty(ControladorGeneral.abreviarSexo(v.getSexo()));
         this.lugarV = new SimpleStringProperty(v.getLugar());

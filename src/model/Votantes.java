@@ -11,12 +11,11 @@ package model;
  */
 public class Votantes extends Persona{
     
+    private int indice;
     private String lugar;
     private String direccionLugar; 
     private String mesa;
 
-    
-    
     
     public String getLugar() {
         return lugar;
@@ -40,6 +39,14 @@ public class Votantes extends Persona{
 
     public void setMesa(String mesa) {
         this.mesa = mesa;
+    }
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
     }
     
     

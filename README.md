@@ -19,7 +19,7 @@ EL software posee los siguientes modulos:
 
 El software ha sido desarrollado con el lenguaje de programacion <b>JAVA</b> trabajamos con la tecnologia <b>JAVA FX</b> mas las siguientes librerias.
 
-* [JFoenix 8.0.8](http://www.jfoenix.com/) - Utilizamos diseños material design para embellecer los componentes del software.
+* [JFoenix 8.0.8](http://www.jfoenix.com/){:target="_blank"} - Utilizamos diseños material design para embellecer los componentes del software.
 * [AnimateFX 1.2.0](https://github.com/Typhon0/AnimateFX) - Realizamos una animación de tipo fade-out para cambiar entre vistas.
 * [Charm-glisten 4.4.4](https://mvnrepository.com/artifact/com.gluonhq/charm-glisten/4.4.2)
 * [MySQL-Connector-java 8.0.16](https://www.mysql.com/products/connector/) Utilizamos la libreria para conectarnos con la base de datos

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import com.jfoenix.controls.JFXButton;
@@ -43,7 +39,7 @@ public class PanelLugarDeVotacionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");                
 
         com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(new WebConsoleListener() {
 
@@ -53,13 +49,11 @@ public class PanelLugarDeVotacionController implements Initializable {
             
             }
         });        
-        
-        
-        
+                
         //String html = "<html><body><iframe width='700' height='700' src='https://www.google.com/' frameborder='0' allowfullscreen></iframe></body></html>";
         
         engine = webview.getEngine();
-        //engine.setUserAgent("use required / intended UA string");        
+        engine.setUserAgent("use required / intended UA string");        
         
         engine.load("https://wsp.registraduria.gov.co/censo/consultar");
         

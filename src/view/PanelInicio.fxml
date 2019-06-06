@@ -11,16 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="panelInicio" prefHeight="1320.0" prefWidth="1000.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelInicioController">
+<GridPane fx:id="panelInicio" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1320.0" prefWidth="720.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelInicioController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="112.0" />
-    <RowConstraints maxHeight="403.0" minHeight="-Infinity" prefHeight="393.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="430.0" minHeight="-Infinity" prefHeight="420.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="453.0" minHeight="-Infinity" prefHeight="414.0" vgrow="ALWAYS" />
+    <RowConstraints vgrow="ALWAYS" />
+    <RowConstraints vgrow="ALWAYS" />
+    <RowConstraints vgrow="ALWAYS" />
+      <RowConstraints vgrow="ALWAYS" />
   </rowConstraints>
    <children>
       <VBox maxHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="480.0" GridPane.valignment="TOP">

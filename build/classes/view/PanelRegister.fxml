@@ -32,7 +32,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <FontAwesomeIcon iconName="USER" size="3em" styleClass="font-nav-icon" />
-                  <Label text="Registrar">
+                  <Label text="Registrar Votantes">
                      <font>
                         <Font name="FontAwesome Regular" size="32.0" />
                      </font>

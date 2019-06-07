@@ -8,7 +8,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="panelRegistro" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1450.0" prefWidth="720.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelRegistroController">
+<GridPane fx:id="panelRegistro" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1150.0" prefWidth="720.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelLiderController">
   <columnConstraints>
     <ColumnConstraints hgrow="ALWAYS" />
     <ColumnConstraints hgrow="ALWAYS" />
@@ -32,7 +31,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <FontAwesomeIcon iconName="USER" size="3em" styleClass="font-nav-icon" />
-                  <Label text="Registrar Votantes">
+                  <Label text="Registrar Lider">
                      <font>
                         <Font name="FontAwesome Regular" size="32.0" />
                      </font>
@@ -42,7 +41,7 @@
                   <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <Label layoutX="10.0" layoutY="10.0" text="Ingresar datos de votantes">
+            <Label layoutX="10.0" layoutY="10.0" text="Ingresar datos lider electoral">
                <font>
                   <Font name="FontAwesome Regular" size="14.0" />
                </font>
@@ -87,26 +86,9 @@
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="80.0" minHeight="-Infinity" prefHeight="55.0" vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Separator prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnSpan="2" GridPane.rowIndex="8">
-                     <GridPane.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-                     </GridPane.margin>
-                  </Separator>
-                  <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" layoutX="20.0" layoutY="665.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="575.0" text="Datos Lugar De Votación " textFill="#363e46" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="368.0" spacing="30.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" GridPane.valignment="CENTER">
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="368.0" spacing="30.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                      <children>
                         <JFXButton id="buttonCyan" fx:id="btnGuardar" buttonType="RAISED" onAction="#eventsAction" prefHeight="62.0" prefWidth="170.0" style="-fx-background-radius: 3; -fx-border-radius: 3;" styleClass="cyan1" text="Guardar" textFill="WHITE">
                            <font>
@@ -317,78 +299,6 @@
                      <GridPane.margin>
                         <Insets left="10.0" right="20.0" />
                      </GridPane.margin>
-                  </VBox>
-                  <VBox prefHeight="64.0" prefWidth="100.0" GridPane.rowIndex="10">
-                     <children>
-                        <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="357.0" text="Lugar" textFill="#363e46">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
-                           <children>
-                              <JFXTextField fx:id="lugarDeVotacion" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ej. Colegio Simon Bolivar" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </JFXTextField>
-                           </children>
-                        </HBox>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </VBox>
-                  <VBox prefHeight="64.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                     <children>
-                        <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="357.0" text="Mesa" textFill="#363e46">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
-                           <children>
-                              <JFXTextField fx:id="mesaDeVotacion" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="62.0" prefWidth="454.0" promptText="Ej. Mesa 26" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </JFXTextField>
-                           </children>
-                        </HBox>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="20.0" />
-                     </GridPane.margin>
-                  </VBox>
-                  <VBox prefHeight="64.0" prefWidth="100.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11">
-                     <children>
-                        <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="357.0" text="Dirección " textFill="#363e46">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
-                           <children>
-                              <JFXTextField fx:id="direccionVotacion" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ej. Carrera 8 # 9-25" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </JFXTextField>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="20.0" right="20.0" />
-                     </padding>
                   </VBox>
                   <VBox prefHeight="64.0" prefWidth="100.0" GridPane.rowIndex="7">
                      <children>

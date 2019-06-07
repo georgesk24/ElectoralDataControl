@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
@@ -77,6 +78,10 @@ public class LoginViewController implements Initializable, GeneralView{
         
         ElectoralDataControl.stageLogin.close();
         ElectoralDataControl.stage = new Stage();
+            
+        URL resource = getClass().getResource("/resources/images/elections.png");        
+        ElectoralDataControl.stage.getIcons().add(new Image(resource.toString()));
+        
         Scene scene = new Scene(root);
         ElectoralDataControl.stage.setMaximized(true);
         ElectoralDataControl.stage.setScene(scene);

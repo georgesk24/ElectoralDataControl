@@ -39,7 +39,7 @@ public class ElectoralDataControl extends Application {
         
         stage.initStyle(StageStyle.UNDECORATED);
 
-        loader = new FXMLLoader(getClass().getResource("test.fxml"));        
+        loader = new FXMLLoader(getClass().getResource("Principal.fxml"));        
         root = loader.load();
                 
         Parent root1 = FXMLLoader.load(getClass().getResource("LoginView.fxml"));

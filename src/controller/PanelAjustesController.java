@@ -69,7 +69,7 @@ public class PanelAjustesController implements Initializable, GeneralView {
                       btnLimpiarUser, btnLimpiarPass,
                       btnLimpiarMail, btnEnviarMail, 
                       btnGuardarDatosEmail, btnLimpiarEmail,
-                      btnAdjuntar;
+                      btnEliminarDatosEmail,btnAdjuntar;
     
     @FXML
     private JFXCheckBox checkVerPass, checkBoxTodo, checkVerPassEmail;
@@ -136,7 +136,9 @@ public class PanelAjustesController implements Initializable, GeneralView {
                 containerImageProfile.setImage(ControladorGeneral.toImage(ControladorGeneral.CONTROLSESION.getImage()));
                 textFieldEmail.setText(ControladorGeneral.CONTROLSESION.getEmail());
                 textFieldPassEmail.setText(ControladorGeneral.CONTROLSESION.getPasswordEmail());
+                textFieldDe.setText(ControladorGeneral.CONTROLSESION.getEmail());
                 textFieldPassEmailUnmask.setText(ControladorGeneral.CONTROLSESION.getPasswordEmail());
+                
             }catch(Exception ex){
                 System.out.println(ex.getMessage());
             }
@@ -547,7 +549,7 @@ public class PanelAjustesController implements Initializable, GeneralView {
 
                             ControladorGeneral.CONTROLSESION.setEmail(textFieldEmail.getText());
                             ControladorGeneral.CONTROLSESION.setPasswordEmail(textFieldPassEmailUnmask.getText());
-                            JOptionPane.showMessageDialog(null, "El E-mail y Contraseña ha sido actualizada", "Éxito", JOptionPane.INFORMATION_MESSAGE);                    
+                            JOptionPane.showMessageDialog(null, "El E-mail y Contraseña ha sido actualizado", "Éxito", JOptionPane.INFORMATION_MESSAGE);                    
 
                         }else{
 
@@ -574,7 +576,56 @@ public class PanelAjustesController implements Initializable, GeneralView {
                 JOptionPane.showMessageDialog(null, "Debe llenar los campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             }
             
-        }else if(evt.equals(btnLimpiarEmail)){
+        }else if(evt.equals(btnEliminarDatosEmail)){
+        
+            int confirmar = JOptionPane.showConfirmDialog(null, "Si realiza esta operación el E-mail será borrado de la base de datos\n"+
+                                                                "¿Esta seguro de realizar esta operación?");
+            
+            if(confirmar==JOptionPane.YES_OPTION){
+
+                model = new UsuarioDAO();
+                
+                if(!textFieldEmail.getText().isEmpty() && !textFieldPassEmailUnmask.getText().isEmpty()){
+
+                    if(model.actualizarEmailUsuario(null, null, ControladorGeneral.CONTROLSESION.getId())){
+
+                        ControladorGeneral.CONTROLSESION.setEmail("");
+                        ControladorGeneral.CONTROLSESION.setPasswordEmail("");
+                        textFieldEmail.setText("");
+                        textFieldPassEmailUnmask.setText("");
+                        textFieldPassEmail.setText("");                        
+                       
+                        JOptionPane.showMessageDialog(null, "El E-mail y Contraseña ha sido eliminado de manera exitosa", "Éxito", JOptionPane.INFORMATION_MESSAGE);                    
+
+                    }else{
+
+                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                            JOptionPane.showMessageDialog(null, "Error en la operación, Posibles errores : \n"+
+                                                                ControladorValidaciones.EXCEPCIONES, 
+                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
+                            ControladorValidaciones.EXCEPCIONES="";                                
+
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se pudo actualizar la informacion", "ERROR", JOptionPane.ERROR_MESSAGE);                        
+                        }                        
+
+                    }                    
+                    
+                
+                }else{
+                    JOptionPane.showMessageDialog(null, "No hay datos que eliminar", "¡Atención!", JOptionPane.WARNING_MESSAGE);
+                }
+                
+                
+                
+                
+            }                                                    
+                    
+        }
+        
+        
+        else if(evt.equals(btnLimpiarEmail)){
 
             if(ControladorGeneral.CONTROLSESION!=null){
                 textFieldEmail.setText(ControladorGeneral.CONTROLSESION.getEmail());
@@ -809,7 +860,6 @@ public class PanelAjustesController implements Initializable, GeneralView {
         addTooltipText(btnLimpiarUser, "Deshacer cambios");
         addTooltipText(btnLimpiarPass, "Deshacer cambios");
         
-        textFieldDe.setText("jorgepotes1994@gmail.com");
         textFieldDe.setEditable(false);
         textFieldPara.setEditable(false);
         checkBoxTodo.setSelected(true);

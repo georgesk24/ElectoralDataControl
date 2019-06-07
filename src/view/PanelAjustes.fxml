@@ -12,7 +12,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -82,11 +81,7 @@
                                           </Label>
                                           <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="180.0" style="-fx-border-color: black; -fx-border-radius: 3; -fx-background-radius: 3;">
                                              <children>
-                                                <ImageView fx:id="containerImageProfile" fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" styleClass="image-profile" HBox.hgrow="ALWAYS">
-                                                   <image>
-                                                      <Image url="@../../../../Escritorio/elections.png" />
-                                                   </image>
-                                                </ImageView>
+                                                <ImageView fx:id="containerImageProfile" fitHeight="150.0" fitWidth="180.0" pickOnBounds="true" styleClass="image-profile" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                           <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" spacing="7.0">
@@ -240,7 +235,7 @@
                                        <children>
                                           <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="500.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                              <children>
-                                                <JFXPasswordField fx:id="textFieldPassEmail" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="43.0" promptText="Los datos no estan disponibles" HBox.hgrow="ALWAYS">
+                                                <JFXPasswordField fx:id="textFieldPassEmail" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="43.0" HBox.hgrow="ALWAYS">
                                                    <unFocusColor>
                                                       <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                                          <stops>
@@ -250,7 +245,7 @@
                                                       </RadialGradient>
                                                    </unFocusColor>
                                                 </JFXPasswordField>
-                                                <JFXTextField fx:id="textFieldPassEmailUnmask" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="49.0" prefWidth="141.0" promptText="Los datos no estan disponibles" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                                <JFXTextField fx:id="textFieldPassEmailUnmask" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="49.0" prefWidth="141.0" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -263,7 +258,8 @@
                                     <HBox layoutX="20.0" layoutY="614.0" prefWidth="200.0" spacing="10.0">
                                        <children>
                                           <JFXButton fx:id="btnGuardarDatosEmail" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonCard" text="Guardar" />
-                                          <JFXButton fx:id="btnLimpiarEmail" layoutX="720.0" layoutY="10.0" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonWarning" text="Limpiar" />
+                                          <JFXButton fx:id="btnEliminarDatosEmail" layoutX="132.0" layoutY="10.0" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonDanger" text="Eliminar" />
+                                          <JFXButton fx:id="btnLimpiarEmail" layoutX="720.0" layoutY="10.0" maxHeight="-Infinity" onAction="#eventsOnAction" prefHeight="45.0" style="-fx-font-size: 20; -fx-text-fill: white;" styleClass="buttonCyan" text="Limpiar" />
                                        </children>
                                        <VBox.margin>
                                           <Insets top="20.0" />

@@ -40,6 +40,7 @@ import javax.swing.JOptionPane;
 import model.Votantes;
 import utlidades.ControladorGeneral;
 import utlidades.UtilidadesView;
+import view.ElectoralDataControl;
 
 /**
  *
@@ -142,21 +143,21 @@ public class PrincipalController implements Initializable, UtilidadesView {
         imageProfile.setFill(new ImagePattern(image));
 
         String tip1 = "Módulo para registrar \npersonal de votación";
-        addTooltipText(btnRegistroPersona, tip1, "toolTipText");
+        ControladorGeneral.addTooltipText(btnRegistroPersona, tip1, "toolTipText");
         
         tip1 = "Realiza consultas del personal \nregistrado en base de datos";
-        addTooltipText(btnConsulta, tip1, "toolTipText");
+        ControladorGeneral.addTooltipText(btnConsulta, tip1, "toolTipText");
 
         tip1 = "Genera reportes en excel";
-        addTooltipText(btnReportes, tip1, "toolTipText");
+        ControladorGeneral.addTooltipText(btnReportes, tip1, "toolTipText");
 
         tip1 = "Consulta el lugar y \nmesa de votación";
-        addTooltipText(btnLugarDeVotacion, tip1, "toolTipText");
+        ControladorGeneral.addTooltipText(btnLugarDeVotacion, tip1, "toolTipText");
 
-        addTooltipText(btnSalirSubMenu, "Salir del sistema", "toolTipTextAjustes");
-        addTooltipText(btnAjustesSubMenu, "Ir a preferencias del sistema", "toolTipTextAjustes");
-        addTooltipText(btnAcercaDe, "Información del software", "toolTipTextAjustes");
-        addTooltipText(btnRecomendacion, "Información general del sistema", "toolTipTextAjustes");
+        ControladorGeneral.addTooltipText(btnSalirSubMenu, "Salir del sistema", "toolTipTextAjustes");
+        ControladorGeneral.addTooltipText(btnAjustesSubMenu, "Ir a preferencias del sistema", "toolTipTextAjustes");
+        ControladorGeneral.addTooltipText(btnAcercaDe, "Información del software", "toolTipTextAjustes");
+        ControladorGeneral.addTooltipText(btnRecomendacion, "Información general del sistema", "toolTipTextAjustes");
 
         try {
             
@@ -214,15 +215,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
         
         
     }    
-    
-    private void addTooltipText(JFXButton button, String text, String classStyle){
-        
-        Tooltip tooltipText = new Tooltip(text);
-        tooltipText.getStyleClass().add(classStyle);
-        Tooltip.install(button, tooltipText);        
-    
-    }
-   
+       
     private void makeFadeOut(GridPane container){
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(700));
@@ -453,6 +446,10 @@ public class PrincipalController implements Initializable, UtilidadesView {
         try {
 
             Stage stage = new Stage();
+            
+            URL resource = getClass().getResource("/resources/images/elections.png");        
+            stage.getIcons().add(new Image(resource.toString()));
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             Parent parent = null;

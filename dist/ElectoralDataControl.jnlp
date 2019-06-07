@@ -9,7 +9,7 @@
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
     <jar href="lib\data-Preloader.jar" size="94918" download="progress" />
-    <jar href="ElectoralDataControl.jar" size="643935" download="eager" />
+    <jar href="ElectoralDataControl.jar" size="659186" download="eager" />
     <jar href="lib\AnimateFX-1.2.0.jar" size="85823" download="eager" />
     <jar href="lib\activation.jar" size="56290" download="eager" />
     <jar href="lib\charm-glisten-4.4.4.jar" size="1041019" download="eager" />

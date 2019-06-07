@@ -67,7 +67,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
     
     
     /*Controlador de componentes visuales*/
-    private final ToggleGroup groupRadio = new ToggleGroup();
+    private final ToggleGroup groupRadioG = new ToggleGroup();
     private final RequiredFieldValidator validatorFieldText = new RequiredFieldValidator();
     private final NumberValidator validatorNumber = new NumberValidator();
     private ValidatorBase validatorEmail = new ValidatorBase() {
@@ -147,6 +147,13 @@ public class PanelRegistroController implements Initializable, GeneralView {
         //Creamos un objeto de tipo Votantes
         Votantes datosVotantes = new Votantes();
         
+        JFXRadioButton rb = (JFXRadioButton)groupRadioG.getSelectedToggle(); 
+        
+        String sex="";
+        if (rb != null) { 
+            sex = rb.getText(); 
+        }        
+        
         //Obtenemos los valores de los campos de texto
         datosVotantes.setTipoDocumento(tipoDocumento.getValue());        
         datosVotantes.setNumeroDocumento(Integer.parseInt(numeroDocumento.getText()));        
@@ -156,7 +163,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
         datosVotantes.setBarrio(barrio.getText());        
         datosVotantes.setTelefono(telefono.getText());
         datosVotantes.setCorreoElectronico(correo.getText());     
-        datosVotantes.setSexo(groupRadio.getSelectedToggle().getUserData().toString());        
+        datosVotantes.setSexo(sex);        
         datosVotantes.setLugar(lugarDeVotacion.getText());        
         datosVotantes.setMesa(mesaDeVotacion.getText());
         datosVotantes.setDireccionLugar(direccionVotacion.getText());   
@@ -197,7 +204,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
         datosVotantes.setBarrio(barrio.getText());        
         datosVotantes.setTelefono(telefono.getText());
         datosVotantes.setCorreoElectronico(correo.getText());     
-        datosVotantes.setSexo(groupRadio.getSelectedToggle().getUserData().toString());        
+        datosVotantes.setSexo(groupRadioG.getSelectedToggle().getUserData().toString());        
         datosVotantes.setLugar(lugarDeVotacion.getText());        
         datosVotantes.setMesa(mesaDeVotacion.getText());
         datosVotantes.setDireccionLugar(direccionVotacion.getText());   
@@ -392,7 +399,8 @@ public class PanelRegistroController implements Initializable, GeneralView {
             
         fechaNacimiento.setConverter(converter);
         radioMale.setSelected(true);            
-
+        radioMale.setToggleGroup(groupRadioG);
+        radioFemale.setToggleGroup(groupRadioG);
 
         tipoDocumento.getItems().add("Cedula de Ciudadanía");
         tipoDocumento.getItems().add("Cedula de Extranjería");

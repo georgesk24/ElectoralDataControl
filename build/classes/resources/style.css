@@ -72,39 +72,39 @@
     -fx-background-color:#30373e;        
 }
 
-.scroll-bar:horizontal{    
+.scroll-left .scroll-bar:horizontal{    
     -fx-background-color:#363e46;
     -fx-color:#363e46;
 }
 
-.scroll-bar:vertical{    
+.scroll-left .scroll-bar:vertical{    
     -fx-background-color:#363e46;        
     -fx-color:#363e46;
 }
 
 
-.scroll-bar .increment-arrow, 
-.scroll-bar .decrement-arrow
+.scroll-left .scroll-bar .increment-arrow, 
+.scroll-left .scroll-bar .decrement-arrow
 {    
     -fx-background-color: #363e46;
 
 }
 
-.scroll-bar .increment-button:hover, 
-.scroll-bar .decrement-button:hover
+.scroll-left .scroll-bar .increment-button:hover, 
+.scroll-left .scroll-bar .decrement-button:hover
 {    
     -fx-background-color: black;
 
 }
 
-.scroll-bar .thumb:hover, 
-.scroll-bar .thumb:hover
+.scroll-left .scroll-bar .thumb:hover, 
+.scroll-left .scroll-bar .thumb:hover
 {    
     -fx-color:black;
 
 }
 
-.scroll-bar .corner{    
+.scroll-left .scroll-bar .corner{    
     -fx-background-color: #363e46;    
 }
 
@@ -336,7 +336,7 @@
 .jfx-tab-pane .tab .tab-label {
     -fx-font-weight: normal;
     -fx-text-fill: #353838;
-    -fx-font-size: 12;
+    -fx-font-size: 18;
 }
 
 .icon{

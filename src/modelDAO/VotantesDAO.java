@@ -5,11 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import model.Conexion;
-import model.Usuario;
 import model.Votantes;
-import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
 
 /**

@@ -12,6 +12,7 @@ import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -21,9 +22,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -31,6 +34,7 @@ import javafx.scene.control.TreeTableView.TreeTableViewSelectionModel;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import model.Votantes;
@@ -78,6 +82,11 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @FXML
     private GridPane panelConsulta;
+    
+    @FXML
+    private ScrollPane scrollConsultaLideres;
+    
+    private VBox panelConsultaLideres;
     
     private JFXTreeTableColumn<ControlTable, String> columnNames, columnNum, columnNumDoc, columnSexo,
                                                 columnLugar, columnMesa;
@@ -329,6 +338,14 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @Override
     public void initComponents(Object obj) {
+        
+        try{
+            panelConsultaLideres = (VBox) FXMLLoader.load(getClass().getResource("/view/PanelConsulltaLideres.fxml"));
+            
+            //scrollConsultaLideres.setContent(panelConsultaLideres);
+        }catch(Exception ex){
+            System.out.println("hola "+ex.getMessage()+ " "+Arrays.toString(ex.getStackTrace()));
+        }
         
         //agregamos combobox
         fxCombotipoBusqueda.getItems().add("Todos");

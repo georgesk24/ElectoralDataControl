@@ -22,7 +22,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import model.Persona;
 import model.Votantes;
+import modelDAO.LiderDAO;
 import modelDAO.VotantesDAO;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
@@ -58,7 +60,7 @@ public class PanelLiderController implements Initializable, GeneralView {
     @FXML
     private JFXButton btnGuardar, btnLimpiar;
     
-    private final VotantesDAO modelo = new VotantesDAO();
+    private final LiderDAO modelo = new LiderDAO();
 
     
     /*Controlador de componentes visuales*/
@@ -97,9 +99,48 @@ public class PanelLiderController implements Initializable, GeneralView {
     
     }
     
-    private boolean agregarVotantes(){
+    private boolean agregarLider(){
         
-        return false;
+        //Creamos un objeto de tipo Votantes
+        Persona datosLider = new Persona();
+        
+        JFXRadioButton rb = (JFXRadioButton)groupRadio.getSelectedToggle(); 
+        
+        String sex="";
+        if (rb != null) { 
+            sex = rb.getText(); 
+        }         
+        
+        //Obtenemos los valores de los campos de texto
+        datosLider.setTipoDocumento(tipoDocumento.getValue());        
+        datosLider.setNumeroDocumento(Integer.parseInt(numeroDocumento.getText()));        
+        datosLider.setNombre(nombreCompleto.getText());
+        datosLider.setApellido(apellidos.getText());        
+        datosLider.setDireccion(direccion.getText());
+        datosLider.setBarrio(barrio.getText());        
+        datosLider.setTelefono(telefono.getText());
+        datosLider.setCorreoElectronico(correo.getText());     
+        datosLider.setSexo(sex);        
+        datosLider.setEstadoCivil(estadoCivil.getValue());
+        
+        String fecha=null;
+
+        try{
+
+            if(fechaNacimiento.getValue()!=null){
+                LocalDate date = fechaNacimiento.getValue();
+                fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();            
+            }
+
+        }catch(Exception ex){
+            fecha=null;
+        }
+        
+        
+        datosLider.setFehaNacimiento(fecha);
+        
+        return modelo.agregarLider(datosLider);
+
     }
     
     private boolean modificarVotantes(){
@@ -168,37 +209,38 @@ public class PanelLiderController implements Initializable, GeneralView {
                 if(ControladorValidaciones.onlyNumber(numeroDocumento.getText()) == true && 
                    ControladorValidaciones.isMayorDeEdad(fechaNacimiento.getValue()) == true){
 
-                    if(btnGuardar.getText().equals("Guardar")){
+                    switch (btnGuardar.getText()) {
                         
-                        if(modelo.validarNumeroIdentificacion(tipoDocumento.getValue(), numeroDocumento.getText())){
-
-                            JOptionPane.showMessageDialog(null, "El número de identificación ya ha sido registrado en la base de datos", "ERROR", JOptionPane.WARNING_MESSAGE);
-                        
-                        }else{
-
-                            if(agregarVotantes()==true){
-                                JOptionPane.showMessageDialog(null, "Los Datos se almacenaron exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
-                                limpiarCampos();
+                        case "Guardar":
+                            if(modelo.validarNumeroIdentificacion(tipoDocumento.getValue(), numeroDocumento.getText())){
+                                
+                                JOptionPane.showMessageDialog(null, "El número de identificación ya ha sido registrado en la base de datos", "ERROR", JOptionPane.WARNING_MESSAGE);
+                                
                             }else{
-                                 JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
-                                                                     ControladorValidaciones.EXCEPCIONES, 
-                                                                     "ERROR", JOptionPane.ERROR_MESSAGE);           
-                                 ControladorValidaciones.EXCEPCIONES="";
-                            }
-                            
-                        }
-
-                    }else if(btnGuardar.getText().equals("Modificar")){
-
-                        if(modificarVotantes()==true){
-                            JOptionPane.showMessageDialog(null, "Los Datos han sido actualizados exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
-                             JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
-                                                                 ControladorValidaciones.EXCEPCIONES, 
-                                                                 "ERROR", JOptionPane.ERROR_MESSAGE);           
-                             ControladorValidaciones.EXCEPCIONES="";
-                        }
-
+                                
+                                if(agregarLider()==true){
+                                    JOptionPane.showMessageDialog(null, "Los informaci{on ha sido almacenada de manera exitosa", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                                    limpiarCampos();
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
+                                            ControladorValidaciones.EXCEPCIONES,
+                                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    ControladorValidaciones.EXCEPCIONES="";
+                                }
+                                
+                            }   break;
+                        
+                        case "Modificar":
+                            /*if(modificarVotantes()==true){
+                                JOptionPane.showMessageDialog(null, "Los Datos han sido actualizados exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
+                                        ControladorValidaciones.EXCEPCIONES,
+                                        "ERROR", JOptionPane.ERROR_MESSAGE);
+                                ControladorValidaciones.EXCEPCIONES="";
+                            }*/  
+                        break;
+                    
                     }
 
                 }else{
@@ -274,7 +316,9 @@ public class PanelLiderController implements Initializable, GeneralView {
         };           
             
         fechaNacimiento.setConverter(converter);
-        radioMale.setSelected(true);            
+        radioMale.setSelected(true);
+        radioMale.setToggleGroup(groupRadio);
+        radioFemale.setToggleGroup(groupRadio);
 
 
         tipoDocumento.getItems().add("Cedula de Ciudadanía");

@@ -369,11 +369,11 @@ public class PrincipalController implements Initializable, UtilidadesView {
     
     public void redimensionarHeightPanel(double dimension1, double dimension2){
 
-        if(dimension1<dimension2){
+        //if(dimension1<dimension2){
             borderP.setPrefHeight(dimension2+70);
-        }else{
-            borderP.setPrefHeight(dimension2);            
-        }
+        //}else{
+          //  borderP.setPrefHeight(dimension2);            
+        //}
         
     }
     

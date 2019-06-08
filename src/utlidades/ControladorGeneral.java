@@ -1,6 +1,7 @@
 package utlidades;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import controller.PanelAjustesController;
 import controller.PrincipalController;
 import java.io.ByteArrayInputStream;
@@ -25,6 +26,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import model.Votantes;
 import view.ElectoralDataControl;
 
 /**
@@ -222,6 +224,17 @@ public class ControladorGeneral {
         Tooltip.install(button, tooltipText);        
     
     }    
+    
+   public static void llenarListaDesplegable(ArrayList<Votantes> list, JFXComboBox combobox){
+
+        for (int i=0; i<list.size(); i++){
+             combobox.getItems().add(list.get(i).getLugar());
+         }       
+
+        combobox.setVisibleRowCount(10);
+        
+    }
+    
     
     
     

@@ -12,7 +12,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class Conexion {
 
     private final String DB="electoraldb";
-    private final String URL="jdbc:mysql://localhost:3306/"+DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private final String URL="jdbc:mysql://localhost:3307/"+DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private final String USER="root";
     private final String PASS="";    
     

@@ -16,11 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.RangeSlider?>
 
-<VBox fx:id="vBoxConsultaLider" styleClass="panelForm" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelConsulltaLideresController">
+<VBox fx:id="vBoxConsultaLider" styleClass="panelForm" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelConsultaLideresController">
    <children>
       <HBox id="headerForm" minHeight="-Infinity" prefHeight="55.0" prefWidth="618.0" style="-fx-background-color: #363e46;">
          <children>
-            <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="556.0" text="Formulario De Consulta" textFill="#fffbfb" HBox.hgrow="ALWAYS">
+            <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" text="Formulario De Consulta Lideres" textFill="#fffbfb" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="FontAwesome Regular" size="35.0" />
                </font>
@@ -42,7 +42,7 @@
             </Label>
             <HBox fx:id="hTipoBusqueda" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="280.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXComboBox fx:id="fxCombotipoBusqueda" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Todos" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                  <JFXComboBox fx:id="fxCombotipoBusquedaLider" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Todos" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="3.0" />
@@ -59,7 +59,7 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                            <children>
-                              <JFXComboBox fx:id="tipoDocumento" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Cedula de Ciudadanía" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                              <JFXComboBox fx:id="tipoDocumentoLider" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Cedula de Ciudadanía" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                      </children>
@@ -76,7 +76,7 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                            <children>
-                              <JFXTextField fx:id="numeroDocumento" focusColor="#363e46"  prefHeight="62.0" prefWidth="454.0" promptText="Ej. 10458235454" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                              <JFXTextField fx:id="numeroDocumentoLider" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ej. 10458235454" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -104,7 +104,7 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                            <children>
-                              <JFXTextField fx:id="busqueda" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingresa el dato que deseas consultar" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+                              <JFXTextField fx:id="busquedaLider" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingresa el dato que deseas consultar" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -142,7 +142,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <RangeSlider fx:id="rangeSliderEdad" highValue="35.0" lowValue="18.0" majorTickUnit="10.0" max="100.0" min="18.0" minorTickCount="5" prefHeight="100.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                        <RangeSlider fx:id="rangeSliderEdadLider" highValue="35.0" lowValue="18.0" majorTickUnit="10.0" max="100.0" min="18.0" minorTickCount="5" prefHeight="100.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -165,7 +165,7 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0">
                            <children>
-                              <JFXRadioButton fx:id="radioMale" prefHeight="65.0" prefWidth="111.0" text="Masculino">
+                              <JFXRadioButton fx:id="radioMaleLider" prefHeight="65.0" prefWidth="111.0" text="Masculino">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -173,7 +173,7 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </JFXRadioButton>
-                              <JFXRadioButton fx:id="radioFemale" layoutX="20.0" layoutY="10.0" prefHeight="66.0" prefWidth="109.0" text="Femenino">
+                              <JFXRadioButton fx:id="radioFemaleLider" layoutX="20.0" layoutY="10.0" prefHeight="66.0" prefWidth="109.0" text="Femenino">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -195,7 +195,7 @@
                   <Insets left="15.0" right="15.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btnBuscar" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCard" text="Buscar" textFill="#f8f4f4" HBox.hgrow="ALWAYS">
+                  <JFXButton fx:id="btnBuscarLider" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCard" text="Buscar" textFill="#f8f4f4" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -248,7 +248,7 @@
                   </JFXButton>
                </children>
             </GridPane>
-            <JFXTreeTableView fx:id="tableView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="350.0" styleClass="tbView" VBox.vgrow="ALWAYS">
+            <JFXTreeTableView fx:id="tableViewLider" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="350.0" styleClass="tbView" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -258,7 +258,7 @@
                   <Insets left="15.0" right="15.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btnNuevo" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCyan" text="Agregar" textFill="WHITE">
+                  <JFXButton fx:id="btnNuevoLider" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCyan" text="Agregar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -266,7 +266,7 @@
                         <FontAwesomeIcon fill="#f8f4f4" iconName="PLUS" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnModificar" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="10.0" layoutY="10.0" styleClass="buttonCard" text="Modificar" textFill="#f8f4f4">
+                  <JFXButton fx:id="btnModificarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="10.0" layoutY="10.0" styleClass="buttonCard" text="Modificar" textFill="#f8f4f4">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -274,7 +274,7 @@
                         <FontAwesomeIcon fill="#f8f4f4" iconName="REFRESH" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnEliminar" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="62.0" layoutY="10.0" styleClass="buttonDanger" text="Eliminar" textFill="#f8f4f4">
+                  <JFXButton fx:id="btnEliminarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="62.0" layoutY="10.0" styleClass="buttonDanger" text="Eliminar" textFill="#f8f4f4">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -282,7 +282,7 @@
                         <FontAwesomeIcon fill="#f8f4f4" iconName="TRASH" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnReporte" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="542.0" layoutY="10.0" styleClass="buttonWarning" text="Reportes" textFill="#f8f4f4">
+                  <JFXButton fx:id="btnReporteLider" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="542.0" layoutY="10.0" styleClass="buttonWarning" text="Reportes" textFill="#f8f4f4">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -294,5 +294,5 @@
             </HBox>
          </children>
       </VBox>
-   </children>
+  </children>
 </VBox>

@@ -238,7 +238,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
                     {
                         try {
                             panelRegistro = (GridPane)loader.load();     
-                            PanelLiderController registroController = loader.getController();
+                            PanelRegistroController registroController = loader.getController();
                             registroController.ActualizarDatos(v);
                         } catch (IOException ex) {
                             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);

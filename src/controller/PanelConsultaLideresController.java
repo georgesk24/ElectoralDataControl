@@ -51,31 +51,29 @@ import view.ElectoralDataControl;
  *
  * @author lenov0o
  */
-public class PanelConsulltaLideresController implements Initializable, ComponentesTabla, GeneralView {
+public class PanelConsultaLideresController implements Initializable, ComponentesTabla, GeneralView {
 
+    
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void addColumn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void addRow(ArrayList<Votantes> list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void initComponents(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void controlVisibilidad(Node node, boolean condicion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

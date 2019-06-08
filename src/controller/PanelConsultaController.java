@@ -84,12 +84,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @FXML
     private GridPane panelConsulta;
-    
-    @FXML
-    private ScrollPane scrollConsultaLideres;
-    
-    private VBox panelConsultaLideres;
-    
+     
     private JFXTreeTableColumn<ControlTable, String> columnNames, columnNum, columnNumDoc, columnSexo,
                                                 columnLugar, columnMesa;
 

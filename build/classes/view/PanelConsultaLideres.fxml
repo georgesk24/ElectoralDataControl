@@ -195,7 +195,7 @@
                   <Insets left="15.0" right="15.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btnBuscarLider" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCard" text="Buscar" textFill="#f8f4f4" HBox.hgrow="ALWAYS">
+                  <JFXButton fx:id="btnBuscarLider" alignment="CENTER" buttonType="RAISED" contentDisplay="RIGHT" graphicTextGap="14.0" onAction="#eventosOnAction" styleClass="buttonCard" text="Buscar" textFill="#f8f4f4" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -233,7 +233,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="67.0" prefWidth="967.0" text="Información Personas" textFill="#363e46">
+                  <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="67.0" prefWidth="967.0" text="Información Lideres" textFill="#363e46">
                      <font>
                         <Font name="FontAwesome Regular" size="35.0" />
                      </font>
@@ -241,7 +241,7 @@
                         <Insets left="15.0" right="15.0" />
                      </padding>
                   </Label>
-                  <JFXButton fx:id="btnActualizarTablaLider" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" prefHeight="43.0" prefWidth="31.0" styleClass="buttonCard" GridPane.columnIndex="1">
+                  <JFXButton fx:id="btnActualizarTablaLider" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#eventosOnAction" prefHeight="43.0" prefWidth="31.0" styleClass="buttonCard" GridPane.columnIndex="1">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
                      </graphic>
@@ -258,7 +258,7 @@
                   <Insets left="15.0" right="15.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <JFXButton fx:id="btnNuevoLider" contentDisplay="RIGHT" graphicTextGap="14.0" styleClass="buttonCyan" text="Agregar" textFill="WHITE">
+                  <JFXButton fx:id="btnNuevoLider" contentDisplay="RIGHT" graphicTextGap="14.0" onAction="#eventosOnAction" styleClass="buttonCyan" text="Agregar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -266,7 +266,7 @@
                         <FontAwesomeIcon fill="#f8f4f4" iconName="PLUS" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnModificarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="10.0" layoutY="10.0" styleClass="buttonCard" text="Modificar" textFill="#f8f4f4">
+                  <JFXButton fx:id="btnModificarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="10.0" layoutY="10.0" onAction="#eventosOnAction" styleClass="buttonCard" text="Modificar" textFill="#f8f4f4">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -274,7 +274,7 @@
                         <FontAwesomeIcon fill="#f8f4f4" iconName="REFRESH" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnEliminarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="62.0" layoutY="10.0" styleClass="buttonDanger" text="Eliminar" textFill="#f8f4f4">
+                  <JFXButton fx:id="btnEliminarLider" contentDisplay="RIGHT" graphicTextGap="14.0" layoutX="62.0" layoutY="10.0" onAction="#eventosOnAction" styleClass="buttonDanger" text="Eliminar" textFill="#f8f4f4">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>

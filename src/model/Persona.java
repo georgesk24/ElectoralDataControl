@@ -7,6 +7,7 @@ package model;
  */
 public class Persona{
     
+    private int indice;
     private int id;
     private String tipoDocumento;
     private int numeroDocumento;
@@ -123,6 +124,14 @@ public class Persona{
 
     public void setBarrio(String barrio) {
         this.barrio = barrio;
+    }
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
     }
     
     

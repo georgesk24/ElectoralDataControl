@@ -23,6 +23,7 @@ public class VotantesDAO {
     public VotantesDAO(){
         conexion=new Conexion();
     }
+
     
     public boolean agregarVotantes(Votantes datosVotante){
         
@@ -35,24 +36,26 @@ public class VotantesDAO {
             if(conectar!=null){
             
                 String sql = "INSERT INTO "
-                            + "votantes(tipo_documento, numero_documento, nombre, apellido, sexo, fecha_nacimiento, direccion, barrio, estado_civil, telefono, correo_electronico, lugar_de_votacion, mesa_de_votacion, direccion_votacion) "
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            + "votantes(id_lider, tipo_documento, numero_documento, nombre, apellido, sexo, fecha_nacimiento, direccion, barrio, estado_civil, telefono, correo_electronico, lugar_de_votacion, mesa_de_votacion, direccion_votacion) "
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 
                 pst = conectar.prepareStatement(sql);
-                pst.setString(1, datosVotante.getTipoDocumento());
-                pst.setInt(2, datosVotante.getNumeroDocumento());
-                pst.setString(3, datosVotante.getNombre());
-                pst.setString(4, datosVotante.getApellido());
-                pst.setString(5, datosVotante.getSexo());
-                pst.setString(6, datosVotante.getFehaNacimiento());
-                pst.setString(7, datosVotante.getDireccion());
-                pst.setString(8, datosVotante.getBarrio());
-                pst.setString(9, datosVotante.getEstadoCivil());
-                pst.setString(10, datosVotante.getTelefono());
-                pst.setString(11, datosVotante.getCorreoElectronico());
-                pst.setString(12, datosVotante.getLugar());
-                pst.setString(13, datosVotante.getMesa());
-                pst.setString(14, datosVotante.getDireccionLugar());
+            
+                pst.setInt(1, datosVotante.getLider().getId());
+                pst.setString(2, datosVotante.getTipoDocumento());
+                pst.setInt(3, datosVotante.getNumeroDocumento());
+                pst.setString(4, datosVotante.getNombre());
+                pst.setString(5, datosVotante.getApellido());
+                pst.setString(6, datosVotante.getSexo());
+                pst.setString(7, datosVotante.getFehaNacimiento());
+                pst.setString(8, datosVotante.getDireccion());
+                pst.setString(9, datosVotante.getBarrio());
+                pst.setString(10, datosVotante.getEstadoCivil());
+                pst.setString(11, datosVotante.getTelefono());
+                pst.setString(12, datosVotante.getCorreoElectronico());
+                pst.setString(13, datosVotante.getLugar());
+                pst.setString(14, datosVotante.getMesa());
+                pst.setString(15, datosVotante.getDireccionLugar());
                 
                 int res = pst.executeUpdate();
                 
@@ -89,7 +92,15 @@ public class VotantesDAO {
             
             if(conectar!=null){
                 
-                String sql ="SELECT * FROM votantes WHERE 1";
+                String sql= "SELECT votantes.id, votantes.tipo_documento, votantes.numero_documento, "
+                           + "votantes.nombre, votantes.apellido, votantes.sexo, votantes.direccion, "
+                           + "votantes.fecha_nacimiento, votantes.barrio, votantes.estado_civil, "
+                           + "votantes.telefono, votantes.correo_electronico, "
+                           + "votantes.lugar_de_votacion, votantes.mesa_de_votacion, "
+                           + "votantes.direccion_votacion, lider.id AS idLider, lider.nombre AS nombreLider, lider.apellido AS apellidoLider "
+                           + "FROM votantes "
+                           + "INNER JOIN lider ON(votantes.id_lider=lider.id) "
+                           + "WHERE 1";                       
                 
                 pst = conectar.prepareStatement(sql);
                 
@@ -117,13 +128,16 @@ public class VotantesDAO {
                     votante.setLugar(rs.getString("lugar_de_votacion"));
                     votante.setMesa(rs.getString("mesa_de_votacion"));
                     votante.setDireccionLugar(rs.getString("direccion_votacion"));
-                                        
+                    votante.getLider().setId(rs.getInt("idLider"));
+                    votante.getLider().setNombre(rs.getString("nombrelider"));
+                    votante.getLider().setApellido(rs.getString("apellidoLider"));
+                    
                     list.add(votante);
                     
                     count++;
 
                 }
-                
+
                 ControladorValidaciones.EXCEPCIONES="";
                 
             }else{
@@ -140,6 +154,8 @@ public class VotantesDAO {
                 
             }
         }
+        System.out.println(ControladorValidaciones.EXCEPCIONES);
+        
         return list;
         
     }
@@ -155,69 +171,73 @@ public class VotantesDAO {
             
             if(conectar!=null){
 
-                String sql;
+                String sql= "SELECT votantes.id, votantes.tipo_documento, votantes.numero_documento, "
+                           + "votantes.nombre, votantes.apellido, votantes.sexo, votantes.direccion, "
+                           + "votantes.fecha_nacimiento, votantes.barrio, votantes.estado_civil, "
+                           + "votantes.telefono, votantes.correo_electronico, "
+                           + "votantes.lugar_de_votacion, votantes.mesa_de_votacion, "
+                           + "votantes.direccion_votacion, lider.id AS idLider, lider.nombre AS nombreLider, lider.apellido AS apellidoLider "
+                           + "FROM votantes "
+                           + "INNER JOIN lider ON(votantes.id_lider=lider.id) ";
 
                 
                 switch(tipoBusqueda){
                     case "Número de Documento":
-                        sql = "SELECT * FROM votantes WHERE tipo_documento=? And numero_documento=?";
+
+                        sql= sql+ "WHERE votantes.tipo_documento=? And votantes.numero_documento=?";                       
+                        
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));
                         pst.setString(2, data.get(1));
                     break;
-
-                    case "Nombre":
-                        sql = "SELECT * FROM votantes WHERE nombre LIKE ? AND apellido=?";
-                        pst = conectar.prepareStatement(sql);
-                        pst.setString(1, "%"+data.get(0)+"%");
-                        pst.setString(2, "%"+data.get(0)+"%");
-                    break;
-                    
-                    case "Apellido":
-                        sql = "SELECT * FROM votantes WHERE apellido LIKE ?";
-                        pst = conectar.prepareStatement(sql);
-                        pst.setString(1, "%"+data.get(0)+"%");
-                    break;
                     
                     case "Nombre/Apellido":
-                        sql = "SELECT * FROM votantes WHERE nombre LIKE ? OR apellido LIKE ?";
+
+                        sql=  sql + "WHERE votantes.nombre LIKE ? OR votantes.apellido LIKE ?";                       
+
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                         pst.setString(2, "%"+data.get(0)+"%");                        
                     break;                    
                     
                     case "Barrio":
-                        sql = "SELECT * FROM votantes WHERE barrio LIKE ?";
+
+                        sql= sql + "WHERE votantes.barrio LIKE ?";                       
+                            
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                     break;                
 
                     case "Edad":
-                        sql = "SELECT * FROM votantes WHERE (YEAR(NOW()) - YEAR(fecha_nacimiento)) BETWEEN ? AND ?";
+
+                        sql= sql + "WHERE (YEAR(NOW()) - YEAR(votantes.fecha_nacimiento)) BETWEEN ? AND ?";                       
+    
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0)); 
                         pst.setString(2, data.get(1));                                                
                     break;
 
                     case "Sexo":
-                        sql = "SELECT * FROM votantes WHERE sexo = ?";
-                        pst = conectar.prepareStatement(sql);
-                        pst.setString(1, data.get(0));                        
-                    break;
 
-                    case "Mesa De Votación":
-                        sql = "SELECT * FROM votantes WHERE mesa_de_votacion = ?";
+                        sql= sql + "WHERE votantes.sexo = ?";                        
+                        
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));                        
+                        
                     break;
 
                      case "Lugar De Votación":
                         if(data.get(1).equals("Todo")){
-                            sql = "SELECT * FROM votantes WHERE lugar_de_votacion = ?";                        
-                            pst = conectar.prepareStatement(sql);
-                            pst.setString(1, data.get(0));                        
+
+                            sql= sql + "WHERE votantes.lugar_de_votacion = ? ";                            
+
+                                pst = conectar.prepareStatement(sql);
+                                pst.setString(1, data.get(0));                        
+
                         }else{
-                            sql = "SELECT * FROM votantes WHERE lugar_de_votacion = ? AND mesa_de_votacion=?";                        
+
+                            sql= sql + "WHERE votantes.lugar_de_votacion = ? AND votantes.mesa_de_votacion=? ";
+                            
                             pst = conectar.prepareStatement(sql);
                             pst.setString(1, data.get(0));       
                             pst.setString(2, data.get(1));                                                                            
@@ -234,10 +254,16 @@ public class VotantesDAO {
                         pst = conectar.prepareStatement(sql);
                     break;
                     
-                    
+                    case "Lider":
+
+                        sql= sql + "WHERE lider.id=? ";
+
+                        pst = conectar.prepareStatement(sql);
+                        pst.setString(1, data.get(0));
+                        
+                    break;
                     
                     default:
-                        sql = "SELECT * FROM votantes WHERE 1";
                         pst = conectar.prepareStatement(sql);
                     break;                                
 
@@ -269,6 +295,9 @@ public class VotantesDAO {
                         votante.setLugar(rs.getString("lugar_de_votacion"));
                         votante.setMesa(rs.getString("mesa_de_votacion"));
                         votante.setDireccionLugar(rs.getString("direccion_votacion"));
+                        votante.getLider().setId(rs.getInt("idLider"));
+                        votante.getLider().setNombre(rs.getString("nombrelider"));
+                        votante.getLider().setApellido(rs.getString("apellidoLider"));
 
                     }else{
                         votante.setLugar(rs.getString("lugar_de_votacion"));
@@ -359,25 +388,26 @@ public class VotantesDAO {
             
             if(conectar!=null){
                 String sql = "UPDATE "
-                            + "votantes SET tipo_documento=?, numero_documento=?, nombre=?, apellido=?, sexo=?, fecha_nacimiento=?, direccion=?, barrio=?, estado_civil=?, telefono=?, correo_electronico=?, lugar_de_votacion=?, mesa_de_votacion=?, direccion_votacion=? "
+                            + "votantes SET id_lider=?, tipo_documento=?, numero_documento=?, nombre=?, apellido=?, sexo=?, fecha_nacimiento=?, direccion=?, barrio=?, estado_civil=?, telefono=?, correo_electronico=?, lugar_de_votacion=?, mesa_de_votacion=?, direccion_votacion=? "
                             + "WHERE id=?";
                 
                 pst = conectar.prepareStatement(sql);
-                pst.setString(1, datosVotante.getTipoDocumento());
-                pst.setInt(2, datosVotante.getNumeroDocumento());
-                pst.setString(3, datosVotante.getNombre());
-                pst.setString(4, datosVotante.getApellido());
-                pst.setString(5, datosVotante.getSexo());
-                pst.setString(6, datosVotante.getFehaNacimiento());
-                pst.setString(7, datosVotante.getDireccion());
-                pst.setString(8, datosVotante.getBarrio());
-                pst.setString(9, datosVotante.getEstadoCivil());
-                pst.setString(10, datosVotante.getTelefono());
-                pst.setString(11, datosVotante.getCorreoElectronico());
-                pst.setString(12, datosVotante.getLugar());
-                pst.setString(13, datosVotante.getMesa());
-                pst.setString(14, datosVotante.getDireccionLugar());
-                pst.setInt(15, datosVotante.getId());                
+                pst.setInt(1, datosVotante.getLider().getId());
+                pst.setString(2, datosVotante.getTipoDocumento());
+                pst.setInt(3, datosVotante.getNumeroDocumento());
+                pst.setString(4, datosVotante.getNombre());
+                pst.setString(5, datosVotante.getApellido());
+                pst.setString(6, datosVotante.getSexo());
+                pst.setString(7, datosVotante.getFehaNacimiento());
+                pst.setString(8, datosVotante.getDireccion());
+                pst.setString(9, datosVotante.getBarrio());
+                pst.setString(10, datosVotante.getEstadoCivil());
+                pst.setString(11, datosVotante.getTelefono());
+                pst.setString(12, datosVotante.getCorreoElectronico());
+                pst.setString(13, datosVotante.getLugar());
+                pst.setString(14, datosVotante.getMesa());
+                pst.setString(15, datosVotante.getDireccionLugar());
+                pst.setInt(16, datosVotante.getId());                
                 
                 int res = pst.executeUpdate();
                 

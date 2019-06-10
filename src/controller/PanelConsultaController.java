@@ -25,7 +25,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -36,13 +35,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
+import model.Lider;
+import model.Persona;
 import model.Votantes;
+import modelDAO.LiderDAO;
 import modelDAO.VotantesDAO;
 import org.controlsfx.control.RangeSlider;
 import utlidades.ComponentesTabla;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
 import utlidades.GeneralView;
+import utlidades.Item;
 import view.ElectoralDataControl;
 
 /**
@@ -57,6 +60,10 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                                 fxComboBoxLugar, fxComboBoxMesa;
     
     @FXML
+    private JFXComboBox<Item> fxComboBoxLider;
+    private Item item;
+    
+    @FXML
     private JFXTextField search, numeroDocumento, busqueda;
         
     @FXML
@@ -67,11 +74,15 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @FXML
     private JFXButton btnBuscar, btnNuevo, btnModificar, btnEliminar, 
-                      btnReporte, btnActualizarTabla;
+                      btnReporte, btnActualizarTabla, 
+                      btnActualizarLugarDeVotacion, btnActualizarLiderAsignado;
 
     @FXML
-    private HBox hTipoBusqueda, hBoxSexo, hBoxEdad, hBoxBusqueda, 
+    private HBox hBoxSexo, hBoxEdad, hBoxBusqueda, 
                  hBoxNumeroDocumento, hBoxBtn;
+    
+    @FXML
+    private VBox vBoxLider;
     
     @FXML
     private GridPane hlugar;
@@ -93,6 +104,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     
     private final VotantesDAO model = new VotantesDAO();
+    private final LiderDAO modelLider = new LiderDAO();
     
     
     /*Controlador de componentes visuales*/
@@ -115,7 +127,6 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 
         addColumn();
         initComponents(false);        
-        validatorText();
         validatorNumber();
         
         rangeSliderEdad.lowValueChangingProperty().addListener(new ChangeListener(){
@@ -155,6 +166,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         
     }
     
+    
     public void validatorText() {
         ControladorValidaciones.validator(busqueda);
     }
@@ -163,6 +175,41 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         ControladorValidaciones.validator(numeroDocumento);
     }
   
+    public void listarLideres(int update){
+        
+        
+        ArrayList<Lider> list =  modelLider.consultaLider("id/value", null);
+        
+        if(update!=1){
+        
+            if(list.size()>0){
+                item = new Item(-1, "Ninguno");
+                fxComboBoxLider.getItems().add(item);
+                for(int i=0; i<list.size(); i++){
+                    item = new Item(list.get(i).getId(), list.get(i).getNombre() + " "+list.get(i).getApellido());
+                    fxComboBoxLider.getItems().add(item);
+                }
+            }        
+        
+        }else{
+
+            if(list.size()>0){
+
+                int length = fxComboBoxLider.getItems().size();
+                fxComboBoxLider.getItems().remove(0, length);
+                
+                item = new Item(-1, "Ninguno");
+                fxComboBoxLider.getItems().add(item);
+                for(int i=0; i<list.size(); i++){
+                    item = new Item(list.get(i).getId(), list.get(i).getNombre() + " "+list.get(i).getApellido());
+                    fxComboBoxLider.getItems().add(item);
+                }
+            
+            }        
+        
+        }
+        
+    }
     
     
     @FXML
@@ -177,12 +224,15 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
             switch(value){
                 
                 case "Número de Documento":
+
                     hBoxNumeroDocumento.setVisible(true);
                     hBoxBtn.setVisible(true);
                     hlugar.setVisible(false);                    
                     hBoxBusqueda.setVisible(false);
                     hBoxEdad.setVisible(false);
                     hBoxSexo.setVisible(false);
+                    vBoxLider.setVisible(false);
+                    
                 break;
 
                 case "Nombre/Apellido":
@@ -202,6 +252,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
                     hBoxSexo.setVisible(false);
+                    vBoxLider.setVisible(false);
+                    
                 break;
                 
                 case "Sexo":
@@ -212,6 +264,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                     hlugar.setVisible(false);                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
+                    vBoxLider.setVisible(false);
+                    
                 break;
                 
                 case "Lugar De Votación":
@@ -221,7 +275,20 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                     hBoxEdad.setVisible(false);                                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
-                break;                
+                    vBoxLider.setVisible(false);
+                    
+                break;    
+                
+                case "Lider Asignado":
+                    hBoxBtn.setVisible(true);
+                    vBoxLider.setVisible(true);
+                    hlugar.setVisible(false);
+                    hBoxSexo.setVisible(false);                
+                    hBoxEdad.setVisible(false);                                    
+                    hBoxBusqueda.setVisible(false);                    
+                    hBoxNumeroDocumento.setVisible(false);                    
+                break;
+                
                 default:
                     hBoxSexo.setVisible(false);                
                     hBoxBtn.setVisible(true);
@@ -237,12 +304,14 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
             buscarDatos();
             
         }else if(evt.equals(btnNuevo)){            
+        
             PrincipalController principalController = ElectoralDataControl.loader.getController();
-            principalController.selectView("Registro", null);            
+            principalController.selectView("Registro", null, "");            
+     
         }else if(evt.equals(btnModificar)){
             
             TreeTableViewSelectionModel<ControlTable> modelTable = tableView.getSelectionModel();
-            if(modelTable.getSelectedIndex() > 0){
+            if(modelTable.getSelectedIndex() > -1){
                 
                 TreeItem<ControlTable> d = modelTable.getSelectedItem();
                 ControlTable c = d.getValue();
@@ -250,7 +319,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                                 
                 ControladorGeneral.CONTROLVIEWMODIFICAR=1;
                 PrincipalController principalController = ElectoralDataControl.loader.getController();
-                principalController.selectView("Registro", v);                                   
+                principalController.selectView("Registro", v, "Votantes");                                   
             
             }else{
                 JOptionPane.showMessageDialog(null, "Seleccione una celda valida", "Operación fallida", JOptionPane.ERROR_MESSAGE);
@@ -259,7 +328,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         }else if(evt.equals(btnEliminar)){
         
             TreeTableViewSelectionModel<ControlTable> modelTable = tableView.getSelectionModel();
-            if(modelTable.getSelectedIndex() > 0){
+            if(modelTable.getSelectedIndex() > -1){
                 
                 TreeItem<ControlTable> d = modelTable.getSelectedItem();
                 ControlTable c = d.getValue();
@@ -277,10 +346,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                         ArrayList<Votantes> list;
                         
                         list = model.consultarVotantes();
-
-                        if(list.size()>0){
-                            addRow(list);                        
-                        }
+                        addRow(list);                        
 
                     }else{
                          JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
@@ -298,7 +364,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         }else if(evt.equals(btnReporte)){
             
             PrincipalController config = ElectoralDataControl.loader.getController();
-            config.selectView("Reporte", null);
+            config.selectView("Reporte", null, "");
         
         }else if(evt.equals(btnActualizarTabla)){
             
@@ -323,6 +389,23 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
 
             }            
             
+        }else if(evt.equals(btnActualizarLugarDeVotacion)){
+        
+            ArrayList<Votantes>list = model.consultarVotantes("ListCombo", null);            
+
+            int length = fxComboBoxLugar.getItems().size();
+            fxComboBoxLugar.getItems().remove(0, length);
+            
+            if(list.size()>0){
+
+                ControladorGeneral.llenarListaDesplegable(list, fxComboBoxLugar);
+
+            }else{
+                fxComboBoxLugar.getItems().add("Sin resultados");
+            }        
+        
+        }else if(evt.equals(btnActualizarLiderAsignado)){
+            listarLideres(1);            
         }
         
     }    
@@ -358,7 +441,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         fxCombotipoBusqueda.getItems().add("Edad");
         fxCombotipoBusqueda.getItems().add("Sexo");
         fxCombotipoBusqueda.getItems().add("Barrio");        
-        fxCombotipoBusqueda.getItems().add("Lugar De Votación");        
+        fxCombotipoBusqueda.getItems().add("Lugar De Votación");
+        fxCombotipoBusqueda.getItems().add("Lider Asignado");
         fxCombotipoBusqueda.setValue("Todos");
         
         tipoDocumento.getItems().add("Cedula de Ciudadanía");
@@ -371,6 +455,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         controlVisibilidad(hBoxEdad, false);
         controlVisibilidad(panelConsulta, true);
         controlVisibilidad(hlugar, false);
+        controlVisibilidad(vBoxLider, false);
         
         hBoxNumeroDocumento.setVisible(false);
         hBoxNumeroDocumento.setManaged(false);
@@ -434,7 +519,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
             fxComboBoxMesa.setValue("Sin resultados");
         }
         
-        
+        listarLideres(0);
+        fxComboBoxLider.setVisibleRowCount(10);
         
         
     }
@@ -515,7 +601,9 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
 
     
     @Override
-    public void addRow(ArrayList<Votantes> list) {
+    public void addRow(ArrayList  list) {
+        
+        ArrayList<Votantes> listadoVotantes = list;
         
         datos = FXCollections.observableArrayList();
         
@@ -525,7 +613,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         
         if(list.size()>0){
             for(int i=0; i<list.size(); i++){
-                ControlTable table = new ControlTable(list.get(i));
+                ControlTable table = new ControlTable(listadoVotantes.get(i));
                 datos.add(table);
             }        
         }else{
@@ -571,7 +659,10 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                     }
 
                 }else{
-                    JOptionPane.showMessageDialog(null, "Solo de aceptan valores numericos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Operación invalida, posibles errores: \n"+
+                                                        "1- El número ingresado esta fuera del rango permitido\n"+
+                                                        "2- El valor ingresado no es un valor numerico\n"+
+                                                        "<html><p style='color:red;'>Por favor verifique e intente nuevamente</p></html>", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
 
             }else{
@@ -700,6 +791,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
 
                 data.add(lugar);
                 data.add(mesa);
+
                 list = model.consultarVotantes("Lugar De Votación", data);
                 
                 if(list.size()>0){
@@ -725,6 +817,37 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un valor valido para realizar la busqueda", "Error", JOptionPane.ERROR_MESSAGE);                        
             }
         
+        }else if(vBoxLider.isVisible()){
+            
+            Item itemLider = fxComboBoxLider.getValue();
+            
+            if(itemLider!=null){                
+                itemLider = fxComboBoxLider.getValue();            
+            }else{
+                itemLider = new Item(-1, "Ninguno");
+            }
+                
+            data.add(String.valueOf(itemLider.getId()));                                
+            list = model.consultarVotantes("Lider", data);
+                
+            if(list.size()>0){
+                addRow(list);                        
+            }else{
+
+                /*validamos si hubo alguna excepción u error*/
+                if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                        ControladorValidaciones.EXCEPCIONES, 
+                                                        "ERROR", JOptionPane.ERROR_MESSAGE);           
+                    ControladorValidaciones.EXCEPCIONES="";                                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    addRow(list);
+                }                        
+            }
+                    
         }else{
 
             list = model.consultarVotantes();

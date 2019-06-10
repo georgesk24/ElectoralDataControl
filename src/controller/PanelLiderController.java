@@ -22,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import model.Lider;
 import model.Persona;
 import model.Votantes;
 import modelDAO.LiderDAO;
@@ -49,10 +50,7 @@ public class PanelLiderController implements Initializable, GeneralView {
     @FXML
     private JFXRadioButton radioMale, radioFemale;
     
-    /*
-    @FXML
-    private DatePicker fechaNacimiento;*/
-
+    
     @FXML
     private JFXComboBox<String> tipoDocumento, estadoCivil;
         
@@ -77,7 +75,7 @@ public class PanelLiderController implements Initializable, GeneralView {
         protected void eval() {}            
     };
    
-    private int idVotante=-1;
+    private int idLider=-1;
     
     /**
      * Initializes the controller class.
@@ -95,14 +93,52 @@ public class PanelLiderController implements Initializable, GeneralView {
         
     }    
     
-    public void ActualizarDatos(Votantes votante){
+    public void ActualizarDatos(Persona persona){
     
+        if(persona!=null){
+            
+            ControladorGeneral.CONTROLVIEWMODIFICARLIDER=0;                                    
+
+            idLider = persona.getId();
+
+            this.tipoDocumento.setValue(persona.getTipoDocumento());
+            this.numeroDocumento.setText(String.valueOf(persona.getNumeroDocumento()));
+            this.nombreCompleto.setText(persona.getNombre());
+            this.apellidos.setText(persona.getApellido());
+            //verificamos el tipo de genero que se va a seleccionar
+            if(persona.getSexo().equals("Femenino")){
+                this.radioFemale.setSelected(true);            
+            }else{
+                this.radioMale.setSelected(true);            
+            }              
+
+            if(persona.getFehaNacimiento()!=null){
+                this.fechaNacimiento.setValue(LocalDate.parse(persona.getFehaNacimiento()));        
+            }
+
+            if(persona.getEstadoCivil()!=null){
+                this.estadoCivil.setValue(persona.getEstadoCivil());            
+            }
+
+            this.direccion.setText(persona.getDireccion());
+            this.barrio.setText(persona.getBarrio());
+            this.telefono.setText(persona.getTelefono());
+            this.correo.setText(persona.getCorreoElectronico());
+            
+            btnGuardar.setText("Modificar");
+
+        }else{
+            limpiarCampos();
+        }
+        
+        
+        
     }
     
     private boolean agregarLider(){
         
         //Creamos un objeto de tipo Votantes
-        Persona datosLider = new Persona();
+        Lider datosLider = new Lider();
         
         JFXRadioButton rb = (JFXRadioButton)groupRadio.getSelectedToggle(); 
         
@@ -143,9 +179,47 @@ public class PanelLiderController implements Initializable, GeneralView {
 
     }
     
-    private boolean modificarVotantes(){
+    private boolean modificarLider(){
         
-        return false;
+        //Creamos un objeto de tipo Votantes
+        Lider datoLider = new Lider();
+        
+        JFXRadioButton rb = (JFXRadioButton)groupRadio.getSelectedToggle(); 
+        
+        String sex="";
+        if (rb != null) { 
+            sex = rb.getText(); 
+        }        
+                
+        //Obtenemos los valores de los campos de texto
+        datoLider.setId(idLider);
+        datoLider.setTipoDocumento(tipoDocumento.getValue());        
+        datoLider.setNumeroDocumento(Integer.parseInt(numeroDocumento.getText()));        
+        datoLider.setNombre(nombreCompleto.getText());
+        datoLider.setApellido(apellidos.getText());        
+        datoLider.setDireccion(direccion.getText());
+        datoLider.setBarrio(barrio.getText());        
+        datoLider.setTelefono(telefono.getText());
+        datoLider.setCorreoElectronico(correo.getText());     
+        datoLider.setSexo(sex);        
+        datoLider.setEstadoCivil(estadoCivil.getValue());
+        
+        String fecha=null;
+
+        try{
+
+            if(fechaNacimiento.getValue()!=null){
+                LocalDate date = fechaNacimiento.getValue();
+                fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();            
+            }
+
+        }catch(Exception ex){
+            fecha=null;
+        }        
+        
+        datoLider.setFehaNacimiento(fecha);
+        
+        return modelo.modificarLider(datoLider);
             
     }
 
@@ -231,14 +305,15 @@ public class PanelLiderController implements Initializable, GeneralView {
                             }   break;
                         
                         case "Modificar":
-                            /*if(modificarVotantes()==true){
+                            if(modificarLider()==true){
                                 JOptionPane.showMessageDialog(null, "Los Datos han sido actualizados exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                                idLider=-1;
                             }else{
                                 JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
                                         ControladorValidaciones.EXCEPCIONES,
                                         "ERROR", JOptionPane.ERROR_MESSAGE);
                                 ControladorValidaciones.EXCEPCIONES="";
-                            }*/  
+                            }  
                         break;
                     
                     }

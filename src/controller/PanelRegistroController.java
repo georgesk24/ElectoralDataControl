@@ -10,10 +10,11 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import com.jfoenix.validation.base.ValidatorBase;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,13 +23,16 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
-import javafx.util.converter.LocalDateStringConverter;
 import javax.swing.JOptionPane;
+import model.Lider;
+import model.Persona;
 import model.Votantes;
+import modelDAO.LiderDAO;
 import modelDAO.VotantesDAO;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
 import utlidades.GeneralView;
+import utlidades.Item;
 
 /**
  * FXML Controller class
@@ -49,21 +53,20 @@ public class PanelRegistroController implements Initializable, GeneralView {
     @FXML
     private JFXRadioButton radioMale, radioFemale;
     
-    /*
-    @FXML
-    private DatePicker fechaNacimiento;*/
-
     @FXML
     private JFXComboBox<String> tipoDocumento, estadoCivil;
-        
+    
+    @FXML 
+    private JFXComboBox<Item> fxComboLider;
+    
     @FXML
     private GridPane panelRegistro;
 
     @FXML
-    private JFXButton btnGuardar, btnLimpiar;
+    private JFXButton btnGuardar, btnLimpiar, btnActualizarLiderEncargado;
     
     private final VotantesDAO modelo = new VotantesDAO();
-
+    private final LiderDAO modeloLider = new LiderDAO();
     
     
     /*Controlador de componentes visuales*/
@@ -81,6 +84,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
    
     private int idVotante=-1;
     
+    private Item item;
     /**
      * Initializes the controller class.
      * @param url
@@ -132,6 +136,32 @@ public class PanelRegistroController implements Initializable, GeneralView {
             this.mesaDeVotacion.setText(String.valueOf(votante.getMesa()));
             this.direccionVotacion.setText(votante.getDireccionLugar());
             
+            listarLideres(1);
+            
+            Item it;
+            if(votante.getLider().getId()==-1){
+                it = new Item(-1, "Ninguno");
+            }else{
+                it = new Item(votante.getLider().getId(), votante.getLider().getNombre()+ " "+ votante.getApellido());            
+            }
+            
+            ObservableList<Item> ob = fxComboLider.getItems();
+
+            boolean condicion = true;
+            
+            int i=0;
+            while(condicion){
+                Item it1  = ob.get(i);
+                if(it.getId()==it1.getId()){
+                    condicion=false;
+                    fxComboLider.setValue(ob.get(i));
+                }
+                i++;
+                if(i==ob.size()){
+                    condicion=false;
+                }
+            }
+                        
             btnGuardar.setText("Modificar");
 
         }else{
@@ -168,6 +198,19 @@ public class PanelRegistroController implements Initializable, GeneralView {
         datosVotantes.setMesa(mesaDeVotacion.getText());
         datosVotantes.setDireccionLugar(direccionVotacion.getText());   
         datosVotantes.setEstadoCivil(estadoCivil.getValue());
+
+        Item itemLider;        
+        if(fxComboLider==null){
+            itemLider = new Item(-1, "Ninguno");
+        }else{
+            itemLider = fxComboLider.getValue();
+        }     
+        
+        try{
+            datosVotantes.getLider().setId(itemLider.getId());
+        }catch(Exception ex){
+            datosVotantes.getLider().setId(-1);            
+        }   
         
         String fecha=null;
 
@@ -194,6 +237,13 @@ public class PanelRegistroController implements Initializable, GeneralView {
         //Creamos un objeto de tipo Votantes
         Votantes datosVotantes = new Votantes();
         
+        JFXRadioButton rb = (JFXRadioButton)groupRadioG.getSelectedToggle(); 
+        
+        String sex="";
+        if (rb != null) { 
+            sex = rb.getText(); 
+        }        
+        
         //Obtenemos los valores de los campos de texto
         datosVotantes.setId(idVotante);
         datosVotantes.setTipoDocumento(tipoDocumento.getValue());        
@@ -204,17 +254,37 @@ public class PanelRegistroController implements Initializable, GeneralView {
         datosVotantes.setBarrio(barrio.getText());        
         datosVotantes.setTelefono(telefono.getText());
         datosVotantes.setCorreoElectronico(correo.getText());     
-        datosVotantes.setSexo(groupRadioG.getSelectedToggle().getUserData().toString());        
+        datosVotantes.setSexo(sex);        
         datosVotantes.setLugar(lugarDeVotacion.getText());        
         datosVotantes.setMesa(mesaDeVotacion.getText());
         datosVotantes.setDireccionLugar(direccionVotacion.getText());   
         datosVotantes.setEstadoCivil(estadoCivil.getValue());
+
+        Item itemLider;        
+        if(fxComboLider==null){
+            itemLider = new Item(-1, "Ninguno");
+        }else{
+            itemLider = fxComboLider.getValue();
+        }     
         
-        String fecha="";
         try{
-            LocalDate date = fechaNacimiento.getValue();
-            fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();
-        }catch(Exception ex){}
+            datosVotantes.getLider().setId(itemLider.getId());
+        }catch(Exception ex){
+            datosVotantes.getLider().setId(-1);            
+        }   
+        
+        String fecha=null;
+
+        try{
+
+            if(fechaNacimiento.getValue()!=null){
+                LocalDate date = fechaNacimiento.getValue();
+                fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();            
+            }
+
+        }catch(Exception ex){
+            fecha=null;
+        }
         
         
         datosVotantes.setFehaNacimiento(fecha);
@@ -240,6 +310,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
         mesaDeVotacion.setText("");
         idVotante = -1;
         btnGuardar.setText("Guardar");
+        fxComboLider.setValue(null);
     }
 
     public void validatorText() {
@@ -274,7 +345,39 @@ public class PanelRegistroController implements Initializable, GeneralView {
 
     }
     
+    public void listarLideres(int update){
+        
+        
+        ArrayList<Lider> list =  modeloLider.consultaLider("id/value", null);
+        
+        if(update!=1){
+        
+            if(list.size()>0){
+                for(int i=0; i<list.size(); i++){
+                    item = new Item(list.get(i).getId(), list.get(i).getNombre() + " "+list.get(i).getApellido());
+                    fxComboLider.getItems().add(item);
+                }
+            }        
+        
+        }else{
 
+            if(list.size()>0){
+
+                int length = fxComboLider.getItems().size();
+                fxComboLider.getItems().remove(0, length);
+                
+                item = new Item(-1, "Ninguno");
+                fxComboLider.getItems().add(item);
+                for(int i=0; i<list.size(); i++){
+                    item = new Item(list.get(i).getId(), list.get(i).getNombre() + " "+list.get(i).getApellido());
+                    fxComboLider.getItems().add(item);
+                }
+            
+            }        
+        
+        }
+        
+    }
     
     @FXML
     public void eventsAction(ActionEvent event) {
@@ -283,7 +386,6 @@ public class PanelRegistroController implements Initializable, GeneralView {
         
         if(evt.equals(btnGuardar) ){
             
-        
             if(!numeroDocumento.getText().isEmpty() && !nombreCompleto.getText().isEmpty() &&
                !apellidos.getText().isEmpty() && !mesaDeVotacion.getText().isEmpty() &&
                !lugarDeVotacion.getText().isEmpty() && !direccionVotacion.getText().isEmpty()){
@@ -316,6 +418,8 @@ public class PanelRegistroController implements Initializable, GeneralView {
 
                         if(modificarVotantes()==true){
                             JOptionPane.showMessageDialog(null, "Los Datos han sido actualizados exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                            idVotante=-1;
+                            limpiarCampos();
                         }else{
                              JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
                                                                  ControladorValidaciones.EXCEPCIONES, 
@@ -344,6 +448,9 @@ public class PanelRegistroController implements Initializable, GeneralView {
         }else if(evt.equals(btnLimpiar)){
             
             limpiarCampos();
+        
+        }else if(evt.equals(btnActualizarLiderEncargado)){
+            listarLideres(1);
         }
         
     }
@@ -466,7 +573,11 @@ public class PanelRegistroController implements Initializable, GeneralView {
         validatorFieldText.setMessage("Este campo es obligatorio");
         validatorNumber.setMessage("Solo se permite el ingreso de números");
         
-                
+        item = new Item(-1, "Ninguno");
+        fxComboLider.getItems().add(item);
+        listarLideres(0);
+        fxComboLider.setVisibleRowCount(10);
+        
     }
 
     @Override

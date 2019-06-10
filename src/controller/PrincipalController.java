@@ -34,6 +34,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
+import model.Persona;
 import model.Votantes;
 import utlidades.ControladorGeneral;
 import utlidades.UtilidadesView;
@@ -72,7 +73,9 @@ public class PrincipalController implements Initializable, UtilidadesView {
     
     FXMLLoader loader = new FXMLLoader();
     public static FXMLLoader loaderAjustes = new FXMLLoader();
-        
+    public static FXMLLoader loaderReportes = new FXMLLoader();
+
+    
     Stop[] stopsActive = new Stop[]{new Stop(0, Color.DARKCYAN), new Stop(1, Color.CYAN)};
     LinearGradient linearActive = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsActive);
     
@@ -85,31 +88,31 @@ public class PrincipalController implements Initializable, UtilidadesView {
         
         if(evt.equals(btnInicio)){
 
-            selectView("Inicio", null);
+            selectView("Inicio", null, "");
                         
         }else if(evt.equals(btnRegistroPersona) ){
 
-            selectView("Registro", null);
+            selectView("Registro", null, "");
             
         }else if(evt.equals(btnRegistroLider) ){
 
-            selectView("Registro_Lider", null);
+            selectView("Registro_Lider", null, "");
             
         }else if(evt.equals(btnConsulta)){
 
-            selectView("Consulta", null);
+            selectView("Consulta", null, "");
             
         }else if(evt.equals(btnReportes)){
 
-            selectView("Reporte", null);
+            selectView("Reporte", null, "");
             
         }else if(evt.equals(btnLugarDeVotacion)){
 
-            selectView("Lugar", null);
+            selectView("Lugar", null, "");
             
         }else if(evt.equals(btnAjustes) || evt.equals(btnAjustesSubMenu)){
 
-            selectView("Ajuste", null);
+            selectView("Ajuste", null, "");
         
         }else if(evt.equals(btnSalir) || evt.equals(btnSalirSubMenu)){
             
@@ -130,8 +133,6 @@ public class PrincipalController implements Initializable, UtilidadesView {
         }
         
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -169,8 +170,9 @@ public class PrincipalController implements Initializable, UtilidadesView {
             loader = new FXMLLoader(getClass().getResource("/view/PanelConsulta.fxml"));        
             panelConsulta = (GridPane)loader.load();
             
+            loaderReportes= new FXMLLoader(getClass().getResource("/view/PanelReporte.fxml"));
+            panelReporte =  (GridPane) loaderReportes.load();
             
-            panelReporte =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelReporte.fxml"));
             panelLugarDeVotacion =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelLugarDeVotacion.fxml"));
 
             loaderAjustes = new FXMLLoader(getClass().getResource("/view/PanelAjustes.fxml"));
@@ -207,8 +209,23 @@ public class PrincipalController implements Initializable, UtilidadesView {
     }    
 
     
-    public void selectView(String name, Votantes v){
+    public void selectView(String name, Object object, String type){
 
+        Votantes v=null;
+        Persona p=null;
+        
+        switch(type){
+            
+            case "Votantes":
+                v = (Votantes) object;
+            break;
+            
+            case "Persona":           
+                p = (Persona) object;
+            break;
+            
+        }
+        
         switch(name){
             
             case "Inicio":
@@ -263,21 +280,21 @@ public class PrincipalController implements Initializable, UtilidadesView {
             break;
 
             case "Registro_Lider":
-                /*
-                if(ControladorGeneral.CONTROLVIEWMODIFICAR==1){
+                
+                if(ControladorGeneral.CONTROLVIEWMODIFICARLIDER==1){
                     
-                    loader = new FXMLLoader(getClass().getResource("/view/PanelRegister.fxml"));        
+                    loader = new FXMLLoader(getClass().getResource("/view/PanelLider.fxml"));        
                     {
                         try {
-                            panelRegistro = (GridPane)loader.load();     
+                            panelRegistroLider = (GridPane)loader.load();     
                             PanelLiderController registroController = loader.getController();
-                            registroController.ActualizarDatos(v);
+                            registroController.ActualizarDatos(p);
                         } catch (IOException ex) {
                             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     
-                }    */            
+                }              
                 
                 fillActive("Registro_Lider");
                 fillDefault("Registro");

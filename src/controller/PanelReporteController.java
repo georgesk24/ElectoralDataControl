@@ -302,20 +302,21 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         addRow(list);
         
         ArrayList<Votantes>list1 = model.consultarVotantes("ListCombo", null);
-        if(list1.size()>0){
-            if(fxComboBoxMesa.getItems().size()>0){
-                fxComboBoxMesa.getItems().remove(0);
+        if(list1.size()>0){            
+            
+            ControladorGeneral.llenarListaDesplegable(list1, fxComboBoxLugar);            
+            
+            fxComboBoxMesa.getItems().add("Todo");
+            for(int i=1; i<=100; i++){
+                fxComboBoxMesa.getItems().add(String.valueOf(i));            
             }
-            if(fxComboBoxLugar.getItems().size()>0){
-                fxComboBoxLugar.getItems().remove(0);
-            }            
-            llenarLista(list1, 1);
-            llenarLista(list1, 2);
+            fxComboBoxMesa.getItems().add("Otro");            
+            
         }else{
-            fxComboBoxMesa.getItems().add("Sin resultados");
             fxComboBoxLugar.getItems().add("Sin resultados");
-            fxComboBoxMesa.setValue("Sin resultados");
             fxComboBoxLugar.setValue("Sin resultados");
+            fxComboBoxMesa.getItems().add("Sin resultados");
+            fxComboBoxMesa.setValue("Sin resultados");
         }
 
         contenedorBarra.setVisible(false);

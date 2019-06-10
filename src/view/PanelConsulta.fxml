@@ -71,7 +71,7 @@
                            <children>
                               <HBox id="headerForm" minHeight="-Infinity" prefHeight="55.0" prefWidth="618.0" style="-fx-background-color: #363e46;">
                                  <children>
-                                    <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="556.0" text="Formulario De Consulta" textFill="#fffbfb" HBox.hgrow="ALWAYS">
+                                    <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" text="Formulario De Consulta Votantes" textFill="#fffbfb" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font name="FontAwesome Regular" size="35.0" />
                                        </font>
@@ -241,6 +241,53 @@
                                           <Insets left="15.0" right="15.0" top="10.0" />
                                        </VBox.margin>
                                     </HBox>
+                                    <GridPane fx:id="hlugar">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                       </VBox.margin>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="597.0" minWidth="10.0" prefWidth="597.0" />
+                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="447.0" minWidth="10.0" prefWidth="289.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints vgrow="ALWAYS" />
+                                       </rowConstraints>
+                                       <children>
+<<<<<<< HEAD
+=======
+                                          <VBox maxWidth="-Infinity">
+                                             <children>
+                                                <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Lugar De Votación" textFill="#363e46">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                                   <children>
+                                                      <JFXComboBox fx:id="fxComboBoxLugar" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" GridPane.columnIndex="1">
+                                             <children>
+                                                <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Mesa" textFill="#363e46">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                                   <children>
+                                                      <JFXComboBox fx:id="fxComboBoxMesa" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </GridPane.margin>
+                                          </VBox>
+                                       </children>
+                                    </GridPane>
                                     <HBox fx:id="hBoxBtn" alignment="TOP_CENTER" layoutX="26.0" layoutY="416.0" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0">
                                        <VBox.margin>
                                           <Insets left="15.0" right="15.0" top="20.0" />
@@ -284,6 +331,7 @@
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
+>>>>>>> c8fa38f8503249fc7b2f690a52057307e547806f
                                           <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="67.0" prefWidth="967.0" text="Información Personas" textFill="#363e46">
                                              <font>
                                                 <Font name="FontAwesome Regular" size="35.0" />
@@ -354,13 +402,23 @@
                   </ScrollPane>
                </content></Tab>
             <Tab text="Consultar Lideres">
+<<<<<<< HEAD
                <content>
                   <ScrollPane fx:id="scrollConsultaLideres">
+=======
+               
+                <content>
+                  <ScrollPane fx:id="scrollConsultaLideres" fitToWidth="true">
+                     <content>                         
+                        <fx:include fx:id="viewLideres" source="PanelConsultaLideres.fxml" />                         
+                     </content>
+>>>>>>> c8fa38f8503249fc7b2f690a52057307e547806f
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </ScrollPane>
                </content>
+ 
             </Tab>
          </tabs>
          <GridPane.margin>

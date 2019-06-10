@@ -38,7 +38,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "SELECT id, usuario, foto, email, password_email FROM Usuario WHERE usuario=? AND pass=?";
+                String sql = "SELECT id, usuario, foto, email, password_email FROM usuario WHERE usuario=? AND pass=?";
                 //CAST(AES_DECRYPT(AES_ENCRYPT(1234,key), key)AS char(50)) as pass
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, user);
@@ -90,7 +90,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "SELECT CAST(AES_DECRYPT(AES_ENCRYPT(pass, 'key'), 'key') AS char(50))  as pass FROM Usuario WHERE usuario=?";
+                String sql = "SELECT CAST(AES_DECRYPT(AES_ENCRYPT(pass, 'key'), 'key') AS char(50))  as pass FROM usuario WHERE usuario=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, usuario);
@@ -132,7 +132,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "SELECT usuario FROM Usuario WHERE usuario=?";
+                String sql = "SELECT usuario FROM usuario WHERE usuario=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, usuario);
@@ -173,7 +173,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "UPDATE Usuario SET usuario=?, pass=? WHERE usuario=?";
+                String sql = "UPDATE usuario SET usuario=?, pass=? WHERE usuario=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, usuario);
@@ -217,7 +217,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "UPDATE Usuario SET foto=? WHERE usuario=?";
+                String sql = "UPDATE usuario SET foto=? WHERE usuario=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setBytes(1, ControladorGeneral.toBlob(imagen));
@@ -260,7 +260,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "UPDATE Usuario SET usuario=? WHERE id=?";
+                String sql = "UPDATE usuario SET usuario=? WHERE id=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, usuarioNuevo);
@@ -303,7 +303,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "UPDATE Usuario SET pass=? WHERE id=?";
+                String sql = "UPDATE usuario SET pass=? WHERE id=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, "AES_ENCRYPT("+newPassword+", key)");
@@ -346,7 +346,7 @@ public class UsuarioDAO {
             
             if(conectar!=null){
 
-                String sql = "UPDATE Usuario SET email=?, password_email=? WHERE id=?";
+                String sql = "UPDATE usuario SET email=?, password_email=? WHERE id=?";
 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, emailNuevo);

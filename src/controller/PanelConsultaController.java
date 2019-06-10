@@ -10,9 +10,9 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.validation.NumberValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
+import java.awt.HeadlessException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -22,7 +22,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -54,7 +53,8 @@ import view.ElectoralDataControl;
 public class PanelConsultaController implements Initializable, ComponentesTabla, GeneralView{
 
     @FXML
-    private JFXComboBox<String> fxCombotipoBusqueda, tipoDocumento;
+    private JFXComboBox<String> fxCombotipoBusqueda, tipoDocumento, 
+                                fxComboBoxLugar, fxComboBoxMesa;
     
     @FXML
     private JFXTextField search, numeroDocumento, busqueda;
@@ -73,6 +73,8 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     private HBox hTipoBusqueda, hBoxSexo, hBoxEdad, hBoxBusqueda, 
                  hBoxNumeroDocumento, hBoxBtn;
     
+    @FXML
+    private GridPane hlugar;
 
     @FXML
     private JFXTreeTableView<ControlTable> tableView;
@@ -82,12 +84,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @FXML
     private GridPane panelConsulta;
-    
-    @FXML
-    private ScrollPane scrollConsultaLideres;
-    
-    private VBox panelConsultaLideres;
-    
+     
     private JFXTreeTableColumn<ControlTable, String> columnNames, columnNum, columnNumDoc, columnSexo,
                                                 columnLugar, columnMesa;
 
@@ -182,16 +179,17 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 case "Número de Documento":
                     hBoxNumeroDocumento.setVisible(true);
                     hBoxBtn.setVisible(true);
+                    hlugar.setVisible(false);                    
                     hBoxBusqueda.setVisible(false);
                     hBoxEdad.setVisible(false);
                     hBoxSexo.setVisible(false);
                 break;
 
-                case "Nombre":
-                case "Apellido":
+                case "Nombre/Apellido":
                 case "Barrio":
                     hBoxBusqueda.setVisible(true);
                     hBoxBtn.setVisible(true);
+                    hlugar.setVisible(false);
                     hBoxNumeroDocumento.setVisible(false);
                     hBoxEdad.setVisible(false);
                     hBoxSexo.setVisible(false);
@@ -200,20 +198,34 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 case "Edad":
                     hBoxEdad.setVisible(true);                
                     hBoxBtn.setVisible(true);
+                    hlugar.setVisible(false);                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
                     hBoxSexo.setVisible(false);
                 break;
+                
                 case "Sexo":
                     hBoxSexo.setVisible(true);                
                     hBoxBtn.setVisible(true);
-                    hBoxEdad.setVisible(false);                                    
+                    hlugar.setVisible(false);                    
+                    hBoxEdad.setVisible(false);
+                    hlugar.setVisible(false);                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
                 break;
+                
+                case "Lugar De Votación":
+                    hBoxBtn.setVisible(true);
+                    hlugar.setVisible(true);
+                    hBoxSexo.setVisible(false);                
+                    hBoxEdad.setVisible(false);                                    
+                    hBoxBusqueda.setVisible(false);                    
+                    hBoxNumeroDocumento.setVisible(false);
+                break;                
                 default:
                     hBoxSexo.setVisible(false);                
                     hBoxBtn.setVisible(true);
+                    hlugar.setVisible(false);                    
                     hBoxEdad.setVisible(false);                                    
                     hBoxBusqueda.setVisible(false);                    
                     hBoxNumeroDocumento.setVisible(false);
@@ -338,23 +350,15 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
     
     @Override
     public void initComponents(Object obj) {
-        
-        try{
-            panelConsultaLideres = (VBox) FXMLLoader.load(getClass().getResource("/view/PanelConsulltaLideres.fxml"));
-            
-            //scrollConsultaLideres.setContent(panelConsultaLideres);
-        }catch(Exception ex){
-            System.out.println("hola "+ex.getMessage()+ " "+Arrays.toString(ex.getStackTrace()));
-        }
-        
+                
         //agregamos combobox
         fxCombotipoBusqueda.getItems().add("Todos");
         fxCombotipoBusqueda.getItems().add("Número de Documento");
-        fxCombotipoBusqueda.getItems().add("Nombre");
-        fxCombotipoBusqueda.getItems().add("Apellido");
+        fxCombotipoBusqueda.getItems().add("Nombre/Apellido");
         fxCombotipoBusqueda.getItems().add("Edad");
         fxCombotipoBusqueda.getItems().add("Sexo");
         fxCombotipoBusqueda.getItems().add("Barrio");        
+        fxCombotipoBusqueda.getItems().add("Lugar De Votación");        
         fxCombotipoBusqueda.setValue("Todos");
         
         tipoDocumento.getItems().add("Cedula de Ciudadanía");
@@ -366,6 +370,7 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         controlVisibilidad(hBoxBusqueda, false);
         controlVisibilidad(hBoxEdad, false);
         controlVisibilidad(panelConsulta, true);
+        controlVisibilidad(hlugar, false);
         
         hBoxNumeroDocumento.setVisible(false);
         hBoxNumeroDocumento.setManaged(false);
@@ -409,6 +414,28 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
         rangoEdadValor.setText("Entre "+min+" y "+max+ " Años");            
         
         ControladorGeneral.addTooltipText(btnActualizarTabla, "Actualizar listado", "toolTipTextAjustes");
+        
+        ArrayList<Votantes>list1 = model.consultarVotantes("listLugar", null);
+        
+        if(list1.size()>0){            
+            
+            ControladorGeneral.llenarListaDesplegable(list1, fxComboBoxLugar);            
+            
+            fxComboBoxMesa.getItems().add("Todo");
+            for(int i=1; i<=100; i++){
+                fxComboBoxMesa.getItems().add(String.valueOf(i));            
+            }
+            fxComboBoxMesa.getItems().add("Otro");            
+            
+        }else{
+            fxComboBoxLugar.getItems().add("Sin resultados");
+            fxComboBoxLugar.setValue("Sin resultados");
+            fxComboBoxMesa.getItems().add("Sin resultados");
+            fxComboBoxMesa.setValue("Sin resultados");
+        }
+        
+        
+        
         
     }
 
@@ -641,6 +668,63 @@ public class PanelConsultaController implements Initializable, ComponentesTabla,
                 }                        
             }
 
+        }else if(hlugar.isVisible()){
+        
+            if(fxComboBoxLugar.getValue()!=null && fxComboBoxMesa.getValue() != null){
+                
+                String lugar = fxComboBoxLugar.getValue();
+                String mesa="";
+                
+                if(fxComboBoxMesa.getValue().equals("Otro")){
+                    boolean condicion=true;
+                    while(condicion){
+                        try{
+                            mesa = JOptionPane.showInputDialog("Ingrese el número de mesa a buscar");
+                            if(mesa!=null){
+                                condicion=false;                            
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido por favor intente nuevamente");
+                            }
+                        }catch(HeadlessException ex){
+                            JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido por favor intente nuevamente", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                }else{
+                    mesa=fxComboBoxMesa.getValue();
+                }
+
+                if(mesa==null){
+                    mesa="Todo";
+                }
+
+                data.add(lugar);
+                data.add(mesa);
+                list = model.consultarVotantes("Lugar De Votación", data);
+                
+                if(list.size()>0){
+                    addRow(list);                        
+                }else{
+
+                    /*validamos si hubo alguna excepción u error*/
+                    if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                        JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                            ControladorValidaciones.EXCEPCIONES, 
+                                                            "ERROR", JOptionPane.ERROR_MESSAGE);           
+                        ControladorValidaciones.EXCEPCIONES="";                                
+
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                        addRow(list);
+                    }                        
+                }
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un valor valido para realizar la busqueda", "Error", JOptionPane.ERROR_MESSAGE);                        
+            }
+        
         }else{
 
             list = model.consultarVotantes();

@@ -35,7 +35,7 @@ public class VotantesDAO {
             if(conectar!=null){
             
                 String sql = "INSERT INTO "
-                            + "Votantes(tipo_documento, numero_documento, nombre, apellido, sexo, fecha_nacimiento, direccion, barrio, estado_civil, telefono, correo_electronico, lugar_de_votacion, mesa_de_votacion, direccion_votacion) "
+                            + "votantes(tipo_documento, numero_documento, nombre, apellido, sexo, fecha_nacimiento, direccion, barrio, estado_civil, telefono, correo_electronico, lugar_de_votacion, mesa_de_votacion, direccion_votacion) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 
                 pst = conectar.prepareStatement(sql);
@@ -89,7 +89,7 @@ public class VotantesDAO {
             
             if(conectar!=null){
                 
-                String sql ="SELECT * FROM Votantes WHERE 1";
+                String sql ="SELECT * FROM votantes WHERE 1";
                 
                 pst = conectar.prepareStatement(sql);
                 
@@ -160,69 +160,84 @@ public class VotantesDAO {
                 
                 switch(tipoBusqueda){
                     case "Número de Documento":
-                        sql = "SELECT * FROM Votantes WHERE tipo_documento=? And numero_documento=?";
+                        sql = "SELECT * FROM votantes WHERE tipo_documento=? And numero_documento=?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));
                         pst.setString(2, data.get(1));
                     break;
 
                     case "Nombre":
-                        sql = "SELECT * FROM Votantes WHERE nombre LIKE ?";
+                        sql = "SELECT * FROM votantes WHERE nombre LIKE ? AND apellido=?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
+                        pst.setString(2, "%"+data.get(0)+"%");
                     break;
                     
                     case "Apellido":
-                        sql = "SELECT * FROM Votantes WHERE apellido LIKE ?";
+                        sql = "SELECT * FROM votantes WHERE apellido LIKE ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                     break;
                     
                     case "Nombre/Apellido":
-                        sql = "SELECT * FROM Votantes WHERE nombre LIKE ? OR apellido LIKE ?";
+                        sql = "SELECT * FROM votantes WHERE nombre LIKE ? OR apellido LIKE ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                         pst.setString(2, "%"+data.get(0)+"%");                        
                     break;                    
                     
                     case "Barrio":
-                        sql = "SELECT * FROM Votantes WHERE barrio LIKE ?";
+                        sql = "SELECT * FROM votantes WHERE barrio LIKE ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                     break;                
 
                     case "Edad":
-                        sql = "SELECT * FROM `Votantes` WHERE (YEAR(NOW()) - YEAR(fecha_nacimiento)) BETWEEN ? AND ?";
+                        sql = "SELECT * FROM votantes WHERE (YEAR(NOW()) - YEAR(fecha_nacimiento)) BETWEEN ? AND ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0)); 
                         pst.setString(2, data.get(1));                                                
                     break;
 
                     case "Sexo":
-                        sql = "SELECT * FROM Votantes WHERE sexo = ?";
+                        sql = "SELECT * FROM votantes WHERE sexo = ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));                        
                     break;
 
                     case "Mesa De Votación":
-                        sql = "SELECT * FROM Votantes WHERE mesa_de_votacion = ?";
+                        sql = "SELECT * FROM votantes WHERE mesa_de_votacion = ?";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));                        
                     break;
 
                      case "Lugar De Votación":
-                        sql = "SELECT * FROM Votantes WHERE lugar_de_votacion = ?";
-                        pst = conectar.prepareStatement(sql);
-                        pst.setString(1, data.get(0));                        
+                        if(data.get(1).equals("Todo")){
+                            sql = "SELECT * FROM votantes WHERE lugar_de_votacion = ?";                        
+                            pst = conectar.prepareStatement(sql);
+                            pst.setString(1, data.get(0));                        
+                        }else{
+                            sql = "SELECT * FROM votantes WHERE lugar_de_votacion = ? AND mesa_de_votacion=?";                        
+                            pst = conectar.prepareStatement(sql);
+                            pst.setString(1, data.get(0));       
+                            pst.setString(2, data.get(1));                                                                            
+                        }
                     break;                   
 
                      case "ListCombo":
-                        sql = "SELECT DISTINCT mesa_de_votacion, lugar_de_votacion FROM Votantes WHERE 1";
+                        sql = "SELECT DISTINCT mesa_de_votacion, lugar_de_votacion FROM votantes WHERE 1";
                         pst = conectar.prepareStatement(sql);
                     break;    
                     
+                    case "listLugar":                         
+                        sql = "SELECT DISTINCT lugar_de_votacion FROM votantes ORDER BY votantes.lugar_de_votacion";
+                        pst = conectar.prepareStatement(sql);
+                    break;
+                    
+                    
+                    
                     default:
-                        sql = "SELECT * FROM Votantes WHERE 1";
+                        sql = "SELECT * FROM votantes WHERE 1";
                         pst = conectar.prepareStatement(sql);
                     break;                                
 
@@ -237,7 +252,7 @@ public class VotantesDAO {
                     
                     votante = new Votantes();
                     
-                    if(!tipoBusqueda.equals("ListCombo")){
+                    if(!tipoBusqueda.equals("ListCombo") && !tipoBusqueda.equals("listLugar")){
                         
                         votante.setId(rs.getInt("id"));
                         votante.setTipoDocumento(rs.getString("tipo_documento"));
@@ -257,7 +272,6 @@ public class VotantesDAO {
 
                     }else{
                         votante.setLugar(rs.getString("lugar_de_votacion"));
-                        votante.setMesa(rs.getString("mesa_de_votacion"));
                     }
                     
                     votante.setIndice(count);
@@ -298,7 +312,7 @@ public class VotantesDAO {
             
             if(conectar!=null){
 
-                String sql = "SELECT DISTINCT correo_electronico FROM Votantes WHERE 1 ";
+                String sql = "SELECT DISTINCT correo_electronico FROM votantes WHERE 1 ";
  
                 pst = conectar.prepareStatement(sql);
                 rs = pst.executeQuery();
@@ -345,7 +359,7 @@ public class VotantesDAO {
             
             if(conectar!=null){
                 String sql = "UPDATE "
-                            + "Votantes SET tipo_documento=?, numero_documento=?, nombre=?, apellido=?, sexo=?, fecha_nacimiento=?, direccion=?, barrio=?, estado_civil=?, telefono=?, correo_electronico=?, lugar_de_votacion=?, mesa_de_votacion=?, direccion_votacion=? "
+                            + "votantes SET tipo_documento=?, numero_documento=?, nombre=?, apellido=?, sexo=?, fecha_nacimiento=?, direccion=?, barrio=?, estado_civil=?, telefono=?, correo_electronico=?, lugar_de_votacion=?, mesa_de_votacion=?, direccion_votacion=? "
                             + "WHERE id=?";
                 
                 pst = conectar.prepareStatement(sql);
@@ -398,7 +412,7 @@ public class VotantesDAO {
             conectar = conexion.conectar();
             
             if(conectar!=null){
-                String sql = "DELETE FROM Votantes WHERE id=?";
+                String sql = "DELETE FROM votantes WHERE id=?";
                 
                 pst = conectar.prepareStatement(sql);
                 pst.setInt(1, id);                
@@ -437,7 +451,7 @@ public class VotantesDAO {
             
             if(conectar!=null){
                 
-                String sql ="SELECT tipo_documento, numero_documento FROM Votantes WHERE tipo_documento=? AND numero_documento=?";
+                String sql ="SELECT tipo_documento, numero_documento FROM votantes WHERE tipo_documento=? AND numero_documento=?";
                 
                 pst = conectar.prepareStatement(sql);
                 pst.setString(1, tipo_documento);

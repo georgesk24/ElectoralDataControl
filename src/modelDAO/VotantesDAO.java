@@ -100,7 +100,7 @@ public class VotantesDAO {
                            + "votantes.direccion_votacion, lider.id AS idLider, lider.nombre AS nombreLider, lider.apellido AS apellidoLider "
                            + "FROM votantes "
                            + "INNER JOIN lider ON(votantes.id_lider=lider.id) "
-                           + "WHERE 1";                       
+                           + "WHERE 1 ORDER BY votantes.nombre, votantes.apellido ASC";                       
                 
                 pst = conectar.prepareStatement(sql);
                 
@@ -193,7 +193,7 @@ public class VotantesDAO {
                     
                     case "Nombre/Apellido":
 
-                        sql=  sql + "WHERE votantes.nombre LIKE ? OR votantes.apellido LIKE ?";                       
+                        sql=  sql + "WHERE votantes.nombre LIKE ? OR votantes.apellido LIKE ? ORDER BY votantes.nombre, votantes.apellido ASC";                       
 
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
@@ -210,7 +210,7 @@ public class VotantesDAO {
 
                     case "Edad":
 
-                        sql= sql + "WHERE (YEAR(NOW()) - YEAR(votantes.fecha_nacimiento)) BETWEEN ? AND ?";                       
+                        sql= sql + "WHERE (YEAR(NOW()) - YEAR(votantes.fecha_nacimiento)) BETWEEN ? AND ? ORDER BY votantes.nombre, votantes.apellido ASC";                       
     
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0)); 
@@ -219,7 +219,7 @@ public class VotantesDAO {
 
                     case "Sexo":
 
-                        sql= sql + "WHERE votantes.sexo = ?";                        
+                        sql= sql + "WHERE votantes.sexo = ? ORDER BY votantes.nombre, votantes.apellido ASC";                        
                         
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));                        
@@ -229,14 +229,14 @@ public class VotantesDAO {
                      case "Lugar De Votación":
                         if(data.get(1).equals("Todo")){
 
-                            sql= sql + "WHERE votantes.lugar_de_votacion = ? ";                            
+                            sql= sql + "WHERE votantes.lugar_de_votacion = ? ORDER BY votantes.nombre, votantes.apellido ASC";                            
 
                                 pst = conectar.prepareStatement(sql);
                                 pst.setString(1, data.get(0));                        
 
                         }else{
 
-                            sql= sql + "WHERE votantes.lugar_de_votacion = ? AND votantes.mesa_de_votacion=? ";
+                            sql= sql + "WHERE votantes.lugar_de_votacion = ? AND votantes.mesa_de_votacion=? ORDER BY votantes.nombre, votantes.apellido ASC";
                             
                             pst = conectar.prepareStatement(sql);
                             pst.setString(1, data.get(0));       
@@ -245,7 +245,7 @@ public class VotantesDAO {
                     break;                   
 
                      case "ListCombo":
-                        sql = "SELECT DISTINCT mesa_de_votacion, lugar_de_votacion FROM votantes WHERE 1";
+                        sql = "SELECT DISTINCT mesa_de_votacion, lugar_de_votacion FROM votantes WHERE 1 ORDER BY votantes.lugar_de_votacion ASC";
                         pst = conectar.prepareStatement(sql);
                     break;    
                     
@@ -256,7 +256,7 @@ public class VotantesDAO {
                     
                     case "Lider":
 
-                        sql= sql + "WHERE lider.id=? ";
+                        sql= sql + "WHERE lider.id=? ORDER BY votantes.nombre, votantes.apellido ASC";
 
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));

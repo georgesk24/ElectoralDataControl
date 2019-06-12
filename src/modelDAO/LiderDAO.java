@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Conexion;
 import model.Lider;
-import model.Persona;
 import utlidades.ControladorValidaciones;
 
 /**
@@ -96,7 +95,7 @@ public class LiderDAO {
                 switch(filtro){
                     
                     case "Todo":
-                        sql = "SELECT * FROM lider WHERE id != -1 ORDER BY nombre ";
+                        sql = "SELECT * FROM lider WHERE id != -1 ORDER BY nombre, apellido ASC";
                         pst = conectar.prepareStatement(sql);
                     break;
 
@@ -108,33 +107,33 @@ public class LiderDAO {
                     break;
                     
                     case "Nombre/Apellido":
-                        sql = "SELECT * FROM lider WHERE id != -1 AND nombre LIKE ? OR apellido LIKE ?";
+                        sql = "SELECT * FROM lider WHERE id != -1 AND nombre LIKE ? OR apellido LIKE ? ORDER BY nombre, apellido ASC";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                         pst.setString(2, "%"+data.get(0)+"%");                        
                     break;                    
                     
                     case "Barrio":
-                        sql = "SELECT * FROM lider WHERE id != -1 AND barrio LIKE ?";
+                        sql = "SELECT * FROM lider WHERE id != -1 AND barrio LIKE ? ORDER BY nombre ASC";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, "%"+data.get(0)+"%");
                     break;                
                     
                     case "Edad":
-                        sql = "SELECT * FROM lider WHERE id != -1 AND (YEAR(NOW()) - YEAR(fecha_nacimiento)) BETWEEN ? AND ?";
+                        sql = "SELECT * FROM lider WHERE id != -1 AND (YEAR(NOW()) - YEAR(fecha_nacimiento)) BETWEEN ? AND ? ORDER BY nombre, apellido ASC";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0)); 
                         pst.setString(2, data.get(1));                                                
                     break;
 
                     case "Sexo":
-                        sql = "SELECT * FROM lider WHERE id != -1 AND sexo = ?";
+                        sql = "SELECT * FROM lider WHERE id != -1 AND sexo = ? ORDER BY nombre, apellido ASC";
                         pst = conectar.prepareStatement(sql);
                         pst.setString(1, data.get(0));                        
                     break;
                     
                     case "id/value":
-                        sql = "SELECT id, nombre, apellido FROM lider WHERE id != -1";
+                        sql = "SELECT id, nombre, apellido FROM lider WHERE id != -1 ORDER BY nombre, apellido ASC";
                         pst= conectar.prepareStatement(sql);
                     break;
                     

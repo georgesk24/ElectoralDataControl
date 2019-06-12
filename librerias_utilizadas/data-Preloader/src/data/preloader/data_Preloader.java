@@ -56,7 +56,7 @@ public class data_Preloader extends Preloader {
             stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
             stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);               
 
-            this.stage = stage;
+            data_Preloader.stage = stage;
 
             
         } catch (IOException ex) {

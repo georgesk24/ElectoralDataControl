@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Conexion;
 
 /**
  *
@@ -23,7 +24,10 @@ public class ElectoralDataControl extends Application {
     public static Stage stage;
     
     public static Stage stageLogin;
-            
+    public static Stage stageFailedConnection;
+    
+    private boolean validarConexion=true;
+    
     @Override
     public void init(){
         /*Cargamos ventana inicial 5 segundos*/
@@ -32,30 +36,58 @@ public class ElectoralDataControl extends Application {
         } catch (InterruptedException ex) {
             Logger.getLogger(ElectoralDataControl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Conexion conexion = new Conexion();
+        this.validarConexion = conexion.conectar()!=null;
+        
+        System.out.println("hola mundo");
     }
     
     @Override
     public void start(Stage stage) throws Exception {
         
-        stage.initStyle(StageStyle.UNDECORATED);
+        if(this.validarConexion){
 
-        loader = new FXMLLoader(getClass().getResource("Principal.fxml"));        
-        root = loader.load();
-                
-        Parent root1 = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+            stage.initStyle(StageStyle.UNDECORATED);
 
-        Scene scene = new Scene(root1);
+            loader = new FXMLLoader(getClass().getResource("Principal.fxml"));        
+            root = loader.load();
 
-        stage.setResizable(false);
-        stage.setScene(scene);
+            Parent root1 = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
 
-        stage.show();
-        
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);               
+            Scene scene = new Scene(root1);
 
-        ElectoralDataControl.stageLogin=stage;
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.show();
+
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);               
+
+            ElectoralDataControl.stageLogin=stage;
+                    
+        }else{
+
+            stage.initStyle(StageStyle.UNDECORATED);            
+            
+            Parent root1 = FXMLLoader.load(getClass().getResource("FailedConnection.fxml"));
+
+            Scene scene = new Scene(root1);
+
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.show();
+
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);    
+            
+            ElectoralDataControl.stageFailedConnection=stage;
+                        
+        }
         
     }
 

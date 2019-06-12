@@ -269,39 +269,31 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
             FileChooser fileSave = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Solo archivos EXCEL", extensiones);                
             fileSave.getExtensionFilters().add(extFilter); //Show save file dialog             
-
-            boolean condicion = true;
             
-            while(condicion){
+            File file = fileSave.showSaveDialog(null); 
 
-                File file = fileSave.showSaveDialog(null); 
+            if (file != null) { 
 
-                if (file != null) { 
+                String name = file.getPath();
 
-                    String name = file.getPath();
+                if(file.getName()!=null){
 
-                    if(file.getName()!=null){
-
-                        if(name.contains(".")){
-                            file = new File(name.substring(0, name.lastIndexOf("."))+".xlsx");                    
-                        }else{
-                            file = new File(name+".xlsx");                                    
-                        }                
-                        
-                        condicion=false;
-                    
+                    if(name.contains(".")){
+                        file = new File(name.substring(0, name.lastIndexOf("."))+".xlsx");                    
                     }else{
-                        JOptionPane.showMessageDialog(null, "Debe ingresar un nombre valido para el archivo", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    }
+                        file = new File(name+".xlsx");                                    
+                    }                
 
-                    try (FileOutputStream fileOut = new FileOutputStream(file)) {
-                        book.write(fileOut);
-                    }
-                    
-                    JOptionPane.showMessageDialog(null, "Operación Exitosa, El reporte ha sido generado de manera correcta", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                } 
-                
-                               
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe ingresar un nombre valido para el archivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+
+                try (FileOutputStream fileOut = new FileOutputStream(file)) {
+                    book.write(fileOut);
+                }
+
+                JOptionPane.showMessageDialog(null, "Operación Exitosa, El reporte ha sido generado de manera correcta", "INFO", JOptionPane.INFORMATION_MESSAGE);
+
             }
                                     
         }catch(IOException ex){
@@ -319,29 +311,7 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
 
         
     }
-    
-    
-    private void llenarLista(ArrayList<Votantes> list, int value){
         
-        for (int i=0; i<list.size(); i++){
-            if(value==1){
-                fxComboBoxLugar.getItems().add(list.get(i).getLugar());
-                if(i==0){
-                    fxComboBoxLugar.setValue(list.get(i).getLugar());
-                }
-            }else if(value==2){
-                fxComboBoxMesa.getItems().add(list.get(i).getMesa());
-                if(i==0){
-                    fxComboBoxMesa.setValue(list.get(i).getMesa());                
-                }            
-            }
-        }
-        
-        fxComboBoxLugar.setVisibleRowCount(10);
-        fxComboBoxMesa.setVisibleRowCount(10);
-        
-    }
-    
     @Override
     public void addColumn() {
     

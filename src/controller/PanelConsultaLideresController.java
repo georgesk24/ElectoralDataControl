@@ -196,9 +196,17 @@ public class PanelConsultaLideresController implements Initializable, Componente
                         addRow(list);                        
 
                     }else{
+                        
+                        String nota="<html>"
+                                     + "<body>"
+                                        + "<span style='color:red;'>Nota: </span>"
+                                        + "<span style='color:blue;'>si tiene problemas para eliminar el registro posiblemente el mismo tenga relación con otros registros</span>"
+                                    + "</body>"
+                                  + "</html>";
                          JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
-                                                             ControladorValidaciones.EXCEPCIONES, 
-                                                             "ERROR", JOptionPane.ERROR_MESSAGE);           
+                                                             ControladorValidaciones.EXCEPCIONES+"\n"
+                                                            +nota, 
+                                                              "ERROR", JOptionPane.ERROR_MESSAGE);           
                          ControladorValidaciones.EXCEPCIONES="";
                     }
                 

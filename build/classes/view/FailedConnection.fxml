@@ -30,13 +30,16 @@
             <Font name="System Bold Italic" size="40.0" />
          </font>
       </Label>
-      <Label layoutX="231.0" layoutY="389.0" text="¡No se pudo establecer una conexión con la base de datos!">
+      <Label layoutX="231.0" layoutY="389.0" text="¡No se pudo establecer una conexión con la base de datos! posiblemente surgieron errores en la configuración inicial" wrapText="true">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="20.0" />
+            <Insets bottom="20.0" left="50.0" right="50.0" />
          </VBox.margin>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
       </Label>
       <HBox alignment="TOP_CENTER" spacing="10.0">
          <VBox.margin>

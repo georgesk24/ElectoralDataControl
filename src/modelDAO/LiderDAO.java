@@ -337,6 +337,89 @@ public class LiderDAO {
         
     }
     
+    /*LIDER DAO MODEL*/
+    public boolean validateLider(){
+
+        boolean condicion = false;
+
+        try{
+
+            conectar = conexion.conectar();
+            if(conectar!=null){
+
+                String sql = "SELECT id FROM lider WHERE id=-1";
+                pst = conectar.prepareStatement(sql);
+                rs = pst.executeQuery();
+
+                if(rs.next()){
+                    condicion = true;
+                }
+
+                ControladorValidaciones.EXCEPCIONES="";
+
+            }else{
+                ControladorValidaciones.EXCEPCIONES="* Error al conectar con la base de datos\n";            
+            }
+
+        }catch(SQLException ex){
+            ControladorValidaciones.EXCEPCIONES= "* Error de ejecución : "+ex.getMessage();        
+        }finally{
+            try{
+                conexion.cerrar(conectar);
+            }catch(Exception ex){
+            }  
+        }
+
+        return condicion;
+
+     }
+
+    public boolean agregarLider(){
+
+        boolean condicion=false;
+
+        try{    
+            conectar = conexion.conectar();            
+
+            if(conectar!=null){
+
+                String sql = "INSERT INTO lider(id, tipo_documento, numero_documento, nombre, apellido) VALUES (?, ?, ?, ?, ?)";
+
+                pst = conectar.prepareStatement(sql);
+                pst.setString(1, "-1");
+                pst.setString(2, "default");
+                pst.setString(3, "-1");
+                pst.setString(4, "default");
+                pst.setString(5, "default");
+
+                int res = pst.executeUpdate();
+
+                if(res>0){
+                    condicion=true;
+                }
+
+                ControladorValidaciones.EXCEPCIONES="";
+
+            }else{
+                ControladorValidaciones.EXCEPCIONES="* Error al conectar con la base de datos\n";            
+            }
+
+
+        }catch(SQLException ex){
+            ControladorValidaciones.EXCEPCIONES= "* Error de ejecución : "+ex.getMessage();        
+        }finally{
+            try{
+                conexion.cerrar(conectar);
+            }catch(Exception ex){
+            }
+
+        }
+
+        return condicion;
+
+    }   
+    
+    
     
     
     

@@ -380,6 +380,92 @@ public class UsuarioDAO {
                 
     }
 
+    public int validateUsuario(){
+
+        int count = -1;
+
+        try{
+
+            conectar = conexion.conectar();
+
+            if(conectar!=null){
+
+                String sql = "SELECT COUNT(*) AS validate FROM usuario ";
+
+                pst = conectar.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+
+                if(rs.next()){
+                    count = rs.getInt("validate");
+                }
+
+                ControladorValidaciones.EXCEPCIONES="";
+
+            }else{
+                ControladorValidaciones.EXCEPCIONES="* Error al conectar con la base de datos\n";            
+            }
+
+
+        }catch(SQLException ex){
+            ControladorValidaciones.EXCEPCIONES= "* Error de ejecución : "+ex.getMessage();        
+        }finally{
+            try{
+                conexion.cerrar(conectar);
+            }catch(Exception ex){
+
+            }
+        }
+
+        return count;
+
+    }
+
+    public boolean agregarUsuario(){
+
+        boolean condicion=false;
+
+        try{
+
+            conectar = conexion.conectar();            
+            if(conectar!=null){
+
+                String sql = "INSERT INTO usuario (usuario, pass, foto) VALUES (?, ?, ?)";
+                String pass = "1234";
+                File imagen = new File("src/resources/images/user-profile.png");
+
+                
+                pst = conectar.prepareStatement(sql);
+                pst.setString(1, "admin");
+                pst.setString(2, "AES_ENCRYPT("+pass+", key)");
+                pst.setBytes(3, ControladorGeneral.toBlob(imagen));
+                
+                int res = pst.executeUpdate();
+
+                if(res>0){
+                    condicion=true;
+                }
+                
+                ControladorValidaciones.EXCEPCIONES="";
+                
+            }else{
+                ControladorValidaciones.EXCEPCIONES="* Error al conectar con la base de datos\n";            
+            }
+            
+            
+        }catch(SQLException ex){
+            ControladorValidaciones.EXCEPCIONES= "* Error de ejecución : "+ex.getMessage();        
+        }finally{
+            try{
+                conexion.cerrar(conectar);
+            }catch(Exception ex){
+                
+            }
+        }
+        
+        return condicion;
+        
+    }
 
     
 }

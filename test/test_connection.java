@@ -12,8 +12,8 @@ public class test_connection {
  
     private final String DB="electoraldb";
     private final String URL="jdbc:mysql://localhost:3307/"+DB+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private final String USER="root";
-    private final String PASS="";    
+    private final String USER="prueba";
+    private final String PASS="*7LIBERTADYORDEN7*";    
     
     public DataSource initializeDataSource(){
 

@@ -12,6 +12,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Conexion;
+import utlidades.ConfiguracionInicial;
 
 /**
  *
@@ -28,8 +29,24 @@ public class ElectoralDataControl extends Application {
     
     private boolean validarConexion=true;
     
+    
+    
     @Override
     public void init(){
+
+        Conexion conexion = new Conexion();
+        this.validarConexion = conexion.conectar()!=null;
+        
+        
+        if(this.validarConexion){
+            
+            ConfiguracionInicial configuracinInicial = new ConfiguracionInicial();
+            if(!configuracinInicial.validarLider() || !configuracinInicial.validarUsuario()){
+                this.validarConexion=false;
+            }        
+        
+        }
+        
         /*Cargamos ventana inicial 5 segundos*/
         try {
             Thread.sleep(5000);
@@ -37,10 +54,7 @@ public class ElectoralDataControl extends Application {
             Logger.getLogger(ElectoralDataControl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Conexion conexion = new Conexion();
-        this.validarConexion = conexion.conectar()!=null;
-        
-        System.out.println("hola mundo");
+ 
     }
     
     @Override

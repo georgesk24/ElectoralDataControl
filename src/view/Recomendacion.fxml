@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane prefHeight="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane prefHeight="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecomendacionController">
    <content>
       <VBox alignment="TOP_CENTER" prefWidth="450.0">
          <children>
@@ -74,7 +73,7 @@
                   <VBox alignment="CENTER_LEFT" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Label text="Para poder realizar el envio de correos debe ingresar al la siguiente direccion: " wrapText="true" />
-                        <Hyperlink text="https://myaccount.google.com/lesssecureapps" textFill="#f50707" />
+                        <Hyperlink fx:id="linkCorreoConfig" onAction="#eventsOnAction" text="https://myaccount.google.com/lesssecureapps" textFill="#f50707" />
                         <Label text="Previamente debe iniciar sesión con la cuenta de correo emisor que registro en el sistema" wrapText="true" />
                      </children>
                      <GridPane.margin>

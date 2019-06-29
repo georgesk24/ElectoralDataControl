@@ -79,7 +79,7 @@
                               </Label>
                               <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                  <children>
-                                    <JFXTextField fx:id="textFieldUsuario" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese su usuario" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                    <JFXTextField fx:id="textFieldUsuario" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese su usuario" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -96,7 +96,7 @@
                               </Label>
                               <HBox fillHeight="false" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                  <children>
-                                    <JFXPasswordField fx:id="textFieldPass" focusColor="#363e46" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
+                                    <JFXPasswordField fx:id="textFieldPass" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
                                        <unFocusColor>
                                           <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                              <stops>
@@ -106,7 +106,7 @@
                                           </RadialGradient>
                                        </unFocusColor>
                                     </JFXPasswordField>
-                                    <JFXTextField fx:id="textFieldPassUnmask" focusColor="#363e46" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="textFieldPassUnmask" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                               <JFXCheckBox fx:id="checkVerPassI" onAction="#eventsOnAction" text="Ver Contraseña">
@@ -142,7 +142,7 @@
                               </Label>
                               <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                  <children>
-                                    <JFXTextField fx:id="textFieldNuevoUsuario" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese un valor" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
+                                    <JFXTextField fx:id="textFieldNuevoUsuario" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="62.0" prefWidth="454.0" promptText="Ingrese un valor" unFocusColor="#ffffff00" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -159,7 +159,7 @@
                               </Label>
                               <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                  <children>
-                                    <JFXPasswordField fx:id="textFieldNuevoPass" focusColor="#363e46" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
+                                    <JFXPasswordField fx:id="textFieldNuevoPass" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="43.0" promptText="Ingrese su contraseña" HBox.hgrow="ALWAYS">
                                        <unFocusColor>
                                           <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                              <stops>
@@ -169,7 +169,7 @@
                                           </RadialGradient>
                                        </unFocusColor>
                                     </JFXPasswordField>
-                                    <JFXTextField fx:id="textFieldPassUnmask2" focusColor="#363e46" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="textFieldPassUnmask2" focusColor="#363e46" onKeyPressed="#eventsKeyPressed" onKeyTyped="#eventsKeyTyped" onMouseClicked="#eventsMouseClick" prefHeight="49.0" prefWidth="141.0" promptText="Ingrese su contraseña" style="-fx-font-size: 17;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                               <JFXCheckBox fx:id="checkVerPassC" onAction="#eventsOnAction" text="Ver Contraseña">

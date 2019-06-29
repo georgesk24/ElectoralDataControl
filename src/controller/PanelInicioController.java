@@ -17,7 +17,7 @@ public class PanelInicioController implements Initializable {
 
     @FXML
     private JFXButton btnCardRegistrar, btnCardConsulta, btnCardReporte, 
-                      btnCardLugarDeVotacion, btnCardAjustes;
+                      btnCardLugarDeVotacion, btnCardAjustes, btnCardRegistrarLider;
     
  
         
@@ -29,15 +29,17 @@ public class PanelInicioController implements Initializable {
         PrincipalController principalController = ElectoralDataControl.loader.getController();
         
         if(evt.equals(btnCardRegistrar)){
-           principalController.selectView("Registro", null);        
+           principalController.selectView("Registro", null, "");        
+        }else if(evt.equals(btnCardRegistrarLider)){
+           principalController.selectView("Registro_Lider", null, "");                
         }else if(evt.equals(btnCardConsulta)){
-           principalController.selectView("Consulta", null);                
+           principalController.selectView("Consulta", null, "");                
         }else if(evt.equals(btnCardReporte)){
-           principalController.selectView("Reporte", null);                
+           principalController.selectView("Reporte", null, "");                
         }else if(evt.equals(btnCardLugarDeVotacion)){
-           principalController.selectView("Lugar", null);                
+           principalController.selectView("Lugar", null, "");                
         }else if(evt.equals(btnCardAjustes)){
-           principalController.selectView("Ajuste", null);                
+           principalController.selectView("Ajuste", null, "");                
         }
 
         

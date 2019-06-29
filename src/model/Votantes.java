@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
@@ -11,11 +6,15 @@ package model;
  */
 public class Votantes extends Persona{
     
-    private int indice;
     private String lugar;
     private String direccionLugar; 
     private String mesa;
-
+    private Lider lider;
+    
+    public Votantes(){
+        lider = new Lider();
+    }
+    
     
     public String getLugar() {
         return lugar;
@@ -41,14 +40,14 @@ public class Votantes extends Persona{
         this.mesa = mesa;
     }
 
-    public int getIndice() {
-        return indice;
+    public Lider getLider() {
+        return lider;
     }
 
-    public void setIndice(int indice) {
-        this.indice = indice;
+    public void setLider(Lider lider) {
+        this.lider = lider;
     }
-    
+
     
     
     

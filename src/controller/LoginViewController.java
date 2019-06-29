@@ -9,18 +9,24 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import model.Usuario;
+import javax.swing.KeyStroke;
 import modelDAO.UsuarioDAO;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
@@ -58,7 +64,8 @@ public class LoginViewController implements Initializable, GeneralView{
     private JFXButton btnIngresar, btnActualizar;
     
     private UsuarioDAO model;
-    
+    private final KeyCombination keyControlC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);
+    private final KeyCombination keyControlV = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_ANY);
 
     
     
@@ -71,6 +78,14 @@ public class LoginViewController implements Initializable, GeneralView{
     public void initialize(URL url, ResourceBundle rb) {
         
         initComponents(null);
+        
+        textFieldUsuario.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+        textFieldPass.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+        textFieldPassUnmask.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+        textFieldNuevoUsuario.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+        textFieldNuevoPass.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+        textFieldPassUnmask2.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
+
         
     }    
 
@@ -194,11 +209,13 @@ public class LoginViewController implements Initializable, GeneralView{
         
     }
 
+    
+    
     @FXML
     public void eventsMouseClick(MouseEvent event) {
         
         Object evt = event.getSource();
-        
+                
         if(evt.equals(btnClose)){
             int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?", "Advertencia", JOptionPane.WARNING_MESSAGE);
             if(confirmar==JOptionPane.YES_OPTION){
@@ -206,10 +223,81 @@ public class LoginViewController implements Initializable, GeneralView{
             }
         }else if(evt.equals(btnMinimize)){
             ElectoralDataControl.stageLogin.setIconified(true);
+        
         }
         
     }
 
+    @FXML
+    public void eventsKeyTyped(KeyEvent event){
+        
+        Object evt = event.getSource();
+        
+        String c = event.getCharacter();
+        
+        if(!ControladorValidaciones.validateWhiteSpaces(c)){
+            event.consume();
+        }
+        
+        if(evt.equals(textFieldUsuario)){
+            
+            if(!ControladorValidaciones.validateLegth(textFieldUsuario.getText(), 30)){
+                 event.consume();
+             }
+            
+        }else if(evt.equals(textFieldNuevoUsuario)){
+
+            if(!ControladorValidaciones.validateLegth(textFieldNuevoUsuario.getText(), 30)){
+                 event.consume();
+             }
+
+        }else if(evt.equals(textFieldPass) ){
+
+            if(!ControladorValidaciones.validateLegth(textFieldPass.getText(), 10)){
+                 event.consume();
+             }
+            
+        }else if(evt.equals(textFieldPassUnmask)){
+
+            if(!ControladorValidaciones.validateLegth(textFieldPassUnmask.getText(), 10)){
+                 event.consume();
+             }
+        
+        }else if(evt.equals(textFieldPassUnmask2)){
+
+            if(!ControladorValidaciones.validateLegth(textFieldPassUnmask2.getText(), 10)){
+                 event.consume();
+             }
+        
+        }else if(evt.equals(textFieldNuevoPass)){
+        
+            if(!ControladorValidaciones.validateLegth(textFieldNuevoPass.getText(), 10)){
+                 event.consume();
+             }
+            
+        }
+        
+    }
+    
+    @FXML
+    public void eventsKeyPressed(KeyEvent event){
+        
+        Object evt = event.getSource();
+        
+        if(evt.equals(textFieldUsuario) || evt.equals(textFieldPass) || 
+           evt.equals(textFieldPassUnmask) || evt.equals(textFieldPassUnmask2) || 
+           evt.equals(textFieldNuevoUsuario) || evt.equals(textFieldNuevoPass) ){
+        
+            if(keyControlC.match(event) || keyControlV.match(event)){
+                event.consume();
+            }
+        
+        }
+        
+        
+    }
+
+    
     @Override
     public void initComponents(Object obj) {
         
@@ -227,7 +315,8 @@ public class LoginViewController implements Initializable, GeneralView{
             ElectoralDataControl.stageLogin.setX(mouseEvent.getScreenX() + dragDelta.x);
             ElectoralDataControl.stageLogin.setY(mouseEvent.getScreenY() + dragDelta.y);
         });        
-        
+
+
     
     }
 

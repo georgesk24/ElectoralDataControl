@@ -19,13 +19,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
+import model.Lider;
 import model.Persona;
-import model.Votantes;
 import modelDAO.LiderDAO;
-import modelDAO.VotantesDAO;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
 import utlidades.GeneralView;
@@ -49,10 +47,7 @@ public class PanelLiderController implements Initializable, GeneralView {
     @FXML
     private JFXRadioButton radioMale, radioFemale;
     
-    /*
-    @FXML
-    private DatePicker fechaNacimiento;*/
-
+    
     @FXML
     private JFXComboBox<String> tipoDocumento, estadoCivil;
         
@@ -77,7 +72,7 @@ public class PanelLiderController implements Initializable, GeneralView {
         protected void eval() {}            
     };
    
-    private int idVotante=-1;
+    private int idLider=-1;
     
     /**
      * Initializes the controller class.
@@ -95,14 +90,52 @@ public class PanelLiderController implements Initializable, GeneralView {
         
     }    
     
-    public void ActualizarDatos(Votantes votante){
+    public void ActualizarDatos(Persona persona){
     
+        if(persona!=null){
+            
+            ControladorGeneral.CONTROLVIEWMODIFICARLIDER=0;                                    
+
+            idLider = persona.getId();
+
+            this.tipoDocumento.setValue(persona.getTipoDocumento());
+            this.numeroDocumento.setText(String.valueOf(persona.getNumeroDocumento()));
+            this.nombreCompleto.setText(persona.getNombre());
+            this.apellidos.setText(persona.getApellido());
+            //verificamos el tipo de genero que se va a seleccionar
+            if(persona.getSexo().equals("Femenino")){
+                this.radioFemale.setSelected(true);            
+            }else{
+                this.radioMale.setSelected(true);            
+            }              
+
+            if(persona.getFehaNacimiento()!=null){
+                this.fechaNacimiento.setValue(LocalDate.parse(persona.getFehaNacimiento()));        
+            }
+
+            if(persona.getEstadoCivil()!=null){
+                this.estadoCivil.setValue(persona.getEstadoCivil());            
+            }
+
+            this.direccion.setText(persona.getDireccion());
+            this.barrio.setText(persona.getBarrio());
+            this.telefono.setText(persona.getTelefono());
+            this.correo.setText(persona.getCorreoElectronico());
+            
+            btnGuardar.setText("Modificar");
+
+        }else{
+            limpiarCampos();
+        }
+        
+        
+        
     }
     
     private boolean agregarLider(){
         
         //Creamos un objeto de tipo Votantes
-        Persona datosLider = new Persona();
+        Lider datosLider = new Lider();
         
         JFXRadioButton rb = (JFXRadioButton)groupRadio.getSelectedToggle(); 
         
@@ -143,9 +176,47 @@ public class PanelLiderController implements Initializable, GeneralView {
 
     }
     
-    private boolean modificarVotantes(){
+    private boolean modificarLider(){
         
-        return false;
+        //Creamos un objeto de tipo Votantes
+        Lider datoLider = new Lider();
+        
+        JFXRadioButton rb = (JFXRadioButton)groupRadio.getSelectedToggle(); 
+        
+        String sex="";
+        if (rb != null) { 
+            sex = rb.getText(); 
+        }        
+                
+        //Obtenemos los valores de los campos de texto
+        datoLider.setId(idLider);
+        datoLider.setTipoDocumento(tipoDocumento.getValue());        
+        datoLider.setNumeroDocumento(Integer.parseInt(numeroDocumento.getText()));        
+        datoLider.setNombre(nombreCompleto.getText());
+        datoLider.setApellido(apellidos.getText());        
+        datoLider.setDireccion(direccion.getText());
+        datoLider.setBarrio(barrio.getText());        
+        datoLider.setTelefono(telefono.getText());
+        datoLider.setCorreoElectronico(correo.getText());     
+        datoLider.setSexo(sex);        
+        datoLider.setEstadoCivil(estadoCivil.getValue());
+        
+        String fecha=null;
+
+        try{
+
+            if(fechaNacimiento.getValue()!=null){
+                LocalDate date = fechaNacimiento.getValue();
+                fecha = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();            
+            }
+
+        }catch(Exception ex){
+            fecha=null;
+        }        
+        
+        datoLider.setFehaNacimiento(fecha);
+        
+        return modelo.modificarLider(datoLider);
             
     }
 
@@ -219,7 +290,7 @@ public class PanelLiderController implements Initializable, GeneralView {
                             }else{
                                 
                                 if(agregarLider()==true){
-                                    JOptionPane.showMessageDialog(null, "Los informaci{on ha sido almacenada de manera exitosa", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "La información ha sido almacenada de manera exitosa", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
                                     limpiarCampos();
                                 }else{
                                     JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
@@ -231,14 +302,15 @@ public class PanelLiderController implements Initializable, GeneralView {
                             }   break;
                         
                         case "Modificar":
-                            /*if(modificarVotantes()==true){
+                            if(modificarLider()==true){
                                 JOptionPane.showMessageDialog(null, "Los Datos han sido actualizados exitosamente", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                                idLider=-1;
                             }else{
                                 JOptionPane.showMessageDialog(null, "Operación invalida, Posibles errores : \n"+
                                         ControladorValidaciones.EXCEPCIONES,
                                         "ERROR", JOptionPane.ERROR_MESSAGE);
                                 ControladorValidaciones.EXCEPCIONES="";
-                            }*/  
+                            }  
                         break;
                     
                     }
@@ -277,11 +349,54 @@ public class PanelLiderController implements Initializable, GeneralView {
         
         if(evt.equals(numeroDocumento)){
         
-            if(!Character.isDigit(c)){
+            if(!Character.isDigit(c) || !ControladorValidaciones.validateLegth(numeroDocumento.getText(), 10)){
                 event.consume();
             }
             
-        }
+        }else if(evt.equals(nombreCompleto)){
+
+            if(!ControladorValidaciones.validateLegth(nombreCompleto.getText(), 100)){
+                event.consume();
+            }
+            
+        }else if(evt.equals(apellidos)){
+
+            if(!ControladorValidaciones.validateLegth(apellidos.getText(), 100)){
+                event.consume();
+            }
+            
+        }else if(evt.equals(direccion)){
+
+            if(!ControladorValidaciones.validateLegth(direccion.getText(), 255)){
+                event.consume();
+            }
+                        
+        }else if(evt.equals(barrio)){
+        
+            if(!ControladorValidaciones.validateLegth(barrio.getText(), 255)){
+                event.consume();
+            }
+        
+        }else if(evt.equals(telefono) || evt.equals(correo)){
+            
+            if(!ControladorValidaciones.validateWhiteSpaces(String.valueOf(c))){
+                event.consume();
+            }
+            
+            if(evt.equals(telefono)){
+                
+                if(!Character.isDigit(c) || !ControladorValidaciones.validateLegth(telefono.getText(), 30)){
+                    event.consume();
+                }                
+                
+            }else if(evt.equals(correo)){
+
+                if(!ControladorValidaciones.validateLegth(correo.getText(), 255)){
+                    event.consume();
+                }                                
+            }
+        
+        }    
         
     }
 

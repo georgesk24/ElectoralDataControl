@@ -14,6 +14,6 @@ public interface ComponentesTabla {
  
     public void addColumn();
     
-    public void addRow(ArrayList<Votantes> list);
+    public void addRow(ArrayList list);
         
 }

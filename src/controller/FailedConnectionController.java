@@ -60,6 +60,7 @@ public class FailedConnectionController implements Initializable {
         
         }catch(Exception ex){
             System.out.println(ex.getMessage());
+            int a = 1;
         }
         
         /*

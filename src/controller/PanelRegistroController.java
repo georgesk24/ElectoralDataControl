@@ -266,6 +266,7 @@ public class PanelRegistroController implements Initializable, GeneralView {
         }else{
             itemLider = fxComboLider.getValue();
         }     
+<<<<<<< HEAD
         
         try{
             datosVotantes.getLider().setId(itemLider.getId());
@@ -276,6 +277,18 @@ public class PanelRegistroController implements Initializable, GeneralView {
         String fecha=null;
 
         try{
+=======
+        
+        try{
+            datosVotantes.getLider().setId(itemLider.getId());
+        }catch(Exception ex){
+            datosVotantes.getLider().setId(-1);            
+        }   
+        
+        String fecha=null;
+
+        try{
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
 
             if(fechaNacimiento.getValue()!=null){
                 LocalDate date = fechaNacimiento.getValue();
@@ -360,9 +373,15 @@ public class PanelRegistroController implements Initializable, GeneralView {
             }        
         
         }else{
+<<<<<<< HEAD
 
             if(list.size()>0){
 
+=======
+
+            if(list.size()>0){
+
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
                 int length = fxComboLider.getItems().size();
                 fxComboLider.getItems().remove(0, length);
                 

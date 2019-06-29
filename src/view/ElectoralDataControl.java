@@ -13,7 +13,10 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+<<<<<<< HEAD
 import javafx.stage.WindowEvent;
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
 import model.Conexion;
 import utlidades.ConfiguracionInicial;
 
@@ -73,6 +76,7 @@ public class ElectoralDataControl extends Application {
             Parent root1 = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
 
             Scene scene = new Scene(root1);
+<<<<<<< HEAD
 
             stage.setResizable(false);
             stage.setScene(scene);
@@ -97,6 +101,31 @@ public class ElectoralDataControl extends Application {
             stage.setScene(scene);
             
             
+=======
+
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.show();
+
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);               
+
+            ElectoralDataControl.stageLogin=stage;
+                    
+        }else{
+
+            stage.initStyle(StageStyle.UNDECORATED);            
+            
+            Parent root1 = FXMLLoader.load(getClass().getResource("FailedConnection.fxml"));
+
+            Scene scene = new Scene(root1);
+
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
             stage.show();
 
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -106,6 +135,7 @@ public class ElectoralDataControl extends Application {
             ElectoralDataControl.stageFailedConnection=stage;
                         
         }
+<<<<<<< HEAD
         
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -114,6 +144,8 @@ public class ElectoralDataControl extends Application {
                 //Platform.exit();
             }
         });
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
         
     }
 

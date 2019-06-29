@@ -30,8 +30,11 @@ public class PanelInicioController implements Initializable {
         
         if(evt.equals(btnCardRegistrar)){
            principalController.selectView("Registro", null, "");        
+<<<<<<< HEAD
         }else if(evt.equals(btnCardRegistrarLider)){
            principalController.selectView("Registro_Lider", null, "");                
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
         }else if(evt.equals(btnCardConsulta)){
            principalController.selectView("Consulta", null, "");                
         }else if(evt.equals(btnCardReporte)){

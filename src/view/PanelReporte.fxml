@@ -25,6 +25,11 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
+<<<<<<< HEAD
+=======
+    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="ALWAYS" />
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
     <RowConstraints vgrow="ALWAYS" />
     <RowConstraints minHeight="-Infinity" vgrow="ALWAYS" />
     <RowConstraints minHeight="-Infinity" vgrow="ALWAYS" />

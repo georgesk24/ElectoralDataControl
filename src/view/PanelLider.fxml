@@ -333,7 +333,11 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                            <children>
+<<<<<<< HEAD
                               <JFXTextField fx:id="correo" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="62.0" prefWidth="454.0" promptText="Ej. Example1234@gmail.com" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+=======
+                              <JFXTextField fx:id="correo" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ej. Example1234@gmail.com" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -377,7 +381,11 @@
                         </Label>
                         <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="408.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                            <children>
+<<<<<<< HEAD
                               <JFXTextField fx:id="telefono" focusColor="#363e46" onKeyTyped="#eventsKeyTyped" prefHeight="62.0" prefWidth="454.0" promptText="Ej. 3205648767" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+=======
+                              <JFXTextField fx:id="telefono" focusColor="#363e46" prefHeight="62.0" prefWidth="454.0" promptText="Ej. 3205648767" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS">
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
                                  <font>
                                     <Font size="18.0" />
                                  </font>

@@ -213,9 +213,15 @@ public class PanelLiderController implements Initializable, GeneralView {
         }catch(Exception ex){
             fecha=null;
         }        
+<<<<<<< HEAD
         
         datoLider.setFehaNacimiento(fecha);
         
+=======
+        
+        datoLider.setFehaNacimiento(fecha);
+        
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
         return modelo.modificarLider(datoLider);
             
     }

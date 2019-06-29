@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/georgep24/NetBeansProjects/ElectoralDataControl/src/controller/LoginViewController.java</file>
             <file>file:/home/georgep24/NetBeansProjects/ElectoralDataControl/src/utlidades/ControladorGeneral.java</file>
             <file>file:/home/georgep24/NetBeansProjects/ElectoralDataControl/test/open_pdf.java</file>
             <file>file:/home/georgep24/NetBeansProjects/ElectoralDataControl/src/controller/PanelGuiaController.java</file>
+=======
+            <file>file:/C:/Users/J/Documents/NetBeansProjects/ElectoralDataControl/src/view/ElectoralDataControl.java</file>
+            <file>file:/C:/Users/J/Documents/NetBeansProjects/ElectoralDataControl/src/model/Conexion.java</file>
+            <file>file:/C:/Users/J/Documents/NetBeansProjects/ElectoralDataControl/src/controller/FailedConnectionController.java</file>
+            <file>file:/C:/Users/J/Documents/NetBeansProjects/ElectoralDataControl/src/view/PanelInicio.fxml</file>
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
         </group>
     </open-files>
 </project-private>

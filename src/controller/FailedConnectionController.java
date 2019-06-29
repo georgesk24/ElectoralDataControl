@@ -4,7 +4,10 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import data.preloader.data_Preloader;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+<<<<<<< HEAD
 import java.awt.HeadlessException;
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -34,12 +37,21 @@ public class FailedConnectionController implements Initializable {
     
     @FXML
     private FontAwesomeIcon btnClose, btnMinimize;
+<<<<<<< HEAD
         
     @FXML
     private JFXButton btnSalir, btnReintentar;
     
     private MediaPlayer player;
     private MediaView mediaView;
+=======
+    
+    @FXML
+    private VBox layout;
+    
+    @FXML
+    private JFXButton btnSalir, btnReintentar;
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
     
     /**
      * Initializes the controller class.
@@ -49,6 +61,7 @@ public class FailedConnectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+<<<<<<< HEAD
         try{
 
             player = new MediaPlayer( new Media(getClass().getResource("/resources/video/video-error-final.mp4").toExternalForm()));
@@ -66,6 +79,16 @@ public class FailedConnectionController implements Initializable {
         player.setAutoPlay(true);
         player.setCycleCount(MediaPlayer.INDEFINITE);        
         */
+=======
+        MediaPlayer player = new MediaPlayer( new Media(getClass().getResource("/resources/video/video-error-final.mp4").toExternalForm()));
+        MediaView mediaView = new MediaView(player);
+        
+        containerVideo.getChildren().add( mediaView);
+        
+        player.setAutoPlay(true);
+        player.setCycleCount(MediaPlayer.INDEFINITE);        
+        
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
         
         
         final Delta dragDelta = new Delta();
@@ -91,6 +114,7 @@ public class FailedConnectionController implements Initializable {
     
         Object evt = event.getSource();
         
+<<<<<<< HEAD
         try{
             
             if(evt.equals(btnSalir)){
@@ -131,6 +155,33 @@ public class FailedConnectionController implements Initializable {
         }
         
         
+=======
+        if(evt.equals(btnSalir)){
+
+            if(evt.equals(btnSalir)){
+                int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?");
+                if(confirmar==JOptionPane.YES_OPTION){
+                    System.exit(0);
+                }
+            }            
+            
+        }else if(evt.equals(btnReintentar)){
+            
+            ElectoralDataControl.stageFailedConnection.close();
+            ElectoralDataControl principal = new ElectoralDataControl();
+            
+            Platform.runLater( () -> {
+                try {
+                    principal.init();
+                    principal.start( new Stage() );
+                } catch (Exception ex) {
+                    Logger.getLogger(FailedConnectionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } );
+            
+        }
+        
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
     }
     
     

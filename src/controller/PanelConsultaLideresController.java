@@ -29,7 +29,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+<<<<<<< HEAD
 import javafx.scene.input.KeyEvent;
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
@@ -247,6 +250,7 @@ public class PanelConsultaLideresController implements Initializable, Componente
     public void validatorNumber() {
         ControladorValidaciones.validator(numeroDocumentoLider);
     }
+<<<<<<< HEAD
     
     /*eventos de teclado*/
     @FXML
@@ -266,6 +270,8 @@ public class PanelConsultaLideresController implements Initializable, Componente
         
     }
     
+=======
+>>>>>>> 36a48334ae93ca73a7ea5761fec022f9b025982d
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {

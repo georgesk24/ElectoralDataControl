@@ -9,11 +9,10 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import java.awt.HeadlessException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -26,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -33,40 +33,38 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
+import model.Lider;
 import model.Votantes;
+import modelDAO.LiderDAO;
 import modelDAO.VotantesDAO;
 import org.apache.poi.hssf.usermodel.HeaderFooter;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Footer;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.RangeSlider;
 import utlidades.ComponentesTabla;
 import utlidades.ControladorGeneral;
 import utlidades.ControladorValidaciones;
 import utlidades.GeneralView;
+import utlidades.Item;
 
 /**
  * FXML Controller class
@@ -78,11 +76,22 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
     // Creamos objetos y relacionamos componentes de la interfaz grafica
     
     @FXML
-    private HBox hBoxMesaVotacion, hBoxLugarVotacion, hBoxSexo, hBoxEdad, 
+    private HBox hBoxSexo, hBoxEdad, 
                  hBoxBusqueda;
+    
+    
+    @FXML
+    private VBox vBoxLider;
+    
+    @FXML
+    private GridPane hlugar;
     
     @FXML
     private JFXComboBox<String> fxCombotipoBusqueda, fxComboBoxMesa, fxComboBoxLugar;
+    
+    @FXML
+    private JFXComboBox<Item> fxComboBoxLider;
+    private Item item;
 
     @FXML
     private JFXTextField fxTextFieldBusqueda;
@@ -98,7 +107,7 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
     private JFXRadioButton radioMale, radioFemale;
     
     @FXML
-    private JFXButton btnBuscar, btnReporte;
+    private JFXButton btnBuscar, btnReporte, btnActualizarLugarDeVotacion, btnActualizarLiderAsignado;;
 
     @FXML
     private VBox contenedorBarra;
@@ -115,10 +124,17 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
     private ObservableList<ControlTableReport> datos;
 
     private final VotantesDAO model = new VotantesDAO();
+    private final LiderDAO modelLider = new LiderDAO();
         
     private final ToggleGroup groupRadio = new ToggleGroup();
 
     private ArrayList<Votantes> list=null;
+    private ArrayList<String> dataFilter=null;
+    private String filter;
+    
+    
+    private Workbook book = null;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -164,28 +180,138 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         
     }    
 
-    
-    private void llenarLista(ArrayList<Votantes> list, int value){
+    public void listarLideres(int update){
         
-        for (int i=0; i<list.size(); i++){
-            if(value==1){
-                fxComboBoxLugar.getItems().add(list.get(i).getLugar());
-                if(i==0){
-                    fxComboBoxLugar.setValue(list.get(i).getLugar());
+        
+        ArrayList<Lider> listLider =  modelLider.consultaLider("id/value", null);
+        
+        if(update!=1){
+        
+            if(listLider.size()>0){
+                item = new Item(-1, "Ninguno");
+                fxComboBoxLider.getItems().add(item);
+                for(int i=0; i<listLider.size(); i++){
+                    item = new Item(listLider.get(i).getId(), listLider.get(i).getNombre() + " "+listLider.get(i).getApellido());
+                    fxComboBoxLider.getItems().add(item);
                 }
-            }else if(value==2){
-                fxComboBoxMesa.getItems().add(list.get(i).getMesa());
-                if(i==0){
-                    fxComboBoxMesa.setValue(list.get(i).getMesa());                
-                }            
-            }
-        }
+            }        
         
-        fxComboBoxLugar.setVisibleRowCount(10);
-        fxComboBoxMesa.setVisibleRowCount(10);
+        }else{
+
+            if(listLider.size()>0){
+
+                int length = fxComboBoxLider.getItems().size();
+                fxComboBoxLider.getItems().remove(0, length);
+                
+                item = new Item(-1, "Ninguno");
+                fxComboBoxLider.getItems().add(item);
+                for(int i=0; i<listLider.size(); i++){
+                    item = new Item(listLider.get(i).getId(), listLider.get(i).getNombre() + " "+listLider.get(i).getApellido());
+                    fxComboBoxLider.getItems().add(item);
+                }
+            
+            }        
+        
+        }
         
     }
     
+    
+    
+    public String generarNombreReporte(){
+        
+        String nombreArchivo="Reporte_";
+        boolean condicion=true;
+        
+        
+        while(condicion){
+            
+            int key=ThreadLocalRandom.current().nextInt(1000000000, 1999999999);
+            String homeUsuario = System.getProperty("user.home"); 
+            File directorio=new File(homeUsuario+"/Reportes-Electoral-Data-Control/"+nombreArchivo+""+key+".xlsx");
+
+            if (!directorio.exists()) {
+                nombreArchivo=nombreArchivo+""+key+".xlsx";
+                condicion=false;
+            }
+
+            
+        }
+        
+        
+        return nombreArchivo;
+        
+    }
+    
+    public final File crearDirectorioPrincipal(String nombreCarpeta){
+        String homeUsuario = System.getProperty("user.home"); 
+        File directorio=new File(homeUsuario+"/"+nombreCarpeta);
+        directorio.mkdir();
+ 
+        return directorio;
+    }
+    
+    
+    public void saveFile(ArrayList<String> extensiones, Workbook book){
+
+        //COPIA DE SEGURIDAD
+        File directorio = crearDirectorioPrincipal("Reportes-Electoral-Data-Control");
+                
+        try{
+            
+            JOptionPane.showMessageDialog(null, "¡Falta poco para terminar!\n"
+                                              + "Para guardar el reporte debe seleccionar el directorio donde será alojado\n"
+                                              + "Igualmente se almacenará un copia de segridad en la siguiente dirección:\n"
+                                              + "<html><body><span style='color:red;'>"+directorio+"</span></body></html>", 
+                                                "INFORMACIÓN", 
+                                                JOptionPane.INFORMATION_MESSAGE);
+            
+            FileChooser fileSave = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Solo archivos EXCEL", extensiones);                
+            fileSave.getExtensionFilters().add(extFilter); //Show save file dialog             
+            
+            File file = fileSave.showSaveDialog(null); 
+
+            if (file != null) { 
+
+                String name = file.getPath();
+
+                if(file.getName()!=null){
+
+                    if(name.contains(".")){
+                        file = new File(name.substring(0, name.lastIndexOf("."))+".xlsx");                    
+                    }else{
+                        file = new File(name+".xlsx");                                    
+                    }                
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe ingresar un nombre valido para el archivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+
+                try (FileOutputStream fileOut = new FileOutputStream(file)) {
+                    book.write(fileOut);
+                }
+
+                JOptionPane.showMessageDialog(null, "Operación Exitosa, El reporte ha sido generado de manera correcta", "INFO", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+                                    
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Operación fallida, hubo un error al generar el reporte.\n"
+                                               +ex.getMessage());
+        }finally{
+            
+            try{
+                try (FileOutputStream fileOut = new FileOutputStream(directorio.getAbsolutePath()+"/"+generarNombreReporte())) {
+                    book.write(fileOut);
+                }            
+            }catch(IOException ex){}
+            
+        }
+
+        
+    }
+        
     @Override
     public void addColumn() {
     
@@ -232,8 +358,9 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
     }
 
     @Override
-    public void addRow(ArrayList<Votantes> list) {
-
+    public void addRow(ArrayList list) {
+        
+        ArrayList<Votantes> listadoReporte  = list;
         datos = FXCollections.observableArrayList();
         
         TreeItem <ControlTableReport> root = new RecursiveTreeItem<ControlTableReport>(datos, RecursiveTreeObject::getChildren);
@@ -242,7 +369,7 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         
         if(list.size()>0){
             for(int i=0; i<list.size(); i++){
-                ControlTableReport table = new ControlTableReport(list.get(i));
+                ControlTableReport table = new ControlTableReport(listadoReporte.get(i));
                 datos.add(table);
             }        
             labelTotalRegistro.setText(list.size() + " registros");
@@ -258,21 +385,18 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         //agregamos combobox
         fxCombotipoBusqueda.getItems().add("Todo");
         fxCombotipoBusqueda.getItems().add("Nombre/Apellido");
-        fxCombotipoBusqueda.getItems().add("Mesa De Votación");
-        fxCombotipoBusqueda.getItems().add("Lugar De Votación");
         fxCombotipoBusqueda.getItems().add("Edad");
         fxCombotipoBusqueda.getItems().add("Sexo");        
+        fxCombotipoBusqueda.getItems().add("Lugar De Votación");
+        fxCombotipoBusqueda.getItems().add("Lider Asignado");
         fxCombotipoBusqueda.setValue("Todo");
         
         controlVisibilidad(hBoxSexo, false);
         controlVisibilidad(hBoxEdad, false);
-        controlVisibilidad(hBoxMesaVotacion, false);
-        controlVisibilidad(hBoxLugarVotacion, false);
-        
-        hBoxBusqueda.setVisible(false);
-        hBoxBusqueda.setManaged(false);
-        hBoxBusqueda.managedProperty().bind(hBoxBusqueda.visibleProperty());
-        
+        controlVisibilidad(hlugar, false);
+        controlVisibilidad(vBoxLider, false);
+        controlVisibilidad(hBoxBusqueda, false);
+                
         rangeSliderEdad.adjustHighValue(80.0);
         rangeSliderEdad.adjustLowValue(20.0);
         
@@ -323,7 +447,10 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         contenedorBarra.setManaged(false);
         contenedorBarra.managedProperty().bind(contenedorBarra.visibleProperty());
         
-        
+        listarLideres(0);
+        fxComboBoxLider.setVisibleRowCount(10);
+
+        filter = "Todo";
         
     }
 
@@ -334,7 +461,6 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
         node.managedProperty().bind(node.visibleProperty());        
     }
     
-
     @FXML
     public void eventosOnAction(ActionEvent event) {
         
@@ -350,44 +476,48 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                     hBoxBusqueda.setVisible(true);
                     hBoxEdad.setVisible(false);
                     hBoxSexo.setVisible(false);
-                    hBoxLugarVotacion.setVisible(false);
-                    hBoxMesaVotacion.setVisible(false);
+                    hlugar.setVisible(false);
+                    vBoxLider.setVisible(false);
                 break;                
  
                 case "Edad":
                     hBoxEdad.setVisible(true);                
                     hBoxBusqueda.setVisible(false);                    
                     hBoxSexo.setVisible(false);
-                    hBoxLugarVotacion.setVisible(false);
-                    hBoxMesaVotacion.setVisible(false);
+                    hlugar.setVisible(false);
+                    vBoxLider.setVisible(false);
                 break;
                 case "Sexo":
                     hBoxSexo.setVisible(true);                
                     hBoxEdad.setVisible(false);                                    
                     hBoxBusqueda.setVisible(false);                    
-                    hBoxLugarVotacion.setVisible(false);
-                    hBoxMesaVotacion.setVisible(false);                    
+                    hlugar.setVisible(false);
+                    vBoxLider.setVisible(false);
                 break;
-                case "Mesa De Votación":
-                    hBoxMesaVotacion.setVisible(true);                                        
-                    hBoxSexo.setVisible(false);                
-                    hBoxEdad.setVisible(false);                                    
-                    hBoxBusqueda.setVisible(false);
-                    hBoxLugarVotacion.setVisible(false);
-                break;
+                        
                 case "Lugar De Votación":
-                    hBoxLugarVotacion.setVisible(true);                    
+                    hlugar.setVisible(true);
                     hBoxSexo.setVisible(false);                
                     hBoxEdad.setVisible(false);                                    
-                    hBoxBusqueda.setVisible(false); 
-                    hBoxMesaVotacion.setVisible(false);                                        
-                break;                
+                    hBoxBusqueda.setVisible(false);                    
+                    vBoxLider.setVisible(false);
+                break;    
+                
+                case "Lider Asignado":
+                    vBoxLider.setVisible(true);
+                    hlugar.setVisible(false);
+                    hBoxSexo.setVisible(false);                
+                    hBoxEdad.setVisible(false);                                    
+                    hBoxBusqueda.setVisible(false);                    
+                break;
+                
+                
                 default:
                     hBoxBusqueda.setVisible(false);
                     hBoxEdad.setVisible(false);
                     hBoxSexo.setVisible(false);
-                    hBoxLugarVotacion.setVisible(false);
-                    hBoxMesaVotacion.setVisible(false);
+                    hlugar.setVisible(false);
+                    vBoxLider.setVisible(false);
                 break;                                
             }
         
@@ -402,6 +532,10 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
 
                     /*obtenemos datos*/
                     data.add(fxTextFieldBusqueda.getText());
+
+                    dataFilter = new ArrayList<>();
+                    dataFilter.add(fxTextFieldBusqueda.getText());
+                    filter = fxCombotipoBusqueda.getValue();
                     
                     list = model.consultarVotantes(fxCombotipoBusqueda.getValue(), data);
 
@@ -432,6 +566,12 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                 int valueMin = ControladorGeneral.toInt(rangeSliderEdad.getLowValue());
                 int valueMax = ControladorGeneral.toInt(rangeSliderEdad.getHighValue());
 
+                dataFilter = new ArrayList<>();
+                dataFilter.add(String.valueOf(valueMin));
+                dataFilter.add(String.valueOf(valueMax));
+                filter = fxCombotipoBusqueda.getValue();
+                
+                
                 data.add(String.valueOf(valueMin));
                 data.add(String.valueOf(valueMax));
 
@@ -456,70 +596,8 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                 }
                 
                 
-            }else if(hBoxLugarVotacion.isVisible()){
-            
-                String lugarDeVotacion = fxComboBoxLugar.getValue();
-                
-                if(!lugarDeVotacion.equals("Sin resultados")){
-                    
-                    data.add(lugarDeVotacion);
-                    list = model.consultarVotantes("Lugar De Votación", data);
-                    
-                    if(list.size()>0){
-                        addRow(list);                        
-                    }else{
-
-                        /*validamos si hubo alguna excepción u error*/
-                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-
-                            JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                                ControladorValidaciones.EXCEPCIONES, 
-                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
-                            ControladorValidaciones.EXCEPCIONES="";                                
-
-                        }else{
-                            JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                            addRow(list);
-                        }                        
-                    }
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Seleccione un ítem valido", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                
-            }else if(hBoxMesaVotacion.isVisible()){
-
-                String lugarDeVotacion = fxComboBoxMesa.getValue();
-                
-                if(!lugarDeVotacion.equals("Sin resultados")){
-                    
-                    data.add(lugarDeVotacion);
-                    list = model.consultarVotantes("Mesa De Votación", data);
-                    
-                    if(list.size()>0){
-                        addRow(list);                        
-                    }else{
-
-                        /*validamos si hubo alguna excepción u error*/
-                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
-
-                            JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
-                                                                ControladorValidaciones.EXCEPCIONES, 
-                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
-                            ControladorValidaciones.EXCEPCIONES="";                                
-
-                        }else{
-                            JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
-                            addRow(list);
-                        }                        
-                    }
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Seleccione un ítem valido", "Error", JOptionPane.ERROR_MESSAGE);
-                }                
-                
             }else if(hBoxSexo.isVisible()){
-
+                                
                 /*obtenemos datos*/
                 if(radioFemale.isSelected()){
                     data.add("Femenino");                
@@ -527,6 +605,11 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                     data.add("Masculino");            
                 }
 
+                dataFilter = new ArrayList<>();
+                dataFilter.add(data.get(0));
+                filter = fxCombotipoBusqueda.getValue();
+                
+                
                 list = model.consultarVotantes("Sexo", data);
 
                 if(list.size()>0){
@@ -548,8 +631,109 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                 }
 
                 
+            }else if(hlugar.isVisible()){
+        
+                if(fxComboBoxLugar.getValue()!=null ){
+
+                    String lugar = fxComboBoxLugar.getValue();
+                    String mesa=fxComboBoxMesa.getValue();
+                    
+                    if(mesa!=null){
+
+                        if(fxComboBoxMesa.getValue().equals("Otro")){
+                            boolean condicion=true;
+                            while(condicion){
+                                try{
+                                    mesa = JOptionPane.showInputDialog("Ingrese el número de mesa a buscar");
+                                    if(mesa!=null){
+                                        condicion=false;                            
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido por favor intente nuevamente");
+                                    }
+                                }catch(HeadlessException ex){
+                                    JOptionPane.showMessageDialog(null, "Debe ingresar un valor valido por favor intente nuevamente", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+
+                        }else{
+                            mesa=fxComboBoxMesa.getValue();
+                        }                    
+                    
+                    }else{
+                        mesa="Todo";
+                    }
+   
+                    data.add(lugar);
+                    data.add(mesa);
+
+                    dataFilter = new ArrayList<>();
+                    dataFilter.add(data.get(0));
+                    dataFilter.add(data.get(1));                    
+                    filter = fxCombotipoBusqueda.getValue();
+                    
+                    
+                    list = model.consultarVotantes("Lugar De Votación", data);
+
+                    if(list.size()>0){
+                        addRow(list);                        
+                    }else{
+
+                        /*validamos si hubo alguna excepción u error*/
+                        if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                            JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                                ControladorValidaciones.EXCEPCIONES, 
+                                                                "ERROR", JOptionPane.ERROR_MESSAGE);           
+                            ControladorValidaciones.EXCEPCIONES="";                                
+
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                            addRow(list);
+                        }                        
+                    }
+
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe seleccionar un valor valido para realizar la busqueda", "Error", JOptionPane.ERROR_MESSAGE);                        
+                }
+        
+            }else if(vBoxLider.isVisible()){
+                
+                filter = fxCombotipoBusqueda.getValue();
+                
+                Item itemLider = fxComboBoxLider.getValue();
+
+                if(itemLider!=null){                
+                    itemLider = fxComboBoxLider.getValue();            
+                }else{
+                    itemLider = new Item(-1, "Ninguno");
+                }
+
+                data.add(String.valueOf(itemLider.getId()));                                
+                
+                list = model.consultarVotantes("Lider", data);
+
+                if(list.size()>0){
+                    addRow(list);                        
+                }else{
+
+                    /*validamos si hubo alguna excepción u error*/
+                    if(!ControladorValidaciones.EXCEPCIONES.equals("")){
+
+                        JOptionPane.showMessageDialog(null, "Error en la consulta, Posibles errores : \n"+
+                                                            ControladorValidaciones.EXCEPCIONES, 
+                                                            "ERROR", JOptionPane.ERROR_MESSAGE);           
+                        ControladorValidaciones.EXCEPCIONES="";                                
+
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se obtuvo resultado de la consulta", "WARNING", JOptionPane.WARNING_MESSAGE);
+                        addRow(list);
+                    }                        
+                }
+                    
             }else{
 
+                filter = fxCombotipoBusqueda.getValue();
                 list = model.consultarVotantes();
 
                 if(list.size()>0){
@@ -583,20 +767,27 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                         @Override
                         protected Void call() throws Exception {
                             contenedorBarra.setVisible(true);
-                            GenerateReport report = new GenerateReport(list, fxCombotipoBusqueda.getValue());
-                            boolean condicion = report.generarReporte();
-                            if(!condicion){
-                                JOptionPane.showMessageDialog(null, "Hubo un error en el proceso, intente nuevamente", "ERROR", JOptionPane.ERROR_MESSAGE);
-                            }
+                            GenerateReport report = new GenerateReport(list, filter, dataFilter);
+                            book = report.generarReporte();
                             contenedorBarra.setVisible(false);
                             return null;
                         }
 
                     };
                     
+                    task.setOnSucceeded((Event event1) -> {
+                        if(book!=null){
+                            ArrayList<String> extensiones = new ArrayList<>();
+                            extensiones.add("*.xlsx");                            
+                            saveFile(extensiones, book);
+                        }else{
+                            JOptionPane.showMessageDialog(null, ControladorValidaciones.EXCEPCIONES);
+                            ControladorValidaciones.EXCEPCIONES="";
+                        }
+                    });
 
-
-                    new Thread(task).start();
+                    Thread t = new Thread(task);
+                    t.start();
                     
                 }else{
                    JOptionPane.showMessageDialog(null, "No hay datos para generar el reporte", "Error De Operación", JOptionPane.ERROR_MESSAGE);
@@ -606,6 +797,23 @@ public class PanelReporteController implements Initializable, ComponentesTabla, 
                 JOptionPane.showMessageDialog(null, "No hay datos para generar el reporte", "Error De Operación", JOptionPane.ERROR_MESSAGE);
             }
         
+        }else if(evt.equals(btnActualizarLugarDeVotacion)){
+        
+            ArrayList<Votantes>listVotantes = model.consultarVotantes("ListCombo", null);            
+            
+            int length = fxComboBoxLugar.getItems().size();
+            fxComboBoxLugar.getItems().remove(0, length);
+            
+            if(listVotantes.size()>0){
+
+                ControladorGeneral.llenarListaDesplegable(listVotantes, fxComboBoxLugar);
+
+            }else{
+                fxComboBoxLugar.getItems().add("Sin resultados");
+            }        
+        
+        }else if(evt.equals(btnActualizarLiderAsignado)){
+            listarLideres(1);            
         }
         
     }    
@@ -644,40 +852,8 @@ class ControlTableReport extends RecursiveTreeObject<ControlTableReport> {
 class GenerateReport{
     
     private final ArrayList<Votantes> lista;
+    private final ArrayList<String> dataFilter;
     private final String filtro;
-    
-    public String generarNombre(){
-        
-        String nombreArchivo="Reporte_";
-        boolean condicion=true;
-        
-        
-        while(condicion){
-            
-            int key=ThreadLocalRandom.current().nextInt(1000000000, 1999999999);
-            String homeUsuario = System.getProperty("user.home"); 
-            File directorio=new File(homeUsuario+"/Reportes-Electoral-Data-Control/"+nombreArchivo+""+key+".xlsx");
-
-            if (!directorio.exists()) {
-                nombreArchivo=nombreArchivo+""+key+".xlsx";
-                condicion=false;
-            }
-
-            
-        }
-        
-        
-        return nombreArchivo;
-        
-    }
-    
-    public final File crearDirectorioPrincipal(String nombreCarpeta){
-        String homeUsuario = System.getProperty("user.home"); 
-        File directorio=new File(homeUsuario+"/"+nombreCarpeta);
-        directorio.mkdir();
- 
-        return directorio;
-    }
     
     public final void agregarTitulo(Workbook libro, Sheet sheet, CellStyle style, String fuente, 
                              int longitudFuente, Row filaT, int columna, String text, int state){
@@ -712,16 +888,16 @@ class GenerateReport{
                 
     }
     
-    public GenerateReport(ArrayList<Votantes> list, String filtro){    
+    public GenerateReport(ArrayList<Votantes> list, String filtro, ArrayList<String> dataFilter){    
         this.lista=list;  
         this.filtro=filtro;
+        this.dataFilter=dataFilter;
     }
     
     
-    public boolean generarReporte(){
-        boolean condicion=false;
+    public Workbook generarReporte(){
+
         /*creamos carpeta principal*/
-        File directorio = crearDirectorioPrincipal("Reportes-Electoral-Data-Control");
                 
         Workbook book = new XSSFWorkbook();
         Sheet sheet = book.createSheet("Votantes");
@@ -730,17 +906,110 @@ class GenerateReport{
         
         try {
 
-            CellStyle style1=null, style2=null ;
+            CellStyle style1=null;
             Row filaT = sheet.createRow(0);
 
             agregarTitulo(book, sheet, style1, "Arial", 31, filaT, 0, "Listado Sufragantes", 1);            
             sheet.addMergedRegion(new CellRangeAddress(0, 3, 0, 7));
 
-            Row filaT1 = sheet.createRow(5);            
-            filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
-            agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
-            sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));
-                        
+            Row filaT1;            
+            
+            switch(filtro){
+            
+                case "Lider Asignado":
+
+                    String nameLider;
+
+                    if(lista.size()>0){
+
+                        if(lista.get(0).getLider().getId()!=-1){
+                            nameLider = lista.get(0).getLider().getNombre() + " "+ lista.get(0).getLider().getApellido();
+                        }else{
+                            nameLider="Ninguno";
+                        }
+                        filaT1 = sheet.createRow(5);            
+                        filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                        agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Lider Asignado: "+nameLider, 0);            
+                        sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+
+                    }
+                                        
+                break;
+            
+                case "Nombre/Apellido":
+
+                    filaT1 = sheet.createRow(4);            
+                    filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                    agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
+                    sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 7));                            
+                    
+                    if(dataFilter.size()>0){
+                        Row filaT2 = sheet.createRow(5);            
+                        agregarTitulo(book, sheet, style1, "Arial", 14, filaT2, 0, "Filtro: "+dataFilter.get(0), 0);            
+                        sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+                    }
+                    
+                break;
+                
+                
+                case "Edad":
+
+                    filaT1 = sheet.createRow(4);            
+                    filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                    agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
+                    sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 7));                            
+                    
+                    if(dataFilter.size()>0){
+                        Row filaT2 = sheet.createRow(5);            
+                        agregarTitulo(book, sheet, style1, "Arial", 14, filaT2, 0, "Filtro: "+dataFilter.get(0)+ " a "+dataFilter.get(1) + " Años", 0);            
+                        sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+                    }
+                    
+                break;
+                
+                case "Sexo":
+
+                    filaT1 = sheet.createRow(4);            
+                    filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                    agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
+                    sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 7));                            
+                    
+                    if(dataFilter.size()>0){
+                        Row filaT2 = sheet.createRow(5);            
+                        agregarTitulo(book, sheet, style1, "Arial", 14, filaT2, 0, "Filtro: "+dataFilter.get(0), 0);            
+                        sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+                    }
+                    
+                break;
+                
+                case "Lugar De Votación":
+
+                    filaT1 = sheet.createRow(4);            
+                    filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                    agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
+                    sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 7));                            
+                    
+                    if(dataFilter.size()>0){
+                        Row filaT2 = sheet.createRow(5);            
+                        agregarTitulo(book, sheet, style1, "Arial", 14, filaT2, 0, "Filtro: "+dataFilter.get(0) +  " Mesa "+dataFilter.get(1), 0);            
+                        sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+                    }
+                    
+                    
+                break;
+                
+                default:
+                    
+                    filaT1 = sheet.createRow(5);            
+                    filaT1.setHeight((short) (2*sheet.getDefaultRowHeight()));            
+                    agregarTitulo(book, sheet, style1, "Arial", 18, filaT1, 0, "Buscar Por: "+filtro, 0);            
+                    sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 7));                            
+                    
+                break;
+                
+                
+            }
+                                                
             String[] cabecera = new String[]{"Nº", "Nº Documento", "Nombres", "Apellidos", "Telefono", "Lugar de Votación", "Dirección", "Mesa"};
                         
             CellStyle headerStyle = book.createCellStyle();
@@ -811,19 +1080,13 @@ class GenerateReport{
             sheet.autoSizeColumn(7);
             
             sheet.setRepeatingRows(CellRangeAddress.valueOf("1:7"));
-            try (FileOutputStream fileOut = new FileOutputStream(directorio+"/"+generarNombre())) {
-                book.write(fileOut);
-            }
-            
-            condicion=true;
-            
-        }catch(IOException ex){
-            System.out.println(ex);
-        } catch (Exception ex) {
-            System.out.println(ex);
+                        
+        }catch (Exception ex) {
+            ControladorValidaciones.EXCEPCIONES= "* Error al generar reporte, posibles errores : \n*"+ex.getMessage();
+            book=null;
         }
 
-        return condicion;
+        return book;
         
     }
 

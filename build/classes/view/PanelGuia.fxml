@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<GridPane prefHeight="800.0" prefWidth="1000.0" styleClass="contenedor_flotante" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PanelGuiaController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="83.0" minHeight="34.0" prefHeight="63.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="420.0" minHeight="10.0" prefHeight="420.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox maxHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="480.0" GridPane.columnSpan="2">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIcon iconName="COGS" size="3em" styleClass="font-nav-icon" />
+                  <Label text="Guia Electoral Data Control">
+                     <font>
+                        <Font name="FontAwesome Regular" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" text="Funciones y puntos a tener en cuenta">
+               <font>
+                  <Font name="FontAwesome Regular" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Accordion fx:id="accordionConfig" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+        <panes>
+          <TitledPane fx:id="titledPaneInicio" text="Inicio">
+               <content>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <ScrollPane styleClass="scroll-ajustes" VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="900.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="200.0" spacing="20.0">
+                                       <children>
+                                          <ImageView fitHeight="280.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resources/images/elections.png" />
+                                             </image>
+                                          </ImageView>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <TextFlow textAlignment="JUSTIFY">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Electoral Data Control Versión 1.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=", es un software para el control y registro de información referente a los datos de personas que participaran en la jordana electoral. ">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Este tendrá varias secciones importantes como por ejemplo:">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Text>
+                                                <TextFlow>
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1- ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro de votantes.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                                <TextFlow layoutX="10.0" layoutY="67.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2- ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro de lideres o personal a cargo de un grupo de votantes.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                                <TextFlow layoutX="10.0" layoutY="86.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3- ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulta de información de votantes, lideres, entre otros.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                                <TextFlow layoutX="10.0" layoutY="105.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4- ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generación de reportes con información relevante de las personas registradas en la base de datos.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                                <Text layoutX="10.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A continuación se enumeran los módulos mas importantes del software.">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Text>
+                                                <HBox spacing="10.0">
+                                                   <children>
+                                                      <JFXButton fx:id="btnSeccionesDeSoftware" buttonType="RAISED" onAction="#eventsOnAction" styleClass="buttonCard1" text="Secciones De Software" />
+                                                      <JFXButton fx:id="btnListadoDeErrores" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#eventsOnAction" styleClass="buttonCard1" text="Listado De Errores" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" prefHeight="200.0" spacing="20.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="153.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="180.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/images/register-data.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" contentDisplay="TEXT_ONLY" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Registro Personas">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <TextFlow textAlignment="JUSTIFY">
+                                                   <children>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Podrá registrar los datos de los ">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="votantes ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="con el fin de recopilar datos básicos tales como: Tipo de documento, numero de documento, nombres y apellidos entre otros; igualmente podrá registrar los datos referentes al lugar y mesa de votación en el cual este debe votar.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="240.0" prefHeight="200.0" spacing="20.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="153.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="180.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/images/lideres.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" contentDisplay="TEXT_ONLY" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Registro Lider">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <TextFlow textAlignment="JUSTIFY">
+                                                   <children>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="En caso que requiera dividir el personal registrado y asignarlo a un líder, podrá hacer uso de este modulo para registrar a las personas encargadas.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="200.0" spacing="20.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="153.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="180.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/images/report-data.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" contentDisplay="TEXT_ONLY" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Reportes">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <TextFlow textAlignment="JUSTIFY">
+                                                   <children>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modulo de software destinado a la generación de reportes específicamente sera un documento en formato ">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="XLSX (Excel), ">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="este contendrá la información referente al personal registrado en la base de datos.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="440.0" prefHeight="200.0" spacing="20.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="153.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="180.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/images/search-data.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label alignment="CENTER" contentDisplay="TEXT_ONLY" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Consultas">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <TextFlow textAlignment="JUSTIFY">
+                                                   <children>
+                                                      <Text layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modulo de software en el cual podrá consultar la información registrada en base de datos, podrá filtrar las búsquedas que se realicen con el fin de obtener un resultado mucho mas preciso.">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                </TextFlow>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
+          </TitledPane>
+          <TitledPane text="Secciones De Software">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <ScrollPane VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox fx:id="vBoxSeccion" prefWidth="880.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children></VBox>
+               </content>
+          </TitledPane>
+            <TitledPane layoutX="10.0" layoutY="44.0" text="Posibles Errores">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                     <children>
+                        <ScrollPane VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox>
+                                 <padding>
+                                    <Insets bottom="20.0" left="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+        </panes>
+         <GridPane.margin>
+            <Insets top="30.0" />
+         </GridPane.margin>
+      </Accordion>
+   </children>
+</GridPane>

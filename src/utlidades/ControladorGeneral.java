@@ -36,6 +36,7 @@ import view.ElectoralDataControl;
 public class ControladorGeneral {
  
     public static int CONTROLVIEWMODIFICAR=0;
+    public static int CONTROLVIEWMODIFICARLIDER=0;    
     public static int CONTROLVIEWSTAGE=0;
     public static Usuario CONTROLSESION=null;
         
@@ -65,19 +66,23 @@ public class ControladorGeneral {
 
         String res="";
         
-        switch(text){
-            
-            case "Femenino":
-                res="F";
-            break;
+        if(text!=null){
 
-            case "Masculino":
-                res="M";
-            break;
-            
-            
+            switch(text){
+
+                case "Femenino":
+                    res="F";
+                break;
+
+                case "Masculino":
+                    res="M";
+                break;
+
+
+            }
+                        
         }
-        
+                
         return res;
         
         
@@ -137,14 +142,16 @@ public class ControladorGeneral {
         int i=12;
         String newPass="";
         
-        if(i<pass.length()){
-            while(pass.charAt(i) != ','){
-                newPass= newPass + pass.charAt(i);
-                i++;
-                if(i==pass.length()){
-                    break;
-                }
-            }            
+        if(pass!=null){
+            if(i<pass.length()){
+                while(pass.charAt(i) != ','){
+                    newPass= newPass + pass.charAt(i);
+                    i++;
+                    if(i==pass.length()){
+                        break;
+                    }
+                }            
+            }
         }
         
         return newPass;
@@ -235,7 +242,9 @@ public class ControladorGeneral {
         
     }
     
-    
-    
+    /*Metodo para obtener el nombre del sistema operativo en el cual esta corriendo el programa*/
+   public static String getOs(){
+       return System.getProperty("os.name");
+   }
     
 }

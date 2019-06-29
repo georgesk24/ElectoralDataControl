@@ -83,7 +83,7 @@
             </WebView>
          </children>
          <GridPane.margin>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            <Insets bottom="50.0" left="50.0" right="50.0" top="20.0" />
          </GridPane.margin>
       </VBox>
    </children>

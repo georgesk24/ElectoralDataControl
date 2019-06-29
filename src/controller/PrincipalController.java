@@ -34,6 +34,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
+import model.Persona;
 import model.Votantes;
 import utlidades.ControladorGeneral;
 import utlidades.UtilidadesView;
@@ -48,18 +49,20 @@ public class PrincipalController implements Initializable, UtilidadesView {
     public BorderPane borderP;
         
     public GridPane panelInicio, panelRegistro, panelRegistroLider, panelConsulta,
-             panelLugarDeVotacion, panelReporte, panelAjuste;
+             panelLugarDeVotacion, panelReporte, panelAjuste, panelGuia;
     
     @FXML
     private JFXButton btnInicio, btnRegistroPersona, btnRegistroLider, 
                       btnConsulta, btnReportes, btnLugarDeVotacion,
-                      btnAjustes, btnSalir, btnAcercaDe, btnRecomendacion;
+                      btnAjustes, btnSalir, btnAcercaDe, btnRecomendacion, 
+                      btnGuia;
 
     @FXML
     private FontAwesomeIcon fontIconInicio, fontIconSalir, 
                             fontIconAjustes, fontIconLugar,
                             fontIconReporte, fontIconConsulta,
-                            fontIconRegistro, fontIconLider;
+                            fontIconRegistro, fontIconLider, 
+                            fontIconGuia;
     
     @FXML
     public Circle imageProfile;
@@ -72,7 +75,9 @@ public class PrincipalController implements Initializable, UtilidadesView {
     
     FXMLLoader loader = new FXMLLoader();
     public static FXMLLoader loaderAjustes = new FXMLLoader();
-        
+    public static FXMLLoader loaderReportes = new FXMLLoader();
+
+    
     Stop[] stopsActive = new Stop[]{new Stop(0, Color.DARKCYAN), new Stop(1, Color.CYAN)};
     LinearGradient linearActive = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stopsActive);
     
@@ -85,32 +90,36 @@ public class PrincipalController implements Initializable, UtilidadesView {
         
         if(evt.equals(btnInicio)){
 
-            selectView("Inicio", null);
+            selectView("Inicio", null, "");
                         
         }else if(evt.equals(btnRegistroPersona) ){
 
-            selectView("Registro", null);
+            selectView("Registro", null, "");
             
         }else if(evt.equals(btnRegistroLider) ){
 
-            selectView("Registro_Lider", null);
+            selectView("Registro_Lider", null, "");
             
         }else if(evt.equals(btnConsulta)){
 
-            selectView("Consulta", null);
+            selectView("Consulta", null, "");
             
         }else if(evt.equals(btnReportes)){
 
-            selectView("Reporte", null);
+            selectView("Reporte", null, "");
             
         }else if(evt.equals(btnLugarDeVotacion)){
 
-            selectView("Lugar", null);
+            selectView("Lugar", null, "");
             
         }else if(evt.equals(btnAjustes) || evt.equals(btnAjustesSubMenu)){
 
-            selectView("Ajuste", null);
+            selectView("Ajuste", null, "");
         
+        }else if(evt.equals(btnGuia)){
+
+            selectView("Guia", null, "");
+            
         }else if(evt.equals(btnSalir) || evt.equals(btnSalirSubMenu)){
             
             int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir del sistema?");
@@ -130,8 +139,6 @@ public class PrincipalController implements Initializable, UtilidadesView {
         }
         
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -169,10 +176,13 @@ public class PrincipalController implements Initializable, UtilidadesView {
             loader = new FXMLLoader(getClass().getResource("/view/PanelConsulta.fxml"));        
             panelConsulta = (GridPane)loader.load();
             
+            loaderReportes= new FXMLLoader(getClass().getResource("/view/PanelReporte.fxml"));
+            panelReporte =  (GridPane) loaderReportes.load();
             
-            panelReporte =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelReporte.fxml"));
             panelLugarDeVotacion =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelLugarDeVotacion.fxml"));
 
+            panelGuia =  (GridPane) FXMLLoader.load(getClass().getResource("/view/PanelGuia.fxml"));            
+            
             loaderAjustes = new FXMLLoader(getClass().getResource("/view/PanelAjustes.fxml"));
             panelAjuste =  (GridPane) loaderAjustes.load();
             
@@ -207,8 +217,23 @@ public class PrincipalController implements Initializable, UtilidadesView {
     }    
 
     
-    public void selectView(String name, Votantes v){
+    public void selectView(String name, Object object, String type){
 
+        Votantes v=null;
+        Persona p=null;
+        
+        switch(type){
+            
+            case "Votantes":
+                v = (Votantes) object;
+            break;
+            
+            case "Persona":           
+                p = (Persona) object;
+            break;
+            
+        }
+        
         switch(name){
             
             case "Inicio":
@@ -220,7 +245,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Reporte");
                 fillDefault("Lugar");
                 fillDefault("Ajuste");
-
+                fillDefault("Guia");
 
                 addOpacity(panelInicio, 0.0);
                 borderP.setCenter(panelInicio);
@@ -254,6 +279,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Reporte");
                 fillDefault("Lugar");
                 fillDefault("Ajuste");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelRegistro);
                 BorderPane.setMargin(panelRegistro, new Insets(0, 30, 0, 0));                        
@@ -263,21 +289,21 @@ public class PrincipalController implements Initializable, UtilidadesView {
             break;
 
             case "Registro_Lider":
-                /*
-                if(ControladorGeneral.CONTROLVIEWMODIFICAR==1){
+                
+                if(ControladorGeneral.CONTROLVIEWMODIFICARLIDER==1){
                     
-                    loader = new FXMLLoader(getClass().getResource("/view/PanelRegister.fxml"));        
+                    loader = new FXMLLoader(getClass().getResource("/view/PanelLider.fxml"));        
                     {
                         try {
-                            panelRegistro = (GridPane)loader.load();     
+                            panelRegistroLider = (GridPane)loader.load();     
                             PanelLiderController registroController = loader.getController();
-                            registroController.ActualizarDatos(v);
+                            registroController.ActualizarDatos(p);
                         } catch (IOException ex) {
                             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     
-                }    */            
+                }              
                 
                 fillActive("Registro_Lider");
                 fillDefault("Registro");
@@ -286,6 +312,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Reporte");
                 fillDefault("Lugar");
                 fillDefault("Ajuste");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelRegistroLider);
                 BorderPane.setMargin(panelRegistroLider, new Insets(0, 30, 0, 0));                        
@@ -303,12 +330,12 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Reporte");
                 fillDefault("Lugar");
                 fillDefault("Ajuste");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelConsulta);
                 BorderPane.setMargin(panelConsulta, new Insets(0, 30, 0, 0));                
                 makeFadeOut(panelConsulta);
                 redimensionarHeightPanel(borderP.getPrefHeight(), panelConsulta.getPrefHeight());
-                                
                 
             break;
             
@@ -321,6 +348,7 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Consulta");
                 fillDefault("Reporte");
                 fillDefault("Ajuste");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelLugarDeVotacion);
                 BorderPane.setMargin(panelLugarDeVotacion, new Insets(0, 30, 0, 0));                
@@ -338,12 +366,13 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Consulta");
                 fillDefault("Lugar");
                 fillDefault("Ajuste");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelReporte);
                 BorderPane.setMargin(panelReporte, new Insets(0, 30, 0, 0));                                
                 makeFadeOut(panelReporte);
-                redimensionarHeightPanel(borderP.getPrefHeight(), panelReporte.getPrefHeight());                
-
+                redimensionarHeightPanel(borderP.getPrefHeight(), 900);                
+                                
             break;
 
             case "Ajuste":
@@ -355,14 +384,33 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 fillDefault("Consulta");
                 fillDefault("Reporte");
                 fillDefault("Lugar");
+                fillDefault("Guia");
 
                 borderP.setCenter(panelAjuste);
                 BorderPane.setMargin(panelAjuste, new Insets(0, 30, 0, 0));                                
                 makeFadeOut(panelAjuste);
                 redimensionarHeightPanel(borderP.getPrefHeight(), panelAjuste.getPrefHeight());                
-
+                                
             break;
-        
+
+            case "Guia":
+                
+                fillActive("Guia");
+                fillDefault("Ajuste");
+                fillDefault("Inicio");
+                fillDefault("Registro");
+                fillDefault("Registro_Lider");                
+                fillDefault("Consulta");
+                fillDefault("Reporte");
+                fillDefault("Lugar");
+                
+                borderP.setCenter(panelGuia);
+                BorderPane.setMargin(panelGuia, new Insets(0, 30, 0, 0));                                
+                makeFadeOut(panelGuia);
+                redimensionarHeightPanel(borderP.getPrefHeight(), panelGuia.getPrefHeight());                
+                                
+            break;            
+            
         
         }
     }
@@ -419,7 +467,11 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 btnAjustes.setTextFill(linearActive);
                 fontIconAjustes.setFill(linearActive);                                        
             break;
-            
+
+            case "Guia":
+                btnGuia.setTextFill(linearActive);
+                fontIconGuia.setFill(linearActive);                                        
+            break;            
         }
 
     }
@@ -462,7 +514,11 @@ public class PrincipalController implements Initializable, UtilidadesView {
                 btnAjustes.setTextFill(Color.web("#999999"));
                 fontIconAjustes.setFill(Color.web("#999999"));                                        
             break;
-            
+
+            case "Guia":
+                btnGuia.setTextFill(Color.web("#999999"));
+                fontIconGuia.setFill(Color.web("#999999"));                                        
+            break;            
         }
     }
 

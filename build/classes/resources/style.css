@@ -125,6 +125,14 @@
     
 }
 
+#hBoxRegisterLider{
+
+    -fx-background-image:url("images/lideres.png");    
+    -fx-background-size: 70% 90%;
+    -fx-background-margin:20;
+    
+}
+
 #hBoxSearch{
 
     -fx-background-image:url("images/search-data.png");    

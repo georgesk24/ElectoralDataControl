@@ -255,11 +255,23 @@
                                        <children>
                                           <VBox maxWidth="-Infinity">
                                              <children>
-                                                <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" prefWidth="357.0" text="Lugar De Votación" textFill="#363e46">
-                                                   <font>
-                                                      <Font name="System Bold" size="20.0" />
-                                                   </font>
-                                                </Label>
+                                                <HBox alignment="BOTTOM_LEFT">
+                                                   <children>
+                                                      <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" text="Lugar De Votación" textFill="#363e46">
+                                                         <font>
+                                                            <Font name="System Bold" size="20.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <JFXButton fx:id="btnActualizarLugarDeVotacion" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#eventosOnAction" prefHeight="25.0" prefWidth="25.0" styleClass="buttonCard">
+                                                         <graphic>
+                                                            <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
+                                                         </graphic>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                   </children>
+                                                </HBox>
                                                 <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
                                                    <children>
                                                       <JFXComboBox fx:id="fxComboBoxLugar" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
@@ -286,6 +298,35 @@
                                           </VBox>
                                        </children>
                                     </GridPane>
+                                    <VBox fx:id="vBoxLider" maxWidth="-Infinity">
+                                       <children>
+                                          <HBox alignment="BOTTOM_LEFT">
+                                             <children>
+                                                <Label alignment="BOTTOM_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="39.0" text="Lider Asignado" textFill="#363e46">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <JFXButton fx:id="btnActualizarLiderAsignado" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#eventosOnAction" prefHeight="25.0" prefWidth="25.0" styleClass="buttonCard">
+                                                   <graphic>
+                                                      <FontAwesomeIcon fill="WHITE" iconName="REFRESH" />
+                                                   </graphic>
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                             </children>
+                                          </HBox>
+                                          <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="1324.0" style="-fx-border-color: #363e46; -fx-border-radius: 4;">
+                                             <children>
+                                                <JFXComboBox fx:id="fxComboBoxLider" focusColor="#363e46" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="577.0" promptText="Seleccione" style="-fx-font-size:18;" unFocusColor="#4d4d4d00" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </VBox>
                                     <HBox fx:id="hBoxBtn" alignment="TOP_CENTER" layoutX="26.0" layoutY="416.0" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0">
                                        <VBox.margin>
                                           <Insets left="15.0" right="15.0" top="20.0" />
@@ -329,7 +370,7 @@
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="67.0" prefWidth="967.0" text="Información Personas" textFill="#363e46">
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="67.0" prefWidth="967.0" text="Información Votantes" textFill="#363e46">
                                              <font>
                                                 <Font name="FontAwesome Regular" size="35.0" />
                                              </font>
@@ -414,7 +455,7 @@
             </Tab>
          </tabs>
          <GridPane.margin>
-            <Insets top="20.0" />
+            <Insets left="20.0" right="20.0" top="20.0" />
          </GridPane.margin>
       </JFXTabPane>
    </children>

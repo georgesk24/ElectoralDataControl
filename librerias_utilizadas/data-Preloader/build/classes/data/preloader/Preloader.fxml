@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.ProgressIndicator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="854.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PreloaderViewController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="605.0" minWidth="10.0" prefWidth="452.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="404.0" minWidth="10.0" prefWidth="402.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #30373e;">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="210.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/electoral-login.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Electoral Data Control" textFill="#f2ecec">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Label>
+                  <Label style="-fx-font-size: 15;" text="Sistema para el control y gestión de datos de votantes" textFill="#f2ecec" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #30373e;" GridPane.columnIndex="1">
+         <children>
+            <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <FontAwesomeIcon fx:id="btnClose" fill="WHITE" iconName="CLOSE" onMouseClicked="#eventsMouseClick" size="2em" styleClass="icon">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </HBox>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/elections.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label style="-fx-text-fill: white; -fx-font-size: 20;" text="Por Favor Espere...">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Label layoutX="127.0" layoutY="187.0" style="-fx-text-fill: white; -fx-font-size: 18;" text="Cargando componentes">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <ProgressIndicator fx:id="progress" progress="1.0" radius="42.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </ProgressIndicator>
+         </children>
+      </VBox>
+   </children>
+</GridPane>

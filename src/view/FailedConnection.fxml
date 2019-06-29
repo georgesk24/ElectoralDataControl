@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="854.0" style="-fx-background-color: white;" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FailedConnectionController">
+   <children>
+      <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="5.0">
+         <children>
+            <FontAwesomeIcon fx:id="btnMinimize" iconName="MINUS" onMouseClicked="#eventsMouseClick" size="2em" styleClass="icon" />
+            <FontAwesomeIcon fx:id="btnClose" iconName="CLOSE" onMouseClicked="#eventsMouseClick" size="2em" styleClass="icon">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </FontAwesomeIcon>
+         </children>
+      </HBox>
+      <VBox fx:id="containerVideo" alignment="TOP_CENTER" prefHeight="330.0" VBox.vgrow="NEVER">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" top="30.0" />
+         </VBox.margin>
+      </VBox>
+      <Label layoutX="366.0" layoutY="20.0" text="Error de Conexión">
+         <font>
+            <Font name="System Bold Italic" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="389.0" text="¡No se pudo establecer una conexión con la base de datos! posiblemente surgieron errores en la configuración inicial" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" left="50.0" right="50.0" />
+         </VBox.margin>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </Label>
+      <HBox alignment="TOP_CENTER" spacing="10.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXButton fx:id="btnReintentar" buttonType="RAISED" onAction="#eventsOnAction" prefHeight="54.0" prefWidth="300.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonCard" text="REINTENTAR" />
+            <JFXButton fx:id="btnSalir" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#eventsOnAction" prefHeight="54.0" prefWidth="300.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" styleClass="buttonDanger" text="SALIR" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

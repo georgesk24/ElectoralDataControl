@@ -110,11 +110,8 @@ public class LoginViewController implements Initializable, GeneralView{
         ControladorGeneral.resetSesion();
         
         ElectoralDataControl.stage.setOnCloseRequest((WindowEvent event) -> {
-            int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cerrar la aplicación?");
-            if(confirmar == JOptionPane.YES_OPTION){
-                Platform.exit();
-                System.exit(0);
-            }
+            Platform.exit();
+            System.exit(0);
         });
         
     }

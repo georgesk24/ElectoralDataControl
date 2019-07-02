@@ -44,7 +44,7 @@ public class PanelGuiaController implements Initializable, GeneralView {
     private TitledPane titledPaneInicio;
     
     @FXML
-    private VBox vBoxSeccion;
+    private VBox vBoxSeccion, vBoxError;
     
     @FXML
     private JFXButton btnSeccionesDeSoftware, btnListadoDeErrores;
@@ -58,28 +58,18 @@ public class PanelGuiaController implements Initializable, GeneralView {
         if(evt.equals(btnSeccionesDeSoftware)){
             
             try {
-
-                switch(ControladorGeneral.getOs()){
-                    
-                    case "Linux":
-
-                        Desktop.getDesktop().open(new File("src/resources/pdf-files/secciones-de-software.pdf"));
-                        break;
-                        
-                    case "Windows":
-
-                        Desktop.getDesktop().open(new File("src/resources/pdf-files/secciones-de-software.pdf"));
-                        break;
-                        
-                }
-                
+                Desktop.getDesktop().open(new File("src/resources/pdf-files/secciones-de-software.pdf"));                        
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
             
         }else if(evt.equals(btnListadoDeErrores)){
             
-            
+            try {
+                Desktop.getDesktop().open(new File("src/resources/pdf-files/control-errores-electoral-data-control.pdf"));                        
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }            
             
         }
     
@@ -97,94 +87,54 @@ public class PanelGuiaController implements Initializable, GeneralView {
         initComponents(null);
     }    
         
+    public void openFilePdf(String url, VBox vbox){
+        
+        try{
+
+            SwingUtilities.invokeAndWait(() -> {
+                SwingController control = new SwingController();
+                
+                Properties properties = new Properties();
+                properties.put("application.showLocalStorageDialogs", "false");
+                
+                
+                PropertiesManager props = new PropertiesManager(System.getProperties(), properties,
+                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                
+                props.setInt(PropertiesManager.PROPERTY_DEFAULT_PAGEFIT, DocumentViewController.PAGE_FIT_WINDOW_WIDTH);
+                props.setInt("document.viewtype", DocumentViewControllerImpl.ONE_COLUMN_VIEW);
+                
+                
+                control.setPropertiesManager(props);
+                new FontPropertiesManager(props, System.getProperties(), ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                
+                SwingViewBuilder factry = new SwingViewBuilder(control);
+                JPanel panel = factry.buildViewerPanel();
+                
+                ComponentKeyBinding.install(control, panel);
+                
+                control.getDocumentViewController().setAnnotationCallback(
+                        new org.icepdf.ri.common.MyAnnotationCallback(
+                                control.getDocumentViewController()));
+                
+                control.openDocument(url);
+                
+                SwingNode node = new SwingNode();
+                node.setContent(panel);
+                vbox.getChildren().add(node);
+            });
+                        
+        }catch(InterruptedException | InvocationTargetException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
     
     @Override
     public void initComponents(Object obj) {
 
-        try {
-           
-            accordionConfig.setExpandedPane(titledPaneInicio);
-           
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-
-                    /*
-                    SwingController control = new SwingController();
-                    control.setIsEmbeddedComponent(true);
-                    PropertiesManager properties = new PropertiesManager(System.getProperties(),
-                            ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-
-                    
-                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
-                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
-                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
-                    properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "false");
-                    properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
-                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
-
-                    ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-                    
-                    new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-                    
-                    control.getDocumentViewController().setAnnotationCallback(
-                            new org.icepdf.ri.common.MyAnnotationCallback(
-                                    control.getDocumentViewController()));
-                    
-                    SwingViewBuilder factry = new SwingViewBuilder(control, properties);
-                    JPanel panel = factry.buildViewerPanel();
-                    panel.revalidate();
-                    
-                    SwingNode swingNode = new SwingNode();
-                    swingNode.setContent(panel);
-
-                    BorderPane pane = new BorderPane();
-                    pane.setCenter(swingNode);
-                    */
-
-            SwingController control = new SwingController();
-
-            Properties properties = new Properties();
-            properties.put("application.showLocalStorageDialogs", "false");
-            
-
-            PropertiesManager props = new PropertiesManager(System.getProperties(), properties, 
-                            ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-
-            props.setInt(PropertiesManager.PROPERTY_DEFAULT_PAGEFIT, DocumentViewController.PAGE_FIT_WINDOW_WIDTH);
-            props.setInt("document.viewtype", DocumentViewControllerImpl.ONE_COLUMN_VIEW);
-            
-
-            control.setPropertiesManager(props);
-            new FontPropertiesManager(props, System.getProperties(), ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-                        
-            SwingViewBuilder factry = new SwingViewBuilder(control);
-            JPanel panel = factry.buildViewerPanel();
-                        
-            ComponentKeyBinding.install(control, panel);
-            
-            control.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(
-                    control.getDocumentViewController()));
-            
-            control.openDocument("src/resources/pdf-files/secciones-de-software.pdf");
-                    
-            SwingNode node = new SwingNode();
-            node.setContent(panel);
-            vBoxSeccion.getChildren().add(node);
-                    
-
-                    
-                }
-            });
-            
-            
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PanelGuiaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(PanelGuiaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        accordionConfig.setExpandedPane(titledPaneInicio);
+        openFilePdf("src/resources/pdf-files/control-errores-electoral-data-control.pdf", vBoxError);
+        openFilePdf("src/resources/pdf-files/secciones-de-software.pdf", vBoxSeccion);
         
     }
 

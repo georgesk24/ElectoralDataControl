@@ -171,7 +171,7 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="410.0" maxHeight="-Infinity" prefHeight="60.0" prefWidth="200.0">
                                  <children>
-                                    <JFXButton fx:id="btnGuia" alignment="BASELINE_LEFT" graphicTextGap="14.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" onAction="#validatorMenu" prefHeight="61.0" prefWidth="250.0" text="Guia" textFill="#999999" HBox.hgrow="ALWAYS">
+                                    <JFXButton fx:id="btnGuia" alignment="BASELINE_LEFT" graphicTextGap="14.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" onAction="#validatorMenu" prefHeight="61.0" prefWidth="250.0" text="Guía" textFill="#999999" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="21.0" />
                                        </font>

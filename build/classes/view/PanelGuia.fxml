@@ -33,8 +33,8 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <FontAwesomeIcon iconName="COGS" size="3em" styleClass="font-nav-icon" />
-                  <Label text="Guia Electoral Data Control">
+                  <FontAwesomeIcon iconName="BOOK" size="3em" styleClass="font-nav-icon" />
+                  <Label text="Guía Electoral Data Control">
                      <font>
                         <Font name="FontAwesome Regular" size="32.0" />
                      </font>
@@ -391,7 +391,7 @@
                      <children>
                         <ScrollPane VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox>
+                              <VBox fx:id="vBoxError" prefWidth="880.0">
                                  <padding>
                                     <Insets bottom="20.0" left="10.0" top="10.0" />
                                  </padding>
